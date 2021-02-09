@@ -15,7 +15,7 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private MonsterInstance Data;
     private int CurrentHealth;
-    private int EnergyAvailable;
+    public int EnergyAvailable { get; private set; }
 
     public int Level => Data.Level;
     public int Attack => Data.Attack;

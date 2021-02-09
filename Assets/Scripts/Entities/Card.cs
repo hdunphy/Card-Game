@@ -18,6 +18,7 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
     [SerializeField] private Image CardSprite;
     [SerializeField] private Image TargetTypeIcon;
     [SerializeField] private Image CardAlignmentIcon;
+    [SerializeField] private Image DisableCover;
 
     private CardData Data;
     private int siblingIndex;
@@ -29,8 +30,26 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("selecting: ");
         EventManager.Instance.OnSelectCardTrigger(this);
+    }
+
+    private void Start()
+    {
+        EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.UpdateSelectedMonster -= Instance_UpdateSelectedMonster;
+    }
+
+    private void Instance_UpdateSelectedMonster(Monster _monster)
+    {
+        DisableCover.gameObject.SetActive(false);
+        if(_monster != null)
+        {
+            DisableCover.gameObject.SetActive(_monster.EnergyAvailable < EnergyCost);
+        }
     }
 
     public void SetCardData(CardData _data)

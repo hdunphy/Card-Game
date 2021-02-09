@@ -33,7 +33,6 @@ public class BattleManager : MonoBehaviour
         CurrentTeam = PlayerTeam.Player;
 
         HandController.AddCardsToDeck(Deck);
-        //EventManager.Instance.OnDrawCardTrigger(cardDraw);
     }
 
     private void OnDestroy()
@@ -56,9 +55,10 @@ public class BattleManager : MonoBehaviour
 
     public void SetSelectedMonster(Monster _monster)
     {
-        if (_monster?.Team == CurrentTeam)
+        if (_monster.Team == CurrentTeam)
         {
             SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
+            EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
         }
         else
         {
@@ -73,6 +73,7 @@ public class BattleManager : MonoBehaviour
     public void SetSelectedCard(Card _card)
     {
         SelectedCard = (Card)SetSelectable(SelectedCard, _card);
+        EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
     }
 
     private SelectableElement SetSelectable(SelectableElement _current, SelectableElement _selected)
