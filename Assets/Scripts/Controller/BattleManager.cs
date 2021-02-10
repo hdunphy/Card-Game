@@ -43,8 +43,11 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
             EventManager.Instance.OnDrawCardTrigger(cardDraw);
+            LeanTween.delayedCall(0.5f, () => { EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster); });
+        }
     }
 
     public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
@@ -62,7 +65,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            if(SelectedCard != null && SelectedMonster != null)
+            if (SelectedCard != null && SelectedMonster != null)
             {
                 SelectedMonster.AttackMonster(_monster, SelectedCard);
                 SetSelectedCard(SelectedCard);

@@ -22,6 +22,7 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     private CardData Data;
     private int siblingIndex;
+    private bool isMoving = false;
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
@@ -30,7 +31,8 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        EventManager.Instance.OnSelectCardTrigger(this);
+        if (!DisableCover.gameObject.activeSelf)
+            EventManager.Instance.OnSelectCardTrigger(this);
     }
 
     private void Start()
@@ -46,7 +48,7 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
     private void Instance_UpdateSelectedMonster(Monster _monster)
     {
         DisableCover.gameObject.SetActive(false);
-        if(_monster != null)
+        if (_monster != null)
         {
             DisableCover.gameObject.SetActive(_monster.EnergyAvailable < EnergyCost);
         }
@@ -68,7 +70,15 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
-    public void DiscardCard()
+
+    public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
+    {
+        transform.SetAsLastSibling();
+        LeanTween.move(gameObject, position, CardMovementTiming);
+        LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
+    }
+
+    private void SetInactive()
     {
         transform.SetParent(null);
         gameObject.SetActive(false);
@@ -84,16 +94,29 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.SetSiblingIndex(siblingIndex);
-        LeanTween.moveLocalY(gameObject, 0, .5f);
-        LeanTween.scale(gameObject, Vector3.one, .5f);
+        if (!isMoving)
+        {
+            transform.SetSiblingIndex(siblingIndex);
+            LeanTween.moveLocalY(gameObject, 0, .5f);
+            LeanTween.scale(gameObject, Vector3.one, .5f);
+        }
+    }
+
+    public void MoveToHandPosition(Vector2 position, Vector3 scale, float CardMovementTiming)
+    {
+        isMoving = true;
+        RectTransform cardTransform = GetComponent<RectTransform>();
+        LeanTween.move(cardTransform, position, CardMovementTiming);
+        LeanTween.scale(cardTransform, scale, CardMovementTiming).setOnComplete(() => { isMoving = false; });
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.SetAsLastSibling();
-        LeanTween.moveLocalY(gameObject, HoverMovement, .5f);
-        LeanTween.scale(gameObject, Vector3.one * HoverScale, .5f);
+        if (!isMoving)
+        {
+            transform.SetAsLastSibling();
+            LeanTween.moveLocalY(gameObject, HoverMovement, .5f);
+            LeanTween.scale(gameObject, Vector3.one * HoverScale, .5f);
+        }
     }
-
 }

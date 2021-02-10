@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public abstract class SelectableElement : MonoBehaviour
 {
     [SerializeField] private Image Highlight;
-    private bool IsSelected;
+    public bool IsSelected { get; private set; }
 
     private void Awake()
     {

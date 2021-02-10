@@ -30,20 +30,27 @@ namespace Assets.Scripts
             HealthModifier = Rules.GetRandomInt(0, 31);
         }
 
-        public bool AddExperience(int _xp)
+        public int AddExperience(int _xp, int levelUps = 0)
         {
-            bool levelup = false;
-
-            int nextLevelExp = Rules.Instance.GetExpNextLevel(this);
-            Experiance += _xp;
-
-            if(Experiance > nextLevelExp)
+            int xpToNextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
+            
+            if(_xp > xpToNextLevel)
             {
+                Experiance += xpToNextLevel;
                 Level++;
-                levelup = true;
+                levelUps = AddExperience(_xp - xpToNextLevel, ++levelUps);
             }
+            else
+                Experiance += _xp;
 
-            return levelup;
+            return levelUps;
+        }
+
+        public float GetExperiencePercentage()
+        {
+            int currentExp = Experiance - Rules.Instance.GetExp(this);
+            int nextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
+            return (float)currentExp / nextLevel;
         }
 
         private int CalculateStat(int baseStat, int modifier)
