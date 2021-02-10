@@ -83,9 +83,6 @@ public class HandController : MonoBehaviour
 
             Vector2 position = new Vector2((halfIndex - i) * currentOffset, 0);
             CardsInHand[--cardIndex].MoveToHandPosition(position, Vector3.one, CardMovementTiming);
-            //RectTransform cardTransform = CardsInHand[--cardIndex].GetComponent<RectTransform>();
-            //LeanTween.move(cardTransform, position, CardMovementTiming);
-            //LeanTween.scale(cardTransform, Vector3.one, CardMovementTiming);
         }
     }
 
@@ -107,15 +104,6 @@ public class HandController : MonoBehaviour
             Debug.Log($"Could not remove card!\nInstanceId: {_card.GetInstanceID()}");
 
         _card.DiscardCard(DiscardPileGO.transform.position, Vector3.one * .33f, CardMovementTiming, () => { DiscardPile.Add(_card); UpdateCardCounts(); });
-        //_card.gameObject.transform.SetAsLastSibling();
-        //LeanTween.move(_card.gameObject, DiscardPileGO.transform.position, CardMovementTiming);
-        //LeanTween.scale(_card.gameObject, Vector3.one * .33f, CardMovementTiming)
-        //    .setOnComplete(() =>
-        //    {
-        //        _card.DiscardCard();
-        //        DiscardPile.Add(_card);
-        //        UpdateCardCounts();
-        //    });
 
         UpdateCardPositions();
     }

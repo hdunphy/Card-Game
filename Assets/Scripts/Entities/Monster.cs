@@ -9,11 +9,15 @@ using UnityEngine.UI;
 public class Monster : SelectableElement, IPointerDownHandler
 {
     [SerializeField] private Image MonsterSprite;
-    [SerializeField] private RectTransform HealthTransform;
+    [SerializeField] private Image DisableCover;
+    [SerializeField] private Image HealthBar;
+    [SerializeField] private Image PrimaryAlignment;
+    [SerializeField] private Image SecondaryAlignment;
     [SerializeField] private RectTransform ExperienceTransform;
     [SerializeField] private TMP_Text HealthText;
+    [SerializeField] private TMP_Text MonsterName;
     [SerializeField] private EnergyHolder EnergyHolder;
-    [SerializeField] private Image DisableCover;
+    [SerializeField] private Gradient HealthGradient;
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
@@ -57,11 +61,21 @@ public class Monster : SelectableElement, IPointerDownHandler
     {
         Data = _data;
         Team = _playerTeam;
-        MonsterSprite.sprite = Data.Sprite;
         CurrentHealth = Data.Health;
         EnergyAvailable = Data.Energy;
+        MonsterName.text = Data.Name;
 
-        HealthTransform.localScale = new Vector3((float)CurrentHealth / Data.Health, 1, 1);
+        MonsterSprite.sprite = Data.Sprite;
+        PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Primary);
+        if (Data.MonsterAlignment.Secondary != CardAlignment.None)
+        {
+            SecondaryAlignment.enabled = true;
+            SecondaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Secondary);
+        }
+        else
+            SecondaryAlignment.enabled = false;
+
+        HealthBar.rectTransform.localScale = new Vector3((float)CurrentHealth / Data.Health, 1, 1);
         ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
 
         TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
@@ -72,23 +86,12 @@ public class Monster : SelectableElement, IPointerDownHandler
         UpdateTooltip();
     }
 
-    //private void CalculateExperience()
-    //{
-    //    ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
-    //}
-
     public void AttackMonster(Monster target, Card selectedCard)
     {
         EventManager.Instance.OnDiscardCardTrigger(selectedCard);
         float damage = Rules.Instance.GetAttackDamage(this, target, selectedCard);
 
-        if (target.TakeDamage(Mathf.FloorToInt(damage)))
-        {
-            int expGained = target.GetDeathExp();
-            Debug.Log($"Exp gained: {expGained}");
-            target.SetDead();
-            UpdateExperienceUI(expGained);
-        }
+        target.TakeDamage(Mathf.FloorToInt(damage), this);
 
         EnergyAvailable -= selectedCard.EnergyCost;
         SetEnergy();
@@ -105,29 +108,29 @@ public class Monster : SelectableElement, IPointerDownHandler
         gameObject.SetActive(false);
     }
 
-    private bool TakeDamage(int damage)
+    private void TakeDamage(int damage, Monster source)
     {
-        Debug.Log($"{GetInstanceID()} takes {damage} damage");
         float startPercent = (float)CurrentHealth / Data.Health;
         float finalPercent = (float)(CurrentHealth -= damage) / Data.Health;
-        StartCoroutine(UpdateHealthUI(startPercent, finalPercent));
-
-        return CurrentHealth <= 0;
+        StartCoroutine(UpdateHealthUI(startPercent, finalPercent, source));
     }
 
-    private IEnumerator UpdateHealthUI(float startPercent, float finalPercent)
+    private IEnumerator UpdateHealthUI(float startPercent, float finalPercent, Monster source)
     {
         float currentPercent = startPercent;
 
         while (Mathf.Abs(currentPercent - finalPercent) > 0.0001f)
         {
             currentPercent = Mathf.Lerp(currentPercent, finalPercent, 0.01f);
-            HealthTransform.localScale = new Vector3(currentPercent, 1, 1);
-            //CurrentHealth = Mathf.CeilToInt(currentPercent * Data.Health);
+            HealthBar.rectTransform.localScale = new Vector3(currentPercent, 1, 1);
+            CurrentHealth = Mathf.FloorToInt((float)currentPercent * Data.Health);
+
             UpdateHealthText();
 
-            if (currentPercent <= 0.0001f)
+            if (CurrentHealth <= 0)
             {
+                source.UpdateExperienceUI(GetDeathExp());
+                SetDead();
                 break;
             }
             yield return null;
@@ -156,7 +159,6 @@ public class Monster : SelectableElement, IPointerDownHandler
 
 
         UpdateTooltip();
-        //LeanTween.scaleX(ExperienceTransform, Data.GetExperiencePercentage(), 0.5f);
     }
 
     private void SetEnergy()
@@ -169,6 +171,7 @@ public class Monster : SelectableElement, IPointerDownHandler
     private void UpdateHealthText()
     {
         HealthText.text = $"{CurrentHealth}/{Data.Health}";
+        HealthBar.color = HealthGradient.Evaluate((float)CurrentHealth / Data.Health);
     }
 
     private void UpdateTooltip()

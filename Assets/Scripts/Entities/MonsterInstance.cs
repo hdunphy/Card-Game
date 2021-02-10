@@ -19,11 +19,13 @@ namespace Assets.Scripts
         public int Level { get; private set; }
 
         public int Experiance { get; private set; }
+        public string Name { get; private set; }
 
         public MonsterInstance(MonsterData monsterData, int _level)
         {
             BaseData = monsterData;
             Level = _level;
+            Name = monsterData.name;
             Experiance = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);

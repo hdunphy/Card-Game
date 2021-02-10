@@ -18,4 +18,4 @@ MonoBehaviour:
   energyCost: 1
   targetType: 1
   cardAlignment: 3
-  attackModifier: 0.3
+  attackModifier: 1.5
