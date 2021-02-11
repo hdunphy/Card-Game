@@ -22,15 +22,12 @@ public class Monster : SelectableElement, IPointerDownHandler
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
     private int CurrentHealth;
-    public int EnergyAvailable { get; private set; }
+    private int TotalEnergy => Data.Energy;
 
+    public int EnergyAvailable { get; private set; }
     public int Level => Data.Level;
     public int Attack => Data.Attack;
     public int Defense => Data.Defense;
-    private int TotalEnergy => Data.Energy;
-
-
-    public PlayerTeam Team { get; private set; }
 
     private void Start()
     {
@@ -51,16 +48,21 @@ public class Monster : SelectableElement, IPointerDownHandler
         }
     }
 
+    public void StartTurn()
+    {
+        EnergyAvailable = Data.Energy;
+        SetEnergy();
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!DisableCover.gameObject.activeSelf)
             EventManager.Instance.OnSelectMonsterTrigger(this);
     }
 
-    public void SetUp(MonsterInstance _data, PlayerTeam _playerTeam)
+    public void SetUp(MonsterInstance _data)
     {
         Data = _data;
-        Team = _playerTeam;
         CurrentHealth = Data.Health;
         EnergyAvailable = Data.Energy;
         MonsterName.text = Data.Name;

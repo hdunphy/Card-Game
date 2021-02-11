@@ -7,6 +7,7 @@ public class HandManager : MonoBehaviour
 
     [SerializeField] public GameObject HandContainer;
     [SerializeField] private TMP_Text DrawCardCount;
+    [SerializeField] private TMP_Text HandCardCount;
     [SerializeField] private TMP_Text DiscardCardCount;
 
     public float CardOffset;
@@ -29,9 +30,11 @@ public class HandManager : MonoBehaviour
         }
     }
 
-    public void UpdateCardCounts(int DrawPileCount, int DiscardPileCount)
+    public void UpdateCardCounts(int DrawPileCount, int DiscardPileCount, int HandCount)
     {
         DrawCardCount.text = DrawPileCount.ToString();
         DiscardCardCount.text = DiscardPileCount.ToString();
+        if(HandCardCount != null)
+            HandCardCount.text = HandCount.ToString();
     }
 }

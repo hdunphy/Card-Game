@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MonsterData", menuName = "Data/Create Monster Data")]
@@ -10,6 +11,9 @@ public class MonsterData : ScriptableObject
     [SerializeField] private int defense;
     [SerializeField] private int energy;
     [SerializeField] private MonsterAlignment monsterAlignments;
+    [SerializeField] private List<CardData> wildCards;
+    [SerializeField] private CardData level30Card;
+    [SerializeField] private CardData level50Card;
 
     public Sprite Sprite { get => sprite; }
     public int Health { get => health; }
@@ -17,7 +21,9 @@ public class MonsterData : ScriptableObject
     public int Defense { get => defense; }
     public int Energy { get => energy; }
     public MonsterAlignment MonsterAlignments { get => monsterAlignments; }
-
+    public List<CardData> WildCards { get => wildCards; }
+    public CardData Level30Card => level30Card;
+    public CardData Level50Card => level50Card;
 }
 
 [Serializable]

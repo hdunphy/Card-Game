@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts
 {
@@ -13,13 +14,13 @@ namespace Assets.Scripts
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
         public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
         public int Energy { get => BaseData.Energy; }
-        public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
-        public MonsterAlignment MonsterAlignment { get => BaseData.MonsterAlignments; }
-
         public int Level { get; private set; }
-
         public int Experiance { get; private set; }
         public string Name { get; private set; }
+
+        public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
+        public MonsterAlignment MonsterAlignment { get => BaseData.MonsterAlignments; }
+        public List<CardData> WildDeck { get; private set; }
 
         public MonsterInstance(MonsterData monsterData, int _level)
         {
@@ -30,6 +31,12 @@ namespace Assets.Scripts
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);
             HealthModifier = Rules.GetRandomInt(0, 31);
+
+            WildDeck = BaseData.WildCards;
+            if (BaseData.Level30Card != null && Level >= 30)
+                WildDeck.Add(BaseData.Level30Card);
+            if (BaseData.Level50Card != null && Level >= 50)
+                WildDeck.Add(BaseData.Level50Card);
         }
 
         public int AddExperience(int _xp, int levelUps = 0)

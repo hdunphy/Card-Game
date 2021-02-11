@@ -20,3 +20,10 @@ MonoBehaviour:
   monsterAlignments:
     Primary: 0
     Secondary: 3
+  wildCards:
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
+  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
+  level30Card: {fileID: 0}
+  level50Card: {fileID: 0}

@@ -22,6 +22,7 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     private CardData Data;
     private int siblingIndex;
+
     private bool isMoving = false;
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;

@@ -4,25 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public enum PlayerTeam { Player, Enemy }
+public enum BattleState { PlayerTurn, EnemyTurn }
 
 public class BattleManager : MonoBehaviour
 {
 
-    [SerializeField] private MonsterLoader PlayerLoader;
-    [SerializeField] private MonsterLoader EnemyLoader;
-    [SerializeField] private PlayerController PlayerController;
+    [SerializeField] private MonsterController PlayerLoader;
+    [SerializeField] private MonsterController EnemyLoader;
 
     //Change later
     public List<MonsterData> PlayerData;
     public List<MonsterData> EnemyData;
     public List<CardData> Deck;
-    public int cardDraw;
 
     //private variables
+    private MonsterController ActiveController { get { return battleState == BattleState.EnemyTurn ? EnemyLoader : PlayerLoader; } }
     private Monster SelectedMonster;
     private Card SelectedCard;
-    private PlayerTeam CurrentTeam;
+    private BattleState battleState;
 
     private void Start()
     {
@@ -30,9 +29,9 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectCard += SetSelectedCard;
 
         LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
-        CurrentTeam = PlayerTeam.Player;
 
-        PlayerController.AddCardsToDeck(Deck);
+        battleState = BattleState.PlayerTurn;
+        ActiveController.StartTurn();
     }
 
     private void OnDestroy()
@@ -43,22 +42,38 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    EventManager.Instance.OnDrawCardTrigger(cardDraw);
+        //    LeanTween.delayedCall(0.5f, () => { EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster); });
+        //}
+    }
+
+    public void EndTurn()
+    {
+        ActiveController.EndTurn();
+
+        if (battleState == BattleState.EnemyTurn)
         {
-            EventManager.Instance.OnDrawCardTrigger(cardDraw);
-            LeanTween.delayedCall(0.5f, () => { EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster); });
+            battleState = BattleState.PlayerTurn;
         }
+        else if (battleState == BattleState.PlayerTurn)
+        {
+            battleState = BattleState.EnemyTurn;
+        }
+        ActiveController.StartTurn();
     }
 
     public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
     {
-        PlayerLoader.LoadMonsters(playerData, PlayerTeam.Player);
-        EnemyLoader.LoadMonsters(enemyData, PlayerTeam.Enemy);
+        PlayerLoader.BattleSetUp(playerData, Deck);
+        EnemyLoader.BattleSetUp(enemyData);
     }
 
     public void SetSelectedMonster(Monster _monster)
     {
-        if (_monster.Team == CurrentTeam)
+        //add null check if for active controller if no one can do anything during other states
+        if (ActiveController.HasMonster(_monster)) 
         {
             SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
             EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
