@@ -50,7 +50,7 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     public void StartTurn()
     {
-        EnergyAvailable = Data.Energy;
+        EnergyAvailable = TotalEnergy;
         SetEnergy();
     }
 

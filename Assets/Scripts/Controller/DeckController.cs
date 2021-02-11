@@ -6,8 +6,6 @@ public abstract class DeckController : MonoBehaviour
     [SerializeField] protected HandManager HandManager;
     [Header("Prefabs")]
     [SerializeField] protected Card CardPrefab;
-    [Header("Stats")]
-    [SerializeField] private int StartTurnDraw;
     [Header("UI Locations")]
     [SerializeField] private GameObject GO_DrawPile;
 
@@ -34,12 +32,12 @@ public abstract class DeckController : MonoBehaviour
         EventManager.Instance.DiscardCard -= DiscardCard;
     }
 
-    public void StartTurn()
+    public void StartTurn(int startTurnDraw)
     {
         //Pre draw actions like status effects
 
         //Draw
-        DrawCards(StartTurnDraw);
+        DrawCards(startTurnDraw);
 
         //Begin Turn
     }

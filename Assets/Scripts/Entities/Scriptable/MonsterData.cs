@@ -10,6 +10,7 @@ public class MonsterData : ScriptableObject
     [SerializeField] private int attack;
     [SerializeField] private int defense;
     [SerializeField] private int energy;
+    [SerializeField] private int cardDraw;
     [SerializeField] private MonsterAlignment monsterAlignments;
     [SerializeField] private List<CardData> wildCards;
     [SerializeField] private CardData level30Card;
@@ -20,6 +21,7 @@ public class MonsterData : ScriptableObject
     public int Attack { get => attack; }
     public int Defense { get => defense; }
     public int Energy { get => energy; }
+    public int CardDraw { get => cardDraw; }
     public MonsterAlignment MonsterAlignments { get => monsterAlignments; }
     public List<CardData> WildCards { get => wildCards; }
     public CardData Level30Card => level30Card;

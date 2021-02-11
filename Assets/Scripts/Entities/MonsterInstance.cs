@@ -13,10 +13,11 @@ namespace Assets.Scripts
         public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
         public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
-        public int Energy { get => BaseData.Energy; }
+        public int Energy { get; private set; }
         public int Level { get; private set; }
         public int Experiance { get; private set; }
         public string Name { get; private set; }
+        public int CardDraw { get; private set; }
 
         public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
         public MonsterAlignment MonsterAlignment { get => BaseData.MonsterAlignments; }
@@ -27,6 +28,9 @@ namespace Assets.Scripts
             BaseData = monsterData;
             Level = _level;
             Name = monsterData.name;
+            Energy = BaseData.Energy;
+            CardDraw = BaseData.CardDraw;
+
             Experiance = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);

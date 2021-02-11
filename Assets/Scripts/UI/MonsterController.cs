@@ -8,6 +8,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private Monster monsterPrefab;
     [SerializeField] private DeckController deckController;
     private List<Monster> monsters;
+    private int CardDraw;
 
     private void Awake()
     {
@@ -16,6 +17,8 @@ public class MonsterController : MonoBehaviour
 
     public void BattleSetUp(IEnumerable<MonsterInstance> datas, List<CardData> _deck = null)
     {
+        CardDraw = 0;
+
         bool isWildDeck = _deck == null;
         List<CardData> Deck = isWildDeck ? new List<CardData>() : _deck;
 
@@ -26,26 +29,32 @@ public class MonsterController : MonoBehaviour
 
         monsters.Clear();
 
+        int index = 0; //for loop doesn't work with IEnumerable ?
         foreach (MonsterInstance _data in datas)
         {
             Monster _monster = Instantiate(monsterPrefab, transform);
             _monster.SetUp(_data);
             monsters.Add(_monster);
+
+            CardDraw += _data.CardDraw - index;
             if (isWildDeck)
                 Deck.AddRange(_data.WildDeck);
+
+            index++;
         }
 
+        CardDraw = Mathf.Clamp(CardDraw, 0, Rules.HAND_MAX);
         deckController.AddCardsToDeck(Deck);
     }
 
     public void StartTurn()
     {
-        deckController.StartTurn();
-
         foreach(Monster monster in monsters)
         {
             monster.StartTurn();
         }
+
+        deckController.StartTurn(CardDraw);
     }
 
     public void EndTurn()

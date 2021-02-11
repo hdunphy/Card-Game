@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +29,8 @@ namespace Assets.Scripts
 
     public class Rules
     {
+        public static readonly int HAND_MAX = 9;
+
         private static readonly float INEFFECTIVE = 0.5f;
         private static readonly float EFFECTIVE = 2f;
         private static readonly float SAME_TYPE_ADVANTAGE = 1.5f;
@@ -108,16 +109,6 @@ namespace Assets.Scripts
 
             return Mathf.FloorToInt(damage);
         }
-
-        //public float GetAttackFormula(Monster source, Monster target, Card _card)
-        //{
-        //    float damage = (float)((2 * source.Level) / 5) + 2;
-        //    damage *= (float)_card.Power * source.Attack / target.Defense;
-        //    damage = (float)(damage / 50) + 2;
-
-        //    return damage;
-        //}
-
 
         public int GetAttackDamage(int level, int attack, int defense, float cardPower,
             MonsterAlignment attackerType, MonsterAlignment defenderTypes, CardAlignment cardType)

@@ -954,7 +954,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HandManager: {fileID: 2031949607}
   CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
-  StartTurnDraw: 5
   GO_DrawPile: {fileID: 1189608356}
   GO_DiscardPile: {fileID: 268385763}
 --- !u!4 &507422523
@@ -1219,7 +1218,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HandManager: {fileID: 106777029}
   CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
-  StartTurnDraw: 5
   GO_DrawPile: {fileID: 2100119898}
 --- !u!4 &602442007
 Transform:
@@ -2607,6 +2605,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
   - {fileID: 11400000, guid: 76c34944871ab2f4ba91a8d415cd3852, type: 2}
   - {fileID: 11400000, guid: 84a994f605581c6479016a625f3556fd, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
 --- !u!4 &1234609933
 Transform:
   m_ObjectHideFlags: 0
