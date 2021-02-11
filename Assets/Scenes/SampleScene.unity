@@ -684,6 +684,53 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &507422521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507422523}
+  - component: {fileID: 507422522}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &507422522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507422521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b333f1a3ce3bc42a2c804d852f66c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandManager: {fileID: 2031949607}
+  CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
+  GO_DrawPile: {fileID: 1189608356}
+  GO_DiscardPile: {fileID: 268385763}
+--- !u!4 &507422523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507422521}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerLoader: {fileID: 1768742047}
   EnemyLoader: {fileID: 364613478}
-  HandController: {fileID: 2031949607}
+  PlayerController: {fileID: 507422522}
   PlayerData:
   - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
   - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
@@ -2382,16 +2429,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2031949602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac9d3919f043058419aa50f1135f6ba8, type: 3}
+  m_Script: {fileID: 11500000, guid: ac46fb1536db7ed43a37d88841e9989a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HandContainer: {fileID: 1888123216}
-  DrawPileGO: {fileID: 1189608356}
-  DiscardPileGO: {fileID: 268385763}
-  CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
   DrawCardCount: {fileID: 334393867}
   DiscardCardCount: {fileID: 616541824}
-  CardOffset: 150
+  CardOffset: 100
   CardMovementTiming: 0.5
 --- !u!1 &2050396987
 GameObject:

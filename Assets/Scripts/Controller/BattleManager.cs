@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private MonsterLoader PlayerLoader;
     [SerializeField] private MonsterLoader EnemyLoader;
-    [SerializeField] private HandController HandController;
+    [SerializeField] private PlayerController PlayerController;
 
     //Change later
     public List<MonsterData> PlayerData;
@@ -32,7 +32,7 @@ public class BattleManager : MonoBehaviour
         LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
         CurrentTeam = PlayerTeam.Player;
 
-        HandController.AddCardsToDeck(Deck);
+        PlayerController.AddCardsToDeck(Deck);
     }
 
     private void OnDestroy()
