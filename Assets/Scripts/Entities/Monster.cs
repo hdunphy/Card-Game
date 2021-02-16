@@ -19,6 +19,8 @@ public class Monster : SelectableElement, IPointerDownHandler
     [SerializeField] private EnergyHolder EnergyHolder;
     [SerializeField] private Gradient HealthGradient;
 
+    public SpriteRenderer _renderer;
+
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
     private int CurrentHealth;
@@ -67,7 +69,9 @@ public class Monster : SelectableElement, IPointerDownHandler
         EnergyAvailable = Data.Energy;
         MonsterName.text = Data.Name;
 
+
         MonsterSprite.sprite = Data.Sprite;
+        //MonsterSprite.rectTransform.localScale = new Vector3(-1, 1, 1); //flipping the sprite but also flips other alignments
         PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Primary);
         if (Data.MonsterAlignment.Secondary != CardAlignment.None)
         {
