@@ -34,11 +34,13 @@ public class Monster : SelectableElement, IPointerDownHandler
     private void Start()
     {
         EventManager.Instance.UpdateSelectedCard += Instance_UpdateSelectedCard;
+        EventManager.Instance.NewTurn += Instance_StartTurn;
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.UpdateSelectedCard -= Instance_UpdateSelectedCard;
+        EventManager.Instance.NewTurn -= Instance_StartTurn;
     }
 
     private void Instance_UpdateSelectedCard(Card _card)
@@ -50,10 +52,13 @@ public class Monster : SelectableElement, IPointerDownHandler
         }
     }
 
-    public void StartTurn()
+    private void Instance_StartTurn(MonsterController activeController)
     {
-        EnergyAvailable = TotalEnergy;
-        SetEnergy();
+        if (activeController.HasMonster(this))
+        {
+            EnergyAvailable = TotalEnergy;
+            SetEnergy();
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)

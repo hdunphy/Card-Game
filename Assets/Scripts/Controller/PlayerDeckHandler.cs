@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : DeckController
+public class PlayerDeckHandler : DeckHandler
 {
     [SerializeField] private GameObject GO_DiscardPile;
     protected override Card AddCardToHand(Card _card, Transform transform)

@@ -6,8 +6,8 @@ using UnityEngine;
 public class MonsterController : MonoBehaviour
 {
     [SerializeField] private Monster monsterPrefab;
-    [SerializeField] private DeckController deckController;
-    private List<Monster> monsters;
+    [SerializeField] private DeckHandler deckController;
+    public List<Monster> monsters { get; private set; }
     private int CardDraw;
 
     private void Awake()
@@ -49,12 +49,8 @@ public class MonsterController : MonoBehaviour
 
     public void StartTurn()
     {
-        foreach(Monster monster in monsters)
-        {
-            monster.StartTurn();
-        }
-
         deckController.StartTurn(CardDraw);
+        EventManager.Instance.OnNewTurnTrigger(this);
     }
 
     public void EndTurn()
@@ -66,4 +62,6 @@ public class MonsterController : MonoBehaviour
     {
         return monsters.Contains(_monster);
     }
+
+    public List<Card> GetHand() { return deckController.GetHand(); }
 }

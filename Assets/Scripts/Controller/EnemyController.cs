@@ -1,22 +1,65 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EnemyController : DeckController
+public class EnemyController : MonoBehaviour
 {
-    protected override Card AddCardToHand(Card _card, Transform transform)
+    [SerializeField] private float SecondsBetweenAttack;
+
+    [SerializeField] private MonsterController SelfController;
+    [SerializeField] private MonsterController OtherController;
+    private List<Card> Hand;
+
+    [SerializeField] private EnemyAttackBehaviorEnum EnemyAttackBehaviorEnum;
+
+    private IEnemyAttackBehavior attackBehavior;
+
+    private void Start()
     {
-        //Do nothing with the card
-        return _card;
+        switch (EnemyAttackBehaviorEnum)
+        {
+            case EnemyAttackBehaviorEnum.Random:
+                attackBehavior = new RandomAttacking();
+                break;
+        }
+
+        EventManager.Instance.NewTurn += Instance_NewTurn;
     }
 
-    protected override void DiscardCardImpl(Card _card)
+    private void OnDestroy()
     {
-        AddToDiscardPile(_card);
+        EventManager.Instance.NewTurn -= Instance_NewTurn;
     }
 
-    protected override void UpdateHandUI(List<Card> CardsInHand)
+    private void Instance_NewTurn(MonsterController obj)
     {
-        //Don't show cards
+        if (obj.Equals(SelfController))
+        {
+            StartTurn(SelfController.GetHand());
+        }
+    }
+
+    public void StartTurn(List<Card> hand)
+    {
+        Hand = hand;
+
+        attackBehavior.SetTurnStategy(Hand, SelfController.monsters, OtherController.monsters);
+
+        StartCoroutine(AttackPhase());
+    }
+
+    private IEnumerator AttackPhase()
+    {
+        while (GetNextAttack())
+        {
+            yield return new WaitForSeconds(SecondsBetweenAttack);
+        }
+    }
+
+    public bool GetNextAttack()
+    {
+        return attackBehavior.GetNextAttack();
     }
 }

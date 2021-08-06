@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DeckController : MonoBehaviour
+public abstract class DeckHandler : MonoBehaviour
 {
     [SerializeField] protected HandManager HandManager;
     [Header("Prefabs")]
@@ -129,5 +129,10 @@ public abstract class DeckController : MonoBehaviour
             DrawPile.Add(_card);
         }
         UpdateCardCounts();
+    }
+
+    public List<Card> GetHand()
+    {
+        return CardsInHand;
     }
 }

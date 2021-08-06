@@ -24,8 +24,8 @@ public class EventManager : MonoBehaviour
     public event Action<Card> SelectCard;
     public event Action<Monster> UpdateSelectedMonster;
     public event Action<Card> UpdateSelectedCard;
-    //public event Action<int> DrawCards;
     public event Action<Card> DiscardCard;
+    public event Action<MonsterController> NewTurn;
 
 
     public void OnSelectMonsterTrigger(Monster _monster)
@@ -56,5 +56,10 @@ public class EventManager : MonoBehaviour
     public void OnDiscardCardTrigger(Card _card)
     {
         DiscardCard?.Invoke(_card);
+    }
+
+    public void OnNewTurnTrigger(MonsterController activeController)
+    {
+        NewTurn?.Invoke(activeController);
     }
 }

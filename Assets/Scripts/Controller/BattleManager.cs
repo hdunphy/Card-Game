@@ -28,10 +28,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectMonster += SetSelectedMonster;
         EventManager.Instance.SelectCard += SetSelectedCard;
 
-        LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
-
-        battleState = BattleState.PlayerTurn;
-        ActiveController.StartTurn();
+        StartCoroutine(StartBattle());
     }
 
     private void OnDestroy()
@@ -40,13 +37,16 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectCard -= SetSelectedCard;
     }
 
-    private void Update()
+    private IEnumerator StartBattle()
     {
-        //if (Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    EventManager.Instance.OnDrawCardTrigger(cardDraw);
-        //    LeanTween.delayedCall(0.5f, () => { EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster); });
-        //}
+        LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
+
+        battleState = BattleState.PlayerTurn;
+
+        yield return new WaitForSeconds(1);
+
+        ActiveController.StartTurn();
+        //EventManager.Instance.OnNewTurnTrigger(ActiveController);
     }
 
     public void EndTurn()
@@ -62,6 +62,7 @@ public class BattleManager : MonoBehaviour
             battleState = BattleState.EnemyTurn;
         }
         ActiveController.StartTurn();
+        //EventManager.Instance.OnNewTurnTrigger(ActiveController);
     }
 
     public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)

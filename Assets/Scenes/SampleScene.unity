@@ -2589,12 +2589,12 @@ MonoBehaviour:
   PlayerLoader: {fileID: 1768742047}
   EnemyLoader: {fileID: 364613478}
   PlayerData:
-  - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
-  - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
-  - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
   EnemyData:
-  - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
-  - {fileID: 11400000, guid: e4acb4fd85350844896c9f2ae54d02f5, type: 2}
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
   Deck:
   - {fileID: 11400000, guid: c43eeda4b95508e44907f4f945b04331, type: 2}
   - {fileID: 11400000, guid: b5b946124c5d4fa409a47226ca9cacad, type: 2}
