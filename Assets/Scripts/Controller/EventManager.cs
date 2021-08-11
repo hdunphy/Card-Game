@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour
     public event Action<Monster> UpdateSelectedMonster;
     public event Action<Card> UpdateSelectedCard;
     public event Action<Card> DiscardCard;
-    public event Action<MonsterController> NewTurn;
+    public event Action GetNextTurnState;
 
 
     public void OnSelectMonsterTrigger(Monster _monster)
@@ -48,18 +48,13 @@ public class EventManager : MonoBehaviour
         UpdateSelectedCard?.Invoke(_card);
     }
 
-    //public void OnDrawCardTrigger(int _cardsToDraw)
-    //{
-    //    DrawCards?.Invoke(_cardsToDraw);
-    //}
-
     public void OnDiscardCardTrigger(Card _card)
     {
         DiscardCard?.Invoke(_card);
     }
 
-    public void OnNewTurnTrigger(MonsterController activeController)
+    public void OnGetNextTurnStateTrigger()
     {
-        NewTurn?.Invoke(activeController);
+        GetNextTurnState?.Invoke();
     }
 }

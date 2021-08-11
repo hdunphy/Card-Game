@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
-public enum BattleState { PlayerTurn, EnemyTurn }
+public enum PlayerTurn { PlayerOne, PlayerTwo }
 
 public class BattleManager : MonoBehaviour
 {
@@ -18,15 +19,16 @@ public class BattleManager : MonoBehaviour
     public List<CardData> Deck;
 
     //private variables
-    private MonsterController ActiveController { get { return battleState == BattleState.EnemyTurn ? EnemyLoader : PlayerLoader; } }
+    private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
     private Monster SelectedMonster;
     private Card SelectedCard;
-    private BattleState battleState;
+    private PlayerTurn playerTurn;
 
     private void Start()
     {
         EventManager.Instance.SelectMonster += SetSelectedMonster;
         EventManager.Instance.SelectCard += SetSelectedCard;
+        EventManager.Instance.GetNextTurnState += GetNextTurnState;
 
         StartCoroutine(StartBattle());
     }
@@ -35,34 +37,39 @@ public class BattleManager : MonoBehaviour
     {
         EventManager.Instance.SelectMonster -= SetSelectedMonster;
         EventManager.Instance.SelectCard -= SetSelectedCard;
+        EventManager.Instance.GetNextTurnState -= GetNextTurnState;
     }
 
     private IEnumerator StartBattle()
     {
+        /* -- Set up Battle -- */
         LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
 
-        battleState = BattleState.PlayerTurn;
+        playerTurn = PlayerTurn.PlayerOne;
 
         yield return new WaitForSeconds(1);
 
+        /* -- Initiate Battle -- */
+        //Start players turn
         ActiveController.StartTurn();
-        //EventManager.Instance.OnNewTurnTrigger(ActiveController);
+    }
+
+    private void GetNextTurnState()
+    {
+        ActiveController.GetNextTurnState();
     }
 
     public void EndTurn()
     {
-        ActiveController.EndTurn();
-
-        if (battleState == BattleState.EnemyTurn)
+        if (playerTurn == PlayerTurn.PlayerTwo)
         {
-            battleState = BattleState.PlayerTurn;
+            playerTurn = PlayerTurn.PlayerOne;
         }
-        else if (battleState == BattleState.PlayerTurn)
+        else if (playerTurn == PlayerTurn.PlayerOne)
         {
-            battleState = BattleState.EnemyTurn;
+            playerTurn = PlayerTurn.PlayerTwo;
         }
-        ActiveController.StartTurn();
-        //EventManager.Instance.OnNewTurnTrigger(ActiveController);
+        GetNextTurnState();
     }
 
     public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
@@ -74,7 +81,7 @@ public class BattleManager : MonoBehaviour
     public void SetSelectedMonster(Monster _monster)
     {
         //add null check if for active controller if no one can do anything during other states
-        if (ActiveController.HasMonster(_monster)) 
+        if (ActiveController.HasMonster(_monster))
         {
             SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
             EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
@@ -93,6 +100,12 @@ public class BattleManager : MonoBehaviour
     {
         SelectedCard = (Card)SetSelectable(SelectedCard, _card);
         EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
+    }
+
+    public void ResetSelected()
+    {
+        if (SelectedCard != null) SetSelectedCard(SelectedCard);
+        if (SelectedMonster != null) SetSelectedMonster(SelectedMonster);
     }
 
     private SelectableElement SetSelectable(SelectableElement _current, SelectableElement _selected)

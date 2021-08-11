@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class DeckHandler : MonoBehaviour
@@ -12,6 +13,8 @@ public abstract class DeckHandler : MonoBehaviour
     private List<Card> DrawPile;
     private List<Card> CardsInHand;
     private List<Card> DiscardPile;
+
+    private int CardDraw;
 
     private void Awake()
     {
@@ -32,12 +35,12 @@ public abstract class DeckHandler : MonoBehaviour
         EventManager.Instance.DiscardCard -= DiscardCard;
     }
 
-    public void StartTurn(int startTurnDraw)
+    public void StartTurn()
     {
         //Pre draw actions like status effects
 
         //Draw
-        DrawCards(startTurnDraw);
+        DrawCards(CardDraw);
 
         //Begin Turn
     }
@@ -75,7 +78,12 @@ public abstract class DeckHandler : MonoBehaviour
         }
     }
 
-    public void EndTurn()
+    public void SetCardDraw(int cardDraw)
+    {
+        CardDraw = cardDraw;
+    }
+
+    public void DiscardHand()
     {
         while (CardsInHand.Count > 0)
         {

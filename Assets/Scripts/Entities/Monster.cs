@@ -25,6 +25,7 @@ public class Monster : SelectableElement, IPointerDownHandler
     private MonsterInstance Data;
     private int CurrentHealth;
     private int TotalEnergy => Data.Energy;
+    private bool isTurn;
 
     public int EnergyAvailable { get; private set; }
     public int Level => Data.Level;
@@ -34,17 +35,21 @@ public class Monster : SelectableElement, IPointerDownHandler
     private void Start()
     {
         EventManager.Instance.UpdateSelectedCard += Instance_UpdateSelectedCard;
-        EventManager.Instance.NewTurn += Instance_StartTurn;
+        //EventManager.Instance.NewTurn += Instance_StartTurn;
+        isTurn = false;
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.UpdateSelectedCard -= Instance_UpdateSelectedCard;
-        EventManager.Instance.NewTurn -= Instance_StartTurn;
+        //EventManager.Instance.NewTurn -= Instance_StartTurn;
     }
 
     private void Instance_UpdateSelectedCard(Card _card)
     {
+        if (!isTurn) return; //Don't run if it is not this monsters turn
+
+
         DisableCover.gameObject.SetActive(false);
         if (_card != null)
         {
@@ -52,13 +57,10 @@ public class Monster : SelectableElement, IPointerDownHandler
         }
     }
 
-    private void Instance_StartTurn(MonsterController activeController)
+    public void StartTurn()
     {
-        if (activeController.HasMonster(this))
-        {
-            EnergyAvailable = TotalEnergy;
-            SetEnergy();
-        }
+        EnergyAvailable = TotalEnergy;
+        SetEnergy();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -118,6 +120,8 @@ public class Monster : SelectableElement, IPointerDownHandler
         TooltipSystem.Hide();
         gameObject.SetActive(false);
     }
+
+    public void SetIsTurn(bool _isTurn) { isTurn = _isTurn; }
 
     private void TakeDamage(int damage, Monster source)
     {

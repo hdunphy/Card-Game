@@ -25,23 +25,20 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
-        EventManager.Instance.NewTurn += Instance_NewTurn;
+        //EventManager.Instance.NewTurn += Instance_NewTurn;
     }
 
     private void OnDestroy()
     {
-        EventManager.Instance.NewTurn -= Instance_NewTurn;
+        //EventManager.Instance.NewTurn -= Instance_NewTurn;
     }
 
-    private void Instance_NewTurn(MonsterController obj)
+    public void StartTurn()
     {
-        if (obj.Equals(SelfController))
-        {
-            StartTurn(SelfController.GetHand());
-        }
+        SetUpTurn(SelfController.GetHand());
     }
 
-    public void StartTurn(List<Card> hand)
+    private void SetUpTurn(List<Card> hand)
     {
         Hand = hand;
 
@@ -56,6 +53,8 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(SecondsBetweenAttack);
         }
+
+        EventManager.Instance.OnGetNextTurnStateTrigger();
     }
 
     public bool GetNextAttack()

@@ -21,12 +21,12 @@ public class RandomAttacking : IEnemyAttackBehavior
             Card _card = GetCard(attacker);
             Monster defender = GetDefender(OtherMonsters);
 
-            attacker.SetSelected(true);
-            _card.SetSelected(true);
-            defender.SetSelected(true);
+            EventManager.Instance.OnSelectMonsterTrigger(attacker);
+            EventManager.Instance.OnSelectCardTrigger(_card);
+            EventManager.Instance.OnSelectMonsterTrigger(defender);
 
-            OtherMonsters.Remove(attacker);
-            Hand.Remove(_card);
+            //Hand.Remove(_card);
+            EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
 
             hasAttack = CanAttack(out minCardEnergy);
         }
@@ -38,8 +38,8 @@ public class RandomAttacking : IEnemyAttackBehavior
     {
         SelfMonsters = SelfMonsters.Where(x => x.EnergyAvailable > 0).ToList();
         OtherMonsters = OtherMonsters.Where(x => x.gameObject.activeSelf).ToList();
-        int maxMonsterEnergy = SelfMonsters.Max(x => x.EnergyAvailable);
-        minCardEnergy = Hand.Min(x => x.EnergyCost);
+        int maxMonsterEnergy = SelfMonsters.Any() ? SelfMonsters.Max(x => x.EnergyAvailable) : 0;
+        minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
 
         return SelfMonsters.Count() > 0 && OtherMonsters.Count() > 0 && maxMonsterEnergy >= minCardEnergy;
     }
