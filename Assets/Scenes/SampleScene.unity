@@ -828,6 +828,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 602442006}
+  stateEvents:
+  - StateEnum: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 602442006}
+          m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
+          m_MethodName: StartTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - StateEnum: 1
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 602442008}
+          m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+          m_MethodName: StartTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - StateEnum: 2
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 602442006}
+          m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
+          m_MethodName: DiscardHand
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1234609932}
+          m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+          m_MethodName: ResetSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1234609932}
+          m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+          m_MethodName: EndTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &429333823
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,6 +955,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &429333827
 Canvas:
   m_ObjectHideFlags: 0
@@ -1197,6 +1271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 602442007}
   - component: {fileID: 602442006}
+  - component: {fileID: 602442008}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1233,6 +1308,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &602442008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602442005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea965c14268a7a84da2625dbf4790fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecondsBetweenAttack: 2
+  SelfController: {fileID: 364613478}
+  OtherController: {fileID: 1768742047}
+  EnemyAttackBehaviorEnum: 0
 --- !u!1 &616541822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,6 +1998,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &876983164
 Canvas:
   m_ObjectHideFlags: 0
@@ -2839,6 +2931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2868,9 +2961,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1234609932}
-        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: EndTurn
+      - m_Target: {fileID: 1234609931}
+        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+        m_MethodName: OnGetNextTurnStateTrigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3312,6 +3405,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 507422522}
+  stateEvents:
+  - StateEnum: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 507422522}
+          m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
+          m_MethodName: StartTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - StateEnum: 1
+    Event:
+      m_PersistentCalls:
+        m_Calls: []
+  - StateEnum: 2
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 507422522}
+          m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
+          m_MethodName: DiscardHand
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1234609932}
+          m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+          m_MethodName: ResetSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1234609932}
+          m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+          m_MethodName: EndTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1888123216
 GameObject:
   m_ObjectHideFlags: 0
