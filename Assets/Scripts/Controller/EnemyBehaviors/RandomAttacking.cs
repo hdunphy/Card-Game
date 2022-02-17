@@ -25,10 +25,9 @@ public class RandomAttacking : IEnemyAttackBehavior
             EventManager.Instance.OnSelectCardTrigger(_card);
             EventManager.Instance.OnSelectMonsterTrigger(defender);
 
-            //Hand.Remove(_card);
             EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
 
-            hasAttack = CanAttack(out minCardEnergy);
+            hasAttack = CanAttack(out _);
         }
 
         return hasAttack;
@@ -36,8 +35,8 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     private bool CanAttack(out int minCardEnergy)
     {
-        SelfMonsters = SelfMonsters.Where(x => x.EnergyAvailable > 0).ToList();
-        OtherMonsters = OtherMonsters.Where(x => x.gameObject.activeSelf).ToList();
+        SelfMonsters = SelfMonsters.Where(x => x.IsActive && x.EnergyAvailable > 0).ToList();
+        OtherMonsters = OtherMonsters.Where(x => x.IsActive).ToList();
         int maxMonsterEnergy = SelfMonsters.Any() ? SelfMonsters.Max(x => x.EnergyAvailable) : 0;
         minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
 
@@ -69,10 +68,10 @@ public class RandomAttacking : IEnemyAttackBehavior
         return attacker;
     }
 
-    public void SetTurnStategy(List<Card> hand, List<Monster> selfMonsters, List<Monster> otherMonsters)
+    public void SetTurnStategy(List<Card> hand, IEnumerable<Monster> selfMonsters, IEnumerable<Monster> otherMonsters)
     {
         Hand = hand;
-        SelfMonsters = selfMonsters;
-        OtherMonsters = otherMonsters;
+        SelfMonsters = selfMonsters.ToList();
+        OtherMonsters = otherMonsters.ToList();
     }
 }

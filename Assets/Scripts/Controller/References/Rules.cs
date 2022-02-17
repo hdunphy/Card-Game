@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Entities;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.References
 {
     public class AlignmentCombination
     {

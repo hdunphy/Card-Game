@@ -1,5 +1,5 @@
-﻿using Assets.Scripts;
-using System;
+﻿using Assets.Scripts.Entities;
+using Assets.Scripts.References;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -23,10 +23,11 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
-    private int CurrentHealth;
-    private int TotalEnergy => Data.Energy;
     private bool isTurn;
+    private int CurrentHealth;
 
+    private int TotalEnergy => Data.Energy;
+    public bool IsActive => CurrentHealth > 0;
     public int EnergyAvailable { get; private set; }
     public int Level => Data.Level;
     public int Attack => Data.Attack;
@@ -34,27 +35,7 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private void Start()
     {
-        EventManager.Instance.UpdateSelectedCard += Instance_UpdateSelectedCard;
-        //EventManager.Instance.NewTurn += Instance_StartTurn;
         isTurn = false;
-    }
-
-    private void OnDestroy()
-    {
-        EventManager.Instance.UpdateSelectedCard -= Instance_UpdateSelectedCard;
-        //EventManager.Instance.NewTurn -= Instance_StartTurn;
-    }
-
-    private void Instance_UpdateSelectedCard(Card _card)
-    {
-        if (!isTurn) return; //Don't run if it is not this monsters turn
-
-
-        DisableCover.gameObject.SetActive(false);
-        if (_card != null)
-        {
-            DisableCover.gameObject.SetActive(EnergyAvailable < _card.EnergyCost);
-        }
     }
 
     public void StartTurn()
@@ -66,7 +47,16 @@ public class Monster : SelectableElement, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!DisableCover.gameObject.activeSelf)
-            EventManager.Instance.OnSelectMonsterTrigger(this);
+        {
+            if(eventData.button == PointerEventData.InputButton.Left)
+            {
+                EventManager.Instance.OnSelectMonsterTrigger(this);
+            }
+            else if(eventData.button == PointerEventData.InputButton.Right)
+            {
+                EventManager.Instance.OnResetSelectedTrigger();
+            }
+        }
     }
 
     public void SetUp(MonsterInstance _data)
@@ -92,7 +82,6 @@ public class Monster : SelectableElement, IPointerDownHandler
         ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
 
         TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
-        TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experiance}", "Stats");
 
         SetEnergy();
         UpdateHealthText();
