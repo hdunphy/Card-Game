@@ -38,12 +38,9 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    public void BattleSetUp(IEnumerable<MonsterInstance> datas, List<CardData> _deck = null)
+    public void BattleSetUp(IEnumerable<MonsterInstance> datas, List<CardData> deck, bool isWildDeck = false)
     {
         CardDraw = 0;
-
-        bool isWildDeck = _deck == null;
-        List<CardData> Deck = isWildDeck ? new List<CardData>() : _deck;
 
         foreach (Monster _monster in monsters)
         {
@@ -66,14 +63,14 @@ public class MonsterController : MonoBehaviour
 
             CardDraw += _data.CardDraw - index;
             if (isWildDeck)
-                Deck.AddRange(_data.WildDeck);
+                deck.AddRange(_data.WildDeck);
 
             index++;
         }
 
         CardDraw = Mathf.Clamp(CardDraw, 0, Rules.HAND_MAX);
         deckController.SetCardDraw(CardDraw);
-        deckController.AddCardsToDeck(Deck);
+        deckController.AddCardsToDeck(deck);
 
         //Add end of preturn event trigger
         TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);

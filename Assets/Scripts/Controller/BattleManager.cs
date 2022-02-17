@@ -75,7 +75,7 @@ public class BattleManager : MonoBehaviour
     public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
     {
         PlayerLoader.BattleSetUp(playerData, Deck);
-        EnemyLoader.BattleSetUp(enemyData);
+        EnemyLoader.BattleSetUp(enemyData, new List<CardData>(), true);
     }
 
     public void SetSelectedMonster(Monster _monster)
