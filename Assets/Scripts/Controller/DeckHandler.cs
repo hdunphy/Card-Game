@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.Scripts.References;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -112,6 +112,7 @@ public abstract class DeckHandler : MonoBehaviour
     private void ShuffleDiscardIntoDrawpile()
     {
         DrawPile.AddRange(DiscardPile);
+        DrawPile.Shuffle();
 
         foreach (Card _card in DrawPile)
         { //Can move into HandManager ?

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Assets.Scripts.References;
+using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Entities
 {
     public class MonsterInstance
     {

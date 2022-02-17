@@ -1,9 +1,7 @@
-﻿using Assets.Scripts;
-using System;
-using System.Collections;
+﻿using Assets.Scripts.Entities;
+using Assets.Scripts.References;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class MonsterController : MonoBehaviour
 {

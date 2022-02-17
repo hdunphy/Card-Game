@@ -1,9 +1,8 @@
-﻿using Assets.Scripts;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
+using Assets.Scripts.Entities;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 

@@ -1,5 +1,5 @@
-﻿using Assets.Scripts;
-using System;
+﻿using Assets.Scripts.Entities;
+using Assets.Scripts.References;
 using System.Collections;
 using TMPro;
 using UnityEngine;
