@@ -24,5 +24,5 @@ public class CardData : ScriptableObject
     public void InvokeAction(Monster source, Monster target, Card card) => cardAction.InvokeAction(source, target, card);
 }
 
-public enum TargetType { Self, Enemy, Ally, All }
+public enum TargetType { Self, Any, Side }
 public enum CardAlignment { Fire, Water, Earth, Air, Nature, Ice, Light, Darkness, None }

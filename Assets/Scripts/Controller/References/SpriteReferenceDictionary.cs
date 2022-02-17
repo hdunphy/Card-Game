@@ -25,21 +25,14 @@ public class SpriteReferenceDictionary : MonoBehaviour
     public Sprite GetSpriteFromEnum<T>(T _enum)
     {
         Sprite sprite;
-        object list;
-
-        switch (_enum)
+        object list = _enum switch
         {
-            case TargetType t:
-                list = TargetTypeReferences;
-                break;
-            case CardAlignment c:
-                list = CardAlignmentReferences;
-                break;
-            default:
-                list = null;
-                break;
-        }
-        if(list != null)
+            TargetType t => TargetTypeReferences,
+            CardAlignment c => CardAlignmentReferences,
+            _ => null,
+        };
+
+        if (list != null)
         {
             sprite = ((List<EnumSpritePair<T>>)list).Find(x => x.Enum.Equals(_enum)).Sprite;
         }

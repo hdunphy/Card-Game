@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.References;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -38,6 +39,8 @@ public class Monster : SelectableElement, IPointerDownHandler
     private void Start()
     {
         isTurn = false;
+        AttackModifier = 1;
+        DefenseModifier = 1;
     }
 
     public void StartTurn()
@@ -92,11 +95,24 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     public void AttackMonster(Monster target, Card selectedCard)
     {
-        EventManager.Instance.OnDiscardCardTrigger(selectedCard);
         float damage = Rules.Instance.GetAttackDamage(this, target, selectedCard);
-
         target.TakeDamage(Mathf.FloorToInt(damage), this);
 
+        PlayCard(selectedCard);
+    }
+
+    public void HealMonster(Monster target, Card selectedCard)
+    {
+        float heal = Rules.Instance.GetAttackDamage(this, target, selectedCard);
+        heal = -0.5f * Mathf.Clamp(heal, 0, target.Data.Health - target.CurrentHealth);
+        target.TakeDamage(Mathf.FloorToInt(heal), this);
+
+        PlayCard(selectedCard);
+    }
+
+    private void PlayCard(Card selectedCard)
+    {
+        EventManager.Instance.OnDiscardCardTrigger(selectedCard);
         EnergyAvailable -= selectedCard.EnergyCost;
         SetEnergy();
     }
