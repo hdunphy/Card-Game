@@ -92,7 +92,6 @@ public class Monster : SelectableElement, IPointerDownHandler
         ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
 
         TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
-        TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experiance}", "Stats");
 
         SetEnergy();
         UpdateHealthText();
