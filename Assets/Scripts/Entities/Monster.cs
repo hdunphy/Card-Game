@@ -29,9 +29,11 @@ public class Monster : SelectableElement, IPointerDownHandler
     private int TotalEnergy => Data.Energy;
     public bool IsActive => CurrentHealth > 0;
     public int EnergyAvailable { get; private set; }
+    public float AttackModifier { get; set; }
+    public float DefenseModifier { get; set; }
     public int Level => Data.Level;
-    public int Attack => Data.Attack;
-    public int Defense => Data.Defense;
+    public float Attack => Data.Attack * AttackModifier;
+    public float Defense => Data.Defense * DefenseModifier;
 
     private void Start()
     {
