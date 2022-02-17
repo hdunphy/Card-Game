@@ -28,6 +28,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectMonster += SetSelectedMonster;
         EventManager.Instance.SelectCard += SetSelectedCard;
         EventManager.Instance.GetNextTurnState += GetNextTurnState;
+        EventManager.Instance.ResetSelected += ResetSelected;
 
         StartCoroutine(StartBattle());
     }
@@ -37,6 +38,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectMonster -= SetSelectedMonster;
         EventManager.Instance.SelectCard -= SetSelectedCard;
         EventManager.Instance.GetNextTurnState -= GetNextTurnState;
+        EventManager.Instance.ResetSelected -= ResetSelected;
     }
 
     private IEnumerator StartBattle()

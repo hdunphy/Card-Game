@@ -19,3 +19,4 @@ MonoBehaviour:
   targetType: 1
   cardAlignment: 1
   attackModifier: 0.2
+  cardAction: {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}

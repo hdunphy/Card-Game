@@ -35,27 +35,7 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private void Start()
     {
-        EventManager.Instance.UpdateSelectedCard += Instance_UpdateSelectedCard;
-        //EventManager.Instance.NewTurn += Instance_StartTurn;
         isTurn = false;
-    }
-
-    private void OnDestroy()
-    {
-        EventManager.Instance.UpdateSelectedCard -= Instance_UpdateSelectedCard;
-        //EventManager.Instance.NewTurn -= Instance_StartTurn;
-    }
-
-    private void Instance_UpdateSelectedCard(Card _card)
-    {
-        if (!isTurn) return; //Don't run if it is not this monsters turn
-
-
-        DisableCover.gameObject.SetActive(false);
-        if (_card != null)
-        {
-            DisableCover.gameObject.SetActive(EnergyAvailable < _card.EnergyCost);
-        }
     }
 
     public void StartTurn()
@@ -67,7 +47,16 @@ public class Monster : SelectableElement, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!DisableCover.gameObject.activeSelf)
-            EventManager.Instance.OnSelectMonsterTrigger(this);
+        {
+            if(eventData.button == PointerEventData.InputButton.Left)
+            {
+                EventManager.Instance.OnSelectMonsterTrigger(this);
+            }
+            else if(eventData.button == PointerEventData.InputButton.Right)
+            {
+                EventManager.Instance.OnResetSelectedTrigger();
+            }
+        }
     }
 
     public void SetUp(MonsterInstance _data)
