@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using Assets.Scripts.Entities.Scriptable;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
 public class CardData : ScriptableObject
@@ -14,6 +11,7 @@ public class CardData : ScriptableObject
     [SerializeField] private TargetType targetType;
     [SerializeField] private CardAlignment cardAlignment;
     [SerializeField, Range(0, 1.5f)] private float attackModifier;
+    [SerializeField] private CardAction cardAction;
 
     public string CardName { get => cardName; }
     public string CardDescription { get => cardDescription; }
@@ -22,6 +20,8 @@ public class CardData : ScriptableObject
     public TargetType TargetType { get => targetType; }
     public CardAlignment CardAlignment { get => cardAlignment; }
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
+
+    public void InvokeAction(Monster source, Monster target, Card card) => cardAction.InvokeAction(source, target, card);
 }
 
 public enum TargetType { Self, Enemy, Ally, All }

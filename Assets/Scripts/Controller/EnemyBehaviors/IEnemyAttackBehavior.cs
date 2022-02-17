@@ -6,6 +6,6 @@ public enum EnemyAttackBehaviorEnum { Random };
 
 public interface IEnemyAttackBehavior
 {
-    void SetTurnStategy(List<Card> hand, List<Monster> selfMonsters, List<Monster> otherMonsters);
+    void SetTurnStategy(List<Card> hand, IEnumerable<Monster> selfMonsters, IEnumerable<Monster> otherMonsters);
     bool GetNextAttack();
 }

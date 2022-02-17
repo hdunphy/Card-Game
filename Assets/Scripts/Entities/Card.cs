@@ -29,7 +29,6 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public void SetSiblingIndex(int i) => siblingIndex = i;
 
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!DisableCover.gameObject.activeSelf)
@@ -78,6 +77,8 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
         LeanTween.move(gameObject, position, CardMovementTiming);
         LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
+
+    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
 
     private void SetInactive()
     {

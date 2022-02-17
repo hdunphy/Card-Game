@@ -7,6 +7,7 @@ public class MonsterController : MonoBehaviour
 {
     [SerializeField] private Monster monsterPrefab;
     [SerializeField] private DeckHandler deckController;
+
     public List<Monster> monsters { get; private set; }
     private int CardDraw;
 
@@ -14,7 +15,6 @@ public class MonsterController : MonoBehaviour
     private TurnStateEnum CurrentTurnState;
     private Dictionary<TurnStateEnum, ITurnStateMachine> TurnStateMachine;
 
-    //[SerializeField] private UnityEvent PreTurnEvents;
     [SerializeField] private List<TurnStateEvent> stateEvents;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class MonsterController : MonoBehaviour
         {
             { TurnStateEnum.PreTurn, new PreTurnState() },
             { TurnStateEnum.AttackTurn, new AttackTurnState() },
-            {TurnStateEnum.PostTurn, new PostTurnState() }
+            { TurnStateEnum.PostTurn, new PostTurnState() }
         };
 
         foreach (TurnStateEnum _enum in TurnStateMachine.Keys)

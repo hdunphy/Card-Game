@@ -24,13 +24,6 @@ public class EnemyController : MonoBehaviour
                 attackBehavior = new RandomAttacking();
                 break;
         }
-
-        //EventManager.Instance.NewTurn += Instance_NewTurn;
-    }
-
-    private void OnDestroy()
-    {
-        //EventManager.Instance.NewTurn -= Instance_NewTurn;
     }
 
     public void StartTurn()

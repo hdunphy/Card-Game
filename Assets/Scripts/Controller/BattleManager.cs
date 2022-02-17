@@ -79,17 +79,19 @@ public class BattleManager : MonoBehaviour
 
     public void SetSelectedMonster(Monster _monster)
     {
-        //add null check if for active controller if no one can do anything during other states
-        if (ActiveController.HasMonster(_monster))
+        if(SelectedCard != null)
+        {
+            SelectedCard.InvokeAction(SelectedMonster, _monster);
+            SetSelectedCard(SelectedCard);
+        }
+        //add check so no one can do anything during other states
+        else if (ActiveController.HasMonster(_monster))
         {
             SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
             EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
-        }
-        else
-        {
-            if (SelectedCard != null && SelectedMonster != null)
+
+            if (SelectedMonster == null && SelectedCard != null)
             {
-                SelectedMonster.AttackMonster(_monster, SelectedCard);
                 SetSelectedCard(SelectedCard);
             }
         }
@@ -97,8 +99,11 @@ public class BattleManager : MonoBehaviour
 
     public void SetSelectedCard(Card _card)
     {
-        SelectedCard = (Card)SetSelectable(SelectedCard, _card);
-        EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
+        if(SelectedMonster != null)
+        {
+            SelectedCard = (Card)SetSelectable(SelectedCard, _card);
+            EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
+        }
     }
 
     public void ResetSelected()

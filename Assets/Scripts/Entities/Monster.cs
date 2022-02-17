@@ -23,10 +23,11 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
-    private int CurrentHealth;
-    private int TotalEnergy => Data.Energy;
     private bool isTurn;
+    private int CurrentHealth;
 
+    private int TotalEnergy => Data.Energy;
+    public bool IsActive => CurrentHealth > 0;
     public int EnergyAvailable { get; private set; }
     public int Level => Data.Level;
     public int Attack => Data.Attack;
