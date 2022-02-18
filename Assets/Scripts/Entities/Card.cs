@@ -110,6 +110,11 @@ public class Card : MonoBehaviour
         RectTransform cardTransform = GetComponent<RectTransform>();
         LeanTween.move(cardTransform, position, CardMovementTiming);
         LeanTween.scale(cardTransform, scale, CardMovementTiming)
-            .setOnComplete(() => { HoverEffect.enabled = true; });
+            .setOnComplete(SetCardInHand);
+    }
+
+    void SetCardInHand()
+    {
+        HoverEffect.enabled = true;
     }
 }
