@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public float HoverMovement;
     public float HoverScale;
@@ -17,6 +17,8 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
     [SerializeField] private Image TargetTypeIcon;
     [SerializeField] private Image CardAlignmentIcon;
     [SerializeField] private Image DisableCover;
+    [SerializeField] private LineRenderer LineRenderer;
+    [SerializeField] private Transform DragTarget;
 
     private CardData Data;
     private int siblingIndex;
@@ -27,20 +29,43 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public void SetSiblingIndex(int i) => siblingIndex = i;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (!DisableCover.gameObject.activeSelf)
-            EventManager.Instance.OnSelectCardTrigger(this);
-    }
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    if (!DisableCover.gameObject.activeSelf)
+    //        EventManager.Instance.OnSelectCardTrigger(this);
+    //}
 
     private void Start()
     {
+        LineRenderer.enabled = false;
+        //LineRenderer.SetPosition(0, transform.position);
+
         EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
+    }
+
+    private void Update()
+    {
+        if (LineRenderer.enabled)
+        {
+            LineRenderer.SetPosition(1, DragTarget.position);
+        }
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.UpdateSelectedMonster -= Instance_UpdateSelectedMonster;
+    }
+
+    public void OnBeginDrag()
+    {
+        LineRenderer.enabled = true;
+        LineRenderer.SetPosition(0, transform.position);
+    }
+
+    public void OnEndDrag()
+    {
+        LineRenderer.enabled = false;
+        DragTarget.position = transform.position;
     }
 
     private void Instance_UpdateSelectedMonster(Monster _monster)
@@ -68,6 +93,7 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
+    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
 
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
     {
@@ -75,8 +101,6 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
         LeanTween.move(gameObject, position, CardMovementTiming);
         LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
-
-    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
 
     private void SetInactive()
     {
@@ -92,6 +116,14 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
         return this;
     }
 
+    public void MoveToHandPosition(Vector2 position, Vector3 scale, float CardMovementTiming)
+    {
+        isMoving = true;
+        RectTransform cardTransform = GetComponent<RectTransform>();
+        LeanTween.move(cardTransform, position, CardMovementTiming);
+        LeanTween.scale(cardTransform, scale, CardMovementTiming).setOnComplete(() => { isMoving = false; });
+    }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!isMoving)
@@ -100,14 +132,6 @@ public class Card : SelectableElement, IPointerDownHandler, IPointerEnterHandler
             LeanTween.moveLocalY(gameObject, 0, .5f);
             LeanTween.scale(gameObject, Vector3.one, .5f);
         }
-    }
-
-    public void MoveToHandPosition(Vector2 position, Vector3 scale, float CardMovementTiming)
-    {
-        isMoving = true;
-        RectTransform cardTransform = GetComponent<RectTransform>();
-        LeanTween.move(cardTransform, position, CardMovementTiming);
-        LeanTween.scale(cardTransform, scale, CardMovementTiming).setOnComplete(() => { isMoving = false; });
     }
 
     public void OnPointerEnter(PointerEventData eventData)

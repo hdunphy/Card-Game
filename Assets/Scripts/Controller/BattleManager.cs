@@ -103,7 +103,7 @@ public class BattleManager : MonoBehaviour
     {
         if(SelectedMonster != null)
         {
-            SelectedCard = (Card)SetSelectable(SelectedCard, _card);
+            //SelectedCard = (Card)SetSelectable(SelectedCard, _card);
             EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
         }
     }
