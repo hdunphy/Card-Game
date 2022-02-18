@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6968571787322211759}
   - component: {fileID: 1180509782708117283}
+  - component: {fileID: 6821801021120068574}
+  - component: {fileID: 5629434573421279429}
   - component: {fileID: 9024238667701070517}
   - component: {fileID: 5056140934290618629}
-  - component: {fileID: 6821801021120068574}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -54,8 +55,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94520be6e5418be47b7c5c5ef85cbab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoverMovement: 75
-  HoverScale: 1.25
   CardName: {fileID: 6583629143540226842}
   CardDescription: {fileID: 6583629144456698973}
   EnergyCostText: {fileID: 7171416418982929672}
@@ -65,6 +64,95 @@ MonoBehaviour:
   DisableCover: {fileID: 7560345995254320797}
   LineRenderer: {fileID: 9024238667701070517}
   DragTarget: {fileID: 1872816832278440656}
+  HoverEffect: {fileID: 5629434573421279429}
+--- !u!114 &6821801021120068574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012564442648465318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd16279d06c96954b9c13abe62e2938e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 1872816832278440656}
+  OnBeginDragEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180509782708117283}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: OnBeginDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEndDragEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180509782708117283}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: OnEndDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5629434573421279429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012564442648465318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e1710e8f39f0742a827ecd03081881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Movement: 75
+  Scaling: 1.25
+  Timing: 0.5
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180509782708117283}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: OnHoverStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoverEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180509782708117283}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: OnHoverEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!120 &9024238667701070517
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -176,49 +264,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &6821801021120068574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012564442648465318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd16279d06c96954b9c13abe62e2938e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rectTransform: {fileID: 1872816832278440656}
-  OnBeginDragEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
-        m_MethodName: OnBeginDrag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnEndDragEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
-        m_MethodName: OnEndDrag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2379805786267350983
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Card : MonoBehaviour
 {
-    public float HoverMovement;
-    public float HoverScale;
-
     [Header("UI")]
     [SerializeField] private TMP_Text CardName;
     [SerializeField] private TMP_Text CardDescription;
@@ -19,11 +16,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private Image DisableCover;
     [SerializeField] private LineRenderer LineRenderer;
     [SerializeField] private Transform DragTarget;
+    [SerializeField] private HoverEffect HoverEffect;
 
     private CardData Data;
     private int siblingIndex;
-
-    private bool isMoving = false;
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
@@ -60,13 +56,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         LineRenderer.enabled = true;
         LineRenderer.SetPosition(0, transform.position);
+        HoverEffect.enabled = false;
+        DragTarget.localScale = new Vector3( 1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
     }
 
     public void OnEndDrag()
     {
         LineRenderer.enabled = false;
         DragTarget.position = transform.position;
+        HoverEffect.enabled = true;
+        DragTarget.localScale = Vector3.one;
     }
+
+    public void OnHoverStart() => transform.SetAsLastSibling();
+
+    public void OnHoverEnd() => transform.SetSiblingIndex(siblingIndex);
 
     private void Instance_UpdateSelectedMonster(Monster _monster)
     {
@@ -118,29 +122,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void MoveToHandPosition(Vector2 position, Vector3 scale, float CardMovementTiming)
     {
-        isMoving = true;
+        HoverEffect.enabled = false;
         RectTransform cardTransform = GetComponent<RectTransform>();
         LeanTween.move(cardTransform, position, CardMovementTiming);
-        LeanTween.scale(cardTransform, scale, CardMovementTiming).setOnComplete(() => { isMoving = false; });
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (!isMoving)
-        {
-            transform.SetSiblingIndex(siblingIndex);
-            LeanTween.moveLocalY(gameObject, 0, .5f);
-            LeanTween.scale(gameObject, Vector3.one, .5f);
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!isMoving)
-        {
-            transform.SetAsLastSibling();
-            LeanTween.moveLocalY(gameObject, HoverMovement, .5f);
-            LeanTween.scale(gameObject, Vector3.one * HoverScale, .5f);
-        }
+        LeanTween.scale(cardTransform, scale, CardMovementTiming)
+            .setOnComplete(() => { HoverEffect.enabled = true; });
     }
 }

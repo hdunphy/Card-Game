@@ -23,12 +23,12 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         canvasGroup.blocksRaycasts = false;
         OnBeginDragEvent.Invoke();
-        Debug.Log("Dragging");
+        Debug.Log($"Dragging {rectTransform.localScale}");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor / rectTransform.localScale;
     }
 
     public void OnEndDrag(PointerEventData eventData)
