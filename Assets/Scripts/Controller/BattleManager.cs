@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Assets.Scripts.Entities;
+using System;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -20,13 +21,12 @@ public class BattleManager : MonoBehaviour
     //private variables
     private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
     private Monster SelectedMonster;
-    private Card SelectedCard;
     private PlayerTurn playerTurn;
 
     private void Start()
     {
         EventManager.Instance.SelectMonster += SetSelectedMonster;
-        EventManager.Instance.SelectCard += SetSelectedCard;
+        EventManager.Instance.SelectTarget += TargetSelected;
         EventManager.Instance.GetNextTurnState += GetNextTurnState;
         EventManager.Instance.ResetSelected += ResetSelected;
 
@@ -36,7 +36,6 @@ public class BattleManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.Instance.SelectMonster -= SetSelectedMonster;
-        EventManager.Instance.SelectCard -= SetSelectedCard;
         EventManager.Instance.GetNextTurnState -= GetNextTurnState;
         EventManager.Instance.ResetSelected -= ResetSelected;
     }
@@ -81,36 +80,28 @@ public class BattleManager : MonoBehaviour
 
     public void SetSelectedMonster(Monster _monster)
     {
-        if(SelectedCard != null)
-        {
-            SelectedCard.InvokeAction(SelectedMonster, _monster);
-            SetSelectedCard(SelectedCard);
-        }
-        //add check so no one can do anything during other states
-        else if (ActiveController.HasMonster(_monster))
+        if (ActiveController.HasMonster(_monster))
         {
             SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
             EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
-
-            if (SelectedMonster == null && SelectedCard != null)
-            {
-                SetSelectedCard(SelectedCard);
-            }
         }
     }
 
-    public void SetSelectedCard(Card _card)
+    private void TargetSelected(Monster target, Card card)
     {
-        if(SelectedMonster != null)
+        if(card.IsValidAction(SelectedMonster, target))
         {
-            //SelectedCard = (Card)SetSelectable(SelectedCard, _card);
-            EventManager.Instance.OnUpdateSelectedCardTrigger(SelectedCard);
+            card.InvokeAction(SelectedMonster, target);
+            
+        }
+        else
+        {
+            //give message and return card to normal position
         }
     }
 
     public void ResetSelected()
     {
-        if (SelectedCard != null) SetSelectedCard(SelectedCard);
         if (SelectedMonster != null) SetSelectedMonster(SelectedMonster);
     }
 

@@ -19,9 +19,8 @@ public class EventManager : MonoBehaviour
     }
 
     public event Action<Monster> SelectMonster;
-    public event Action<Card> SelectCard;
+    public event Action<Monster, Card> SelectTarget;
     public event Action<Monster> UpdateSelectedMonster;
-    public event Action<Card> UpdateSelectedCard;
     public event Action<Card> DiscardCard;
     public event Action GetNextTurnState;
     public event Action ResetSelected;
@@ -31,19 +30,9 @@ public class EventManager : MonoBehaviour
         SelectMonster?.Invoke(_monster);
     }
 
-    public void OnSelectCardTrigger(Card _card)
-    {
-        SelectCard?.Invoke(_card);
-    }
-
     public void OnUpdateSelectedMonsterTrigger(Monster _monster)
     {
         UpdateSelectedMonster?.Invoke(_monster);
-    }
-
-    public void OnUpdateSelectedCardTrigger(Card _card)
-    {
-        UpdateSelectedCard?.Invoke(_card);
     }
 
     public void OnDiscardCardTrigger(Card _card)
@@ -59,5 +48,10 @@ public class EventManager : MonoBehaviour
     public void OnResetSelectedTrigger()
     {
         ResetSelected?.Invoke();
+    }
+
+    public void OnSelectTargetTrigger(Monster target, Card card)
+    {
+        SelectTarget?.Invoke(target, card);
     }
 }

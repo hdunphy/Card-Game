@@ -22,7 +22,7 @@ public class RandomAttacking : IEnemyAttackBehavior
             Monster defender = GetDefender(OtherMonsters);
 
             EventManager.Instance.OnSelectMonsterTrigger(attacker);
-            EventManager.Instance.OnSelectCardTrigger(_card);
+            EventManager.Instance.OnSelectTargetTrigger(defender, _card);
             EventManager.Instance.OnSelectMonsterTrigger(defender);
 
             EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
@@ -35,8 +35,8 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     private bool CanAttack(out int minCardEnergy)
     {
-        SelfMonsters = SelfMonsters.Where(x => x.IsActive && x.EnergyAvailable > 0).ToList();
-        OtherMonsters = OtherMonsters.Where(x => x.IsActive).ToList();
+        SelfMonsters = SelfMonsters.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
+        OtherMonsters = OtherMonsters.Where(x => x.IsInPlay).ToList();
         int maxMonsterEnergy = SelfMonsters.Any() ? SelfMonsters.Max(x => x.EnergyAvailable) : 0;
         minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
 

@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Entities.Scriptable;
+using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
@@ -21,7 +23,34 @@ public class CardData : ScriptableObject
     public CardAlignment CardAlignment { get => cardAlignment; }
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
 
-    public void InvokeAction(Monster source, Monster target, Card card) => cardAction.InvokeAction(source, target, card);
+    public void InvokeAction(Monster source, Monster target, Card card)
+    {
+        switch (TargetType)
+        {
+            case TargetType.Self:
+                cardAction.InvokeAction(target, target, card);
+                break;
+            case TargetType.Any:
+                cardAction.InvokeAction(source, target, card);
+                break;
+            case TargetType.Side:
+                var controller = FindObjectsOfType<MonsterController>().First(m => m.HasMonster(target)); //should never be null
+                foreach (var monster in controller.monsters.Where(m => m.IsInPlay))
+                {
+                    cardAction.InvokeAction(source, monster, card);
+                }
+                break;
+        }
+    }
+
+    public bool IsValidAction(Monster source, Monster target) =>
+        TargetType switch
+        {
+            TargetType.Self => (source == null && target.IsTurn) || source == target,
+            TargetType.Any => source != null && target != null,
+            TargetType.Side => source != null && target != null, //handle later?
+            _ => throw new NotImplementedException(),
+        };
 }
 
 public enum TargetType { Self, Any, Side }

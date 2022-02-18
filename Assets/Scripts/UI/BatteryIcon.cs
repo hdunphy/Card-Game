@@ -18,7 +18,7 @@ public class BatteryIcon : MonoBehaviour
             return;
         }
 
-        Sprite _sprite = BatteryCellSprites[numberFilled];
+        Sprite _sprite = BatteryCellSprites[numberFilled]; //Got an index out of range
 
         for(int i = 0; i < BatteryCells.Count; i++)
         {

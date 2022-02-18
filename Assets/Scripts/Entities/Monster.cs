@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Monster : SelectableElement, IPointerDownHandler
+public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 {
     [SerializeField] private Image MonsterSprite;
     [SerializeField] private Image DisableCover;
@@ -24,11 +24,11 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
-    private bool isTurn;
     private int CurrentHealth;
 
     private int TotalEnergy => Data.Energy;
-    public bool IsActive => CurrentHealth > 0;
+    public bool IsInPlay => CurrentHealth > 0;
+    public bool IsTurn { get; private set; }
     public int EnergyAvailable { get; private set; }
     public float AttackModifier { get; set; }
     public float DefenseModifier { get; set; }
@@ -38,7 +38,7 @@ public class Monster : SelectableElement, IPointerDownHandler
 
     private void Start()
     {
-        isTurn = false;
+        IsTurn = false;
         AttackModifier = 1;
         DefenseModifier = 1;
     }
@@ -128,7 +128,7 @@ public class Monster : SelectableElement, IPointerDownHandler
         gameObject.SetActive(false);
     }
 
-    public void SetIsTurn(bool _isTurn) { isTurn = _isTurn; }
+    public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
 
     private void TakeDamage(int damage, Monster source)
     {
@@ -204,5 +204,13 @@ public class Monster : SelectableElement, IPointerDownHandler
     public MonsterAlignment GetMonsterAlignment()
     {
         return Data.MonsterAlignment;
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if(eventData.pointerPress.TryGetComponent(out Card card))
+        {
+            EventManager.Instance.OnSelectTargetTrigger(this, card);
+        }
     }
 }

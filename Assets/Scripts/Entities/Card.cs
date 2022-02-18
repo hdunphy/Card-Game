@@ -50,6 +50,7 @@ public class Card : MonoBehaviour
     {
         Dragger.Instance.EndDragging();
         HoverEffect.enabled = true;
+        HoverEffect.ReturnToNormalPosition();
     }
 
     public void OnHoverStart() => transform.SetAsLastSibling();
@@ -89,6 +90,8 @@ public class Card : MonoBehaviour
         LeanTween.move(gameObject, position, CardMovementTiming);
         LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
+
+    public bool IsValidAction(Monster source, Monster target) => Data.IsValidAction(source, target);
 
     private void SetInactive()
     {
