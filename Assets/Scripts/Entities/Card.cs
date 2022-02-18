@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour
@@ -14,9 +13,8 @@ public class Card : MonoBehaviour
     [SerializeField] private Image TargetTypeIcon;
     [SerializeField] private Image CardAlignmentIcon;
     [SerializeField] private Image DisableCover;
-    [SerializeField] private LineRenderer LineRenderer;
-    [SerializeField] private Transform DragTarget;
     [SerializeField] private HoverEffect HoverEffect;
+    [SerializeField] private DragAndDrop DragAndDrop;
 
     private CardData Data;
     private int siblingIndex;
@@ -33,18 +31,8 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        LineRenderer.enabled = false;
-        //LineRenderer.SetPosition(0, transform.position);
-
+        DragAndDrop.SetRectTransform(Dragger.Instance.GetComponent<RectTransform>());
         EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
-    }
-
-    private void Update()
-    {
-        if (LineRenderer.enabled)
-        {
-            LineRenderer.SetPosition(1, DragTarget.position);
-        }
     }
 
     private void OnDestroy()
@@ -54,18 +42,14 @@ public class Card : MonoBehaviour
 
     public void OnBeginDrag()
     {
-        LineRenderer.enabled = true;
-        LineRenderer.SetPosition(0, transform.position);
         HoverEffect.enabled = false;
-        DragTarget.localScale = new Vector3( 1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
+        Dragger.Instance.StartDragging(transform);
     }
 
     public void OnEndDrag()
     {
-        LineRenderer.enabled = false;
-        DragTarget.position = transform.position;
+        Dragger.Instance.EndDragging();
         HoverEffect.enabled = true;
-        DragTarget.localScale = Vector3.one;
     }
 
     public void OnHoverStart() => transform.SetAsLastSibling();

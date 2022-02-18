@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(CanvasGroup))]
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private Transform m_transform;
     [SerializeField] private UnityEvent OnBeginDragEvent;
     [SerializeField] private UnityEvent OnEndDragEvent;
 
@@ -19,16 +19,24 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         canvas = FindObjectsOfType<Canvas>().First(c => c.name == "Main Canvas");
     }
 
+    public void SetRectTransform(Transform transform)
+    {
+        m_transform = transform;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = false;
         OnBeginDragEvent.Invoke();
-        Debug.Log($"Dragging {rectTransform.localScale}");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor / rectTransform.localScale;
+        var position = Camera.main.WorldToScreenPoint(m_transform.position);
+        position += (Vector3)eventData.delta;
+        m_transform.position = Camera.main.ScreenToWorldPoint(position);
+        //rectTransform.anchoredPosition += eventData.delta; // canvas.scaleFactor;
+        //Debug.Log($"Delta: {eventData.delta}\nPosition: {eventData.position}\nAnchor:{rectTransform.anchoredPosition}");
     }
 
     public void OnEndDrag(PointerEventData eventData)
