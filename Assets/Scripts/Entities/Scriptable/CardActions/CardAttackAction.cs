@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.References;
+using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
@@ -7,7 +8,10 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override void InvokeAction(Monster source, Monster target, Card card)
         {
-            source.AttackMonster(target, card);
+            float damage = Rules.Instance.GetAttackDamage(source, target, card);
+            target.TakeDamage(Mathf.FloorToInt(damage), source);
+
+            source.PlayCard(card);
         }
     }
 }

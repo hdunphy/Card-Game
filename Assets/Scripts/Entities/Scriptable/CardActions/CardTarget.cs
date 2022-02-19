@@ -7,7 +7,8 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] public Sprite Sprite;
 
-        public abstract bool IsValidAction(Monster source, Monster target);
+        public virtual bool IsValidAction(Monster source, Monster target, Card card)
+            => source != null && target != null && source.IsTurn && source.EnergyAvailable >= card.EnergyCost;
 
         public abstract void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card);
     }

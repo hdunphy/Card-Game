@@ -25,9 +25,6 @@ public class CardData : ScriptableObject
 
     public void InvokeAction(Monster source, Monster target, Card card) =>
         TargetType.InvokeAction(cardAction, source, target, card);
-
-    public bool IsValidAction(Monster source, Monster target) =>
-        TargetType.IsValidAction(source, target);
 }
 
 public enum CardAlignment { Fire, Water, Earth, Air, Nature, Ice, Light, Darkness, None }

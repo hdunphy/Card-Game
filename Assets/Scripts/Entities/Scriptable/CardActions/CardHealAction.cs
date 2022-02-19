@@ -1,3 +1,4 @@
+using Assets.Scripts.References;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -7,7 +8,11 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override void InvokeAction(Monster source, Monster target, Card card)
         {
-            source.HealMonster(target, card);
+            float heal = Rules.Instance.GetAttackDamage(source, target, card);
+            heal = -0.5f * Mathf.Clamp(heal, 0, target.MissingHealth);
+            target.TakeDamage(Mathf.FloorToInt(heal), source);
+
+            source.PlayCard(card);
         }
     }
 }

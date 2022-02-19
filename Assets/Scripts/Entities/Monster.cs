@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.Entities;
-using Assets.Scripts.References;
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -28,6 +26,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     private int TotalEnergy => Data.Energy;
     public bool IsInPlay => CurrentHealth > 0;
+    public int MissingHealth => Data.Health - CurrentHealth;
     public bool IsTurn { get; private set; }
     public int EnergyAvailable { get; private set; }
     public float AttackModifier { get; set; }
@@ -93,24 +92,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         UpdateTooltip();
     }
 
-    public void AttackMonster(Monster target, Card selectedCard)
-    {
-        float damage = Rules.Instance.GetAttackDamage(this, target, selectedCard);
-        target.TakeDamage(Mathf.FloorToInt(damage), this);
-
-        PlayCard(selectedCard);
-    }
-
-    public void HealMonster(Monster target, Card selectedCard)
-    {
-        float heal = Rules.Instance.GetAttackDamage(this, target, selectedCard);
-        heal = -0.5f * Mathf.Clamp(heal, 0, target.Data.Health - target.CurrentHealth);
-        target.TakeDamage(Mathf.FloorToInt(heal), this);
-
-        PlayCard(selectedCard);
-    }
-
-    private void PlayCard(Card selectedCard)
+    public void PlayCard(Card selectedCard)
     {
         EventManager.Instance.OnDiscardCardTrigger(selectedCard);
         EnergyAvailable -= selectedCard.EnergyCost;
@@ -130,7 +112,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
 
-    private void TakeDamage(int damage, Monster source)
+    public void TakeDamage(int damage, Monster source)
     {
         float startPercent = (float)CurrentHealth / Data.Health;
         float finalPercent = (float)(CurrentHealth -= damage) / Data.Health;

@@ -21,14 +21,6 @@ public class Card : MonoBehaviour
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
-    public void SetSiblingIndex(int i) => siblingIndex = i;
-
-    //public void OnPointerDown(PointerEventData eventData)
-    //{
-    //    if (!DisableCover.gameObject.activeSelf)
-    //        EventManager.Instance.OnSelectCardTrigger(this);
-    //}
-
     private void Start()
     {
         DragAndDrop.SetRectTransform(Dragger.Instance.GetComponent<RectTransform>());
@@ -53,9 +45,17 @@ public class Card : MonoBehaviour
         HoverEffect.ReturnToNormalPosition();
     }
 
+    public void SetSiblingIndex(int i) => siblingIndex = i;
+
     public void OnHoverStart() => transform.SetAsLastSibling();
 
     public void OnHoverEnd() => transform.SetSiblingIndex(siblingIndex);
+
+    public CardAlignment CardAlignment => Data.CardAlignment;
+
+    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
+
+    public bool IsValidAction(Monster source, Monster target) => Data.TargetType.IsValidAction(source, target, this);
 
     private void Instance_UpdateSelectedMonster(Monster _monster)
     {
@@ -80,18 +80,12 @@ public class Card : MonoBehaviour
         gameObject.AddComponent<TooltipTrigger>().SetText($"Card has power: {Power}");
     }
 
-    public CardAlignment CardAlignment => Data.CardAlignment;
-
-    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
-
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
     {
         transform.SetAsLastSibling();
         LeanTween.move(gameObject, position, CardMovementTiming);
         LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
-
-    public bool IsValidAction(Monster source, Monster target) => Data.IsValidAction(source, target);
 
     private void SetInactive()
     {

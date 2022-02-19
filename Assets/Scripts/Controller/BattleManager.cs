@@ -92,7 +92,6 @@ public class BattleManager : MonoBehaviour
         if(card.IsValidAction(SelectedMonster, target))
         {
             card.InvokeAction(SelectedMonster, target);
-            
         }
         else
         {
