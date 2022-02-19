@@ -47,7 +47,7 @@ public abstract class DeckHandler : MonoBehaviour
 
     protected abstract Card AddCardToHand(Card _card, Transform transform);
     protected abstract void UpdateHandUI(List<Card> CardsInHand);
-    protected abstract void DiscardCardImpl(Card _card);
+    protected abstract void DiscardCardImpl(Card _card, bool cancelOtherTween);
 
     private void DrawCards(int _numberOfCards)
     {
@@ -87,7 +87,7 @@ public abstract class DeckHandler : MonoBehaviour
     {
         while (CardsInHand.Count > 0)
         {
-            DiscardCard(CardsInHand[0]);
+            DiscardCard(CardsInHand[0], false);
         }
     }
 
@@ -97,12 +97,14 @@ public abstract class DeckHandler : MonoBehaviour
         UpdateCardCounts();
     }
 
-    private void DiscardCard(Card _card)
+    void DiscardCard(Card _card) => DiscardCard(_card, true);
+
+    private void DiscardCard(Card _card, bool cancelOtherTween)
     {
         //Add check for Battle State
         if (CardsInHand.Remove(_card)) //might not be in this hand
         {
-            DiscardCardImpl(_card);
+            DiscardCardImpl(_card, cancelOtherTween);
             UpdateHandUI(CardsInHand);
         }
         else

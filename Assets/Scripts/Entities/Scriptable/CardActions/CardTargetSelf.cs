@@ -9,7 +9,10 @@ namespace Assets.Scripts.Entities.Scriptable
             => target != null && target.IsTurn && target.EnergyAvailable >= card.EnergyCost && (source == null || source == target);
 
         public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
-            => cardAction.InvokeAction(target, target, card);
+        {
+            cardAction.InvokeAction(target, target, card);
+            target.PlayCard(card);
+        }
     }
 }
 

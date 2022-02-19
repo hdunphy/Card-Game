@@ -11,8 +11,6 @@ namespace Assets.Scripts.Entities.Scriptable
             float heal = Rules.Instance.GetAttackDamage(source, target, card);
             heal = -0.5f * Mathf.Clamp(heal, 0, target.MissingHealth);
             target.TakeDamage(Mathf.FloorToInt(heal), source);
-
-            source.PlayCard(card);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable
             {
                 cardAction.InvokeAction(source, monster, card);
             }
+            source.PlayCard(card);
         }
     }
 }

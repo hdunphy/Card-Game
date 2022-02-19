@@ -53,7 +53,11 @@ public class Card : MonoBehaviour
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
-    public void InvokeAction(Monster source, Monster target) => Data.InvokeAction(source, target, this);
+    public void InvokeAction(Monster source, Monster target)
+    {
+        HoverEffect.enabled = false;
+        Data.InvokeAction(source, target, this);
+    }
 
     public bool IsValidAction(Monster source, Monster target) => Data.TargetType.IsValidAction(source, target, this);
 

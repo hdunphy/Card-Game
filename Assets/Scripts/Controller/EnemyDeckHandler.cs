@@ -10,7 +10,7 @@ public class EnemyDeckHandler : DeckHandler
         return _card;
     }
 
-    protected override void DiscardCardImpl(Card _card)
+    protected override void DiscardCardImpl(Card _card, bool cancelOtherTween)
     {
         AddToDiscardPile(_card);
     }

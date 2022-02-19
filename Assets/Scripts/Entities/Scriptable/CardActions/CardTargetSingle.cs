@@ -6,7 +6,10 @@ namespace Assets.Scripts.Entities.Scriptable
     public class CardTargetSingle : CardTarget
     {
         public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
-            => cardAction.InvokeAction(source, target, card);
+        {
+            cardAction.InvokeAction(source, target, card);
+            source.PlayCard(card);
+        }
     }
 }
 
