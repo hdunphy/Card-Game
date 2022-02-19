@@ -16,7 +16,7 @@ MonoBehaviour:
   cardDescription: Slap enemy with water
   cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
   energyCost: 1
-  targetType: 1
+  targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
   cardAlignment: 1
   attackModifier: 0.2
   cardAction: {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}

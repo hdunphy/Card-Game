@@ -6,7 +6,6 @@ public class SpriteReferenceDictionary : MonoBehaviour
 {
     public static SpriteReferenceDictionary Instance;
 
-    [SerializeField] private List<EnumSpritePair<TargetType>> TargetTypeReferences;
     [SerializeField] private List<EnumSpritePair<CardAlignment>> CardAlignmentReferences;
 
     private void Awake()
@@ -27,7 +26,6 @@ public class SpriteReferenceDictionary : MonoBehaviour
         Sprite sprite;
         object list = _enum switch
         {
-            TargetType t => TargetTypeReferences,
             CardAlignment c => CardAlignmentReferences,
             _ => null,
         };

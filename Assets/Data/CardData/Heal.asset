@@ -16,7 +16,7 @@ MonoBehaviour:
   cardDescription: Heal Ally for 20 Power
   cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
   energyCost: 2
-  targetType: 2
+  targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
   cardAlignment: 6
   attackModifier: 0.2
   cardAction: {fileID: 11400000, guid: a2b0c084b357f3a448c8892f9f177960, type: 2}

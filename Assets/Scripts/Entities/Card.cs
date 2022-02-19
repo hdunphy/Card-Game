@@ -74,7 +74,7 @@ public class Card : MonoBehaviour
         CardDescription.text = Data.CardDescription;
         EnergyCostText.text = Data.EnergyCost.ToString();
         CardSprite.sprite = Data.CardSprite;
-        TargetTypeIcon.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.TargetType);
+        TargetTypeIcon.sprite = Data.TargetType.Sprite;
         CardAlignmentIcon.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.CardAlignment);
 
         gameObject.AddComponent<TooltipTrigger>().SetText($"Card has power: {Power}");
