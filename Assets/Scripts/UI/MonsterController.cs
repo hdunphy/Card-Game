@@ -2,6 +2,7 @@
 using Assets.Scripts.References;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MonsterController : MonoBehaviour
 {
@@ -72,6 +73,16 @@ public class MonsterController : MonoBehaviour
 
         //Add end of preturn event trigger
         TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);
+    }
+
+    public void AddListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
+    {
+        TurnStateMachine[turnState].NewStateAlert.AddListener(call);
+    }
+
+    public void RemoveListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
+    {
+        TurnStateMachine[turnState].NewStateAlert.RemoveListener(call);
     }
 
     public void GetNextTurnState()

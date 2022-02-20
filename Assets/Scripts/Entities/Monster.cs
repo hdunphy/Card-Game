@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Scriptable;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,7 +28,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     private int TotalEnergy => Data.Energy;
     public bool IsInPlay => CurrentHealth > 0;
-    public int MissingHealth => Data.Health - CurrentHealth;
+    public int TotalHealth => Data.Health;
     public bool IsTurn { get; private set; }
     public int EnergyAvailable { get; private set; }
     public float AttackModifier { get; set; }
@@ -34,6 +36,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     public int Level => Data.Level;
     public float Attack => Data.Attack * AttackModifier;
     public float Defense => Data.Defense * DefenseModifier;
+    private Dictionary<BaseStatus, int> Statuses;
 
     private void Start()
     {
@@ -85,6 +88,8 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         HealthBar.rectTransform.localScale = new Vector3((float)CurrentHealth / Data.Health, 1, 1);
         ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
 
+        Statuses = new Dictionary<BaseStatus, int>();
+
         TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
 
         SetEnergy();
@@ -102,6 +107,33 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     private int GetDeathExp()
     {
         return 100;
+    }
+
+    public void ApplyStatus(BaseStatus status)
+    {
+        if (Statuses.ContainsKey(status))
+        {
+            Statuses[status] += status.GetCount();
+            if (Statuses[status] == 0)
+            {
+                RemoveStatus(status);
+            }
+        }
+        else
+        {
+            Statuses.Add(status, 1);
+        }
+    }
+
+    public void GetStatusEffect(BaseStatus status)
+    {
+        status.DoEffect(this, Statuses[status]);
+    }
+
+    public void RemoveStatus(BaseStatus status)
+    {
+        Statuses.Remove(status);
+        status.RemoveStatus(this);
     }
 
     private void SetDead()
