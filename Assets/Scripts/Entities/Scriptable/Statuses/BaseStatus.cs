@@ -1,26 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
     public abstract class BaseStatus : ScriptableObject
     {
-        [SerializeField] private Sprite Sprite;
+        [SerializeField] protected Sprite sprite;
 
-        public virtual void ApplyStatus(Monster monster)
+        public virtual Sprite GetSprite(int count) => sprite;
+
+        public virtual void ApplyStatus(Monster monster, int count)
         {
-            monster.ApplyStatus(this);
+            monster.ApplyStatus(this, count);
         }
 
         public virtual void RemoveStatus(Monster monster)
         {
         }
 
-        public virtual int GetCount() => 1;
-
         public abstract void DoEffect(Monster monster, int count);
 
+        public abstract string GetTooltip(int count);
+
+        public abstract string GetTooltipHeader(int count);
     }
 }

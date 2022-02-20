@@ -2841,13 +2841,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b5b946124c5d4fa409a47226ca9cacad, type: 2}
   - {fileID: 11400000, guid: 2aa9bd44352586b41bd46445ae679545, type: 2}
   - {fileID: 11400000, guid: bb65d53c135113b4b86c423fbb0bc7dc, type: 2}
-  - {fileID: 11400000, guid: 099d766b75600cf458e741bd3a8fa4ed, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 95cf3deeb764d234b9353fff719f4346, type: 2}
+  - {fileID: 11400000, guid: b0754c318565f4b47b7b1e3db56015e7, type: 2}
   - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
   - {fileID: 11400000, guid: 76c34944871ab2f4ba91a8d415cd3852, type: 2}
   - {fileID: 11400000, guid: 84a994f605581c6479016a625f3556fd, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: b03ba5bd2a1692148bac16d77ead14d7, type: 2}
+  - {fileID: 11400000, guid: 95cf3deeb764d234b9353fff719f4346, type: 2}
   - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
 --- !u!4 &1234609933
 Transform:
@@ -2887,15 +2887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aacf2c316bb8594fac9f20ccf8efa35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetTypeReferences:
-  - Sprite: {fileID: 18780751124475366, guid: 002b0e83172f1984491ba372e1e4f881, type: 3}
-    Enum: 0
-  - Sprite: {fileID: -2525345079167609344, guid: 002b0e83172f1984491ba372e1e4f881, type: 3}
-    Enum: 1
-  - Sprite: {fileID: -6806482444771467717, guid: 002b0e83172f1984491ba372e1e4f881, type: 3}
-    Enum: 2
-  - Sprite: {fileID: 21300000, guid: 8a9bbdb396616444cb3ef35d09ddb7f2, type: 3}
-    Enum: 3
   CardAlignmentReferences:
   - Sprite: {fileID: -7115396137046201765, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
     Enum: 0

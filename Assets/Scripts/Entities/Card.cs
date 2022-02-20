@@ -86,9 +86,10 @@ public class Card : MonoBehaviour
 
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
     {
+        HoverEffect.enabled = false;
         transform.SetAsLastSibling();
-        LeanTween.move(gameObject, position, CardMovementTiming);
-        LeanTween.scale(gameObject, scale, CardMovementTiming).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
+        LeanTween.move(gameObject, position, CardMovementTiming).setDelay(0.1f);
+        LeanTween.scale(gameObject, scale, CardMovementTiming).setDelay(0.1f).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
 
     private void SetInactive()

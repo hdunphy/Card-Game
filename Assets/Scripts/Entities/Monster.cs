@@ -19,8 +19,8 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     [SerializeField] private TMP_Text MonsterName;
     [SerializeField] private EnergyHolder EnergyHolder;
     [SerializeField] private Gradient HealthGradient;
-
-    public SpriteRenderer _renderer;
+    [SerializeField] private Transform StatusParent;
+    [SerializeField] private StatusIcon StatusIconPrefab;
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
@@ -36,7 +36,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     public int Level => Data.Level;
     public float Attack => Data.Attack * AttackModifier;
     public float Defense => Data.Defense * DefenseModifier;
-    private Dictionary<BaseStatus, int> Statuses;
+    private Dictionary<BaseStatus, StatusIcon> Statuses;
 
     private void Start()
     {
@@ -88,7 +88,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         HealthBar.rectTransform.localScale = new Vector3((float)CurrentHealth / Data.Health, 1, 1);
         ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
 
-        Statuses = new Dictionary<BaseStatus, int>();
+        Statuses = new Dictionary<BaseStatus, StatusIcon>();
 
         TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
 
@@ -109,35 +109,39 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         return 100;
     }
 
-    public void ApplyStatus(BaseStatus status)
+    public void ApplyStatus(BaseStatus status, int _count)
     {
         if (Statuses.ContainsKey(status))
         {
-            Statuses[status] += status.GetCount();
-            if (Statuses[status] == 0)
+            var count = Statuses[status].AddCount(_count);
+            if (count == 0)
             {
                 RemoveStatus(status);
             }
         }
         else
         {
-            Statuses.Add(status, 1);
+            var icon = Instantiate(StatusIconPrefab, StatusParent);
+            icon.SetStatus(status, _count);
+            Statuses.Add(status, icon);
         }
     }
 
     public void GetStatusEffect(BaseStatus status)
     {
-        status.DoEffect(this, Statuses[status]);
+        status.DoEffect(this, Statuses[status].Count);
     }
 
     public void RemoveStatus(BaseStatus status)
     {
+        Destroy(Statuses[status]);
         Statuses.Remove(status);
         status.RemoveStatus(this);
     }
 
     private void SetDead()
     {
+        //remove events
         TooltipSystem.Hide();
         gameObject.SetActive(false);
     }
@@ -165,7 +169,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
             if (CurrentHealth <= 0)
             {
-                source.UpdateExperienceUI(GetDeathExp());
+                source?.UpdateExperienceUI(GetDeathExp()); //TODO null propagation for Status deaths
                 SetDead();
                 break;
             }
