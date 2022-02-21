@@ -14,11 +14,11 @@ namespace Assets.Scripts.Entities.Scriptable
             base.ApplyStatus(monster, count);
             if (count > 0)
             {
-                monster.DefenseModifier *= Modifier * count;
+                monster.DefenseModifier *= Modifier * Mathf.Abs(count);
             }
             else
             {
-                monster.DefenseModifier /= Modifier * count;
+                monster.DefenseModifier /= Modifier * Mathf.Abs(count);
             }
         }
 

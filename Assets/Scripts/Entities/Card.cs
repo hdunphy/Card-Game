@@ -18,6 +18,7 @@ public class Card : MonoBehaviour
 
     private CardData Data;
     private int siblingIndex;
+    private bool playedThisTurn;
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
@@ -41,8 +42,11 @@ public class Card : MonoBehaviour
     public void OnEndDrag()
     {
         Dragger.Instance.EndDragging();
-        HoverEffect.enabled = true;
-        HoverEffect.ReturnToNormalPosition();
+        if (!playedThisTurn)
+        {
+            HoverEffect.enabled = true;
+            HoverEffect.ReturnToNormalPosition();
+        }
     }
 
     public void SetSiblingIndex(int i) => siblingIndex = i;
@@ -56,6 +60,7 @@ public class Card : MonoBehaviour
     public void InvokeAction(Monster source, Monster target)
     {
         HoverEffect.enabled = false;
+        playedThisTurn = true;
         Data.InvokeAction(source, target, this);
     }
 
@@ -87,9 +92,10 @@ public class Card : MonoBehaviour
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
     {
         HoverEffect.enabled = false;
+        LeanTween.cancel(gameObject);
         transform.SetAsLastSibling();
-        LeanTween.move(gameObject, position, CardMovementTiming).setDelay(0.1f);
-        LeanTween.scale(gameObject, scale, CardMovementTiming).setDelay(0.1f).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
+        LeanTween.move(gameObject, position, CardMovementTiming).setDelay(0.5f);
+        LeanTween.scale(gameObject, scale, CardMovementTiming).setDelay(0.5f).setOnComplete(() => { onComplete.Invoke(); SetInactive(); });
     }
 
     private void SetInactive()
@@ -118,5 +124,6 @@ public class Card : MonoBehaviour
     void SetCardInHand()
     {
         HoverEffect.enabled = true;
+        playedThisTurn = false;
     }
 }

@@ -134,7 +134,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void RemoveStatus(BaseStatus status)
     {
-        Destroy(Statuses[status]);
+        Destroy(Statuses[status].gameObject);
         Statuses.Remove(status);
         status.RemoveStatus(this);
     }

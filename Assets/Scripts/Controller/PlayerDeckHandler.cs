@@ -10,10 +10,8 @@ public class PlayerDeckHandler : DeckHandler
         return _card.DrawCard(transform);
     }
 
-    protected override void DiscardCardImpl(Card _card, bool cancelOtherTween)
+    protected override void DiscardCardImpl(Card _card)
     {
-        if (cancelOtherTween)
-            LeanTween.cancelAll();
         _card.DiscardCard(GO_DiscardPile.transform.position, Vector3.one * .33f, HandManager.CardMovementTiming, () => { AddToDiscardPile(_card); });
     }
 
