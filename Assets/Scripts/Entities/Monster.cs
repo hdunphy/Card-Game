@@ -127,10 +127,9 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         }
     }
 
-    public void GetStatusEffect(BaseStatus status)
-    {
-        status.DoEffect(this, Statuses[status].Count);
-    }
+    public bool HasStatus(BaseStatus status) => Statuses.ContainsKey(status);
+    
+    public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Statuses[status].Count);
 
     public void RemoveStatus(BaseStatus status)
     {

@@ -14,6 +14,7 @@ public class CardData : ScriptableObject
     [SerializeField] private CardAlignment cardAlignment;
     [SerializeField, Range(0, 1.5f)] private float attackModifier;
     [SerializeField] private CardAction cardAction;
+    [SerializeField] private BaseConstraint cardConstraint;
 
     public string CardName { get => cardName; }
     public string CardDescription { get => cardDescription; }
@@ -22,6 +23,7 @@ public class CardData : ScriptableObject
     public CardTarget TargetType { get => targetType; }
     public CardAlignment CardAlignment { get => cardAlignment; }
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
+    public BaseConstraint CardConstraint { get => cardConstraint; }
 
     public void InvokeAction(Monster source, Monster target, Card card) =>
         TargetType.InvokeAction(cardAction, source, target, card);

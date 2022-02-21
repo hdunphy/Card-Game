@@ -6,7 +6,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class CardTargetSelf : CardTarget
     {
         public override bool IsValidAction(Monster source, Monster target, Card card)
-            => target != null && target.IsTurn && target.EnergyAvailable >= card.EnergyCost && (source == null || source == target);
+            => target != null && target.IsTurn && card.CheckConstraints(source) && (source == null || source == target);
 
         public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
         {

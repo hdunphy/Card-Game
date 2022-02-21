@@ -64,6 +64,8 @@ public class Card : MonoBehaviour
         Data.InvokeAction(source, target, this);
     }
 
+    public bool CheckConstraints(Monster source) => Data.CardConstraint.CheckConstraint(source, this);
+
     public bool IsValidAction(Monster source, Monster target) => Data.TargetType.IsValidAction(source, target, this);
 
     private void Instance_UpdateSelectedMonster(Monster _monster)
