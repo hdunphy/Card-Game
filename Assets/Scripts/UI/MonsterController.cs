@@ -10,7 +10,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private Monster monsterPrefab;
     [SerializeField] private DeckHandler deckController;
 
-    public List<Monster> monsters { get; private set; }
+    public List<Monster> Monsters { get; private set; }
     private int CardDraw;
 
     //Turn
@@ -21,13 +21,14 @@ public class MonsterController : MonoBehaviour
 
     private void Awake()
     {
-        monsters = new List<Monster>();
+        Monsters = new List<Monster>();
         CurrentTurnState = TurnStateEnum.PostTurn;
         TurnStateMachine = new Dictionary<TurnStateEnum, ITurnStateMachine>
         {
             { TurnStateEnum.PreTurn, new PreTurnState() },
             { TurnStateEnum.AttackTurn, new AttackTurnState() },
-            { TurnStateEnum.PostTurn, new PostTurnState() }
+            { TurnStateEnum.PostTurn, new PostTurnState() },
+            { TurnStateEnum.End, new EndTurnState() }
         };
 
         foreach (TurnStateEnum _enum in TurnStateMachine.Keys)
@@ -36,20 +37,25 @@ public class MonsterController : MonoBehaviour
             if (_event != null)
                 TurnStateMachine[_enum].NewStateAlert = _event.Event;
         }
+    }
 
+    private void Start()
+    {
         EventManager.Instance.MonsterDied += Instance_MonsterDied;
+        EventManager.Instance.BattleOver += Instance_BattleOver;
     }
 
     private void OnDestroy()
     {
         EventManager.Instance.MonsterDied -= Instance_MonsterDied;
+        EventManager.Instance.BattleOver -= Instance_BattleOver;
     }
 
     private void Instance_MonsterDied(Monster _monster)
     {
         if (HasMonster(_monster))
         {
-            if(!monsters.Any(m => m.IsInPlay))
+            if(!Monsters.Any(m => m.IsInPlay))
             { //if all monsters are not in play
                 EventManager.Instance.OnBattleOverTrigger(this);
             }
@@ -59,23 +65,28 @@ public class MonsterController : MonoBehaviour
         }
     }
 
+    private void Instance_BattleOver(MonsterController obj)
+    {
+        CurrentTurnState = TurnStateEnum.End;
+    }
+
     public void BattleSetUp(IEnumerable<MonsterInstance> datas, List<CardData> deck, bool isWildDeck = false)
     {
         CardDraw = 0;
 
-        foreach (Monster _monster in monsters)
+        foreach (Monster _monster in Monsters)
         {
             Destroy(_monster);
         }
 
-        monsters.Clear();
+        Monsters.Clear();
 
         int index = 0; //for loop doesn't work with IEnumerable ?
         foreach (MonsterInstance _data in datas)
         {
             Monster _monster = Instantiate(monsterPrefab, transform);
             _monster.SetUp(_data);
-            monsters.Add(_monster);
+            Monsters.Add(_monster);
 
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_monster.StartTurn);
@@ -122,7 +133,7 @@ public class MonsterController : MonoBehaviour
 
     public bool HasMonster(Monster _monster)
     {
-        return monsters.Contains(_monster);
+        return Monsters.Contains(_monster);
     }
 
     public void DrawCards(int numberOfCards) => deckController.DrawCards(numberOfCards);

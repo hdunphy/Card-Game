@@ -11,9 +11,4 @@ public class PreTurnState : ITurnStateMachine
     {
         return TurnStateEnum.AttackTurn;
     }
-
-    public void ProcessState()
-    {
-        throw new System.NotImplementedException();
-    }
 }

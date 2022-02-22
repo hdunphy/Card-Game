@@ -2829,6 +2829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerLoader: {fileID: 1768742047}
   EnemyLoader: {fileID: 364613478}
+  EndButton: {fileID: 1569033877}
   PlayerData:
   - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
   - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}

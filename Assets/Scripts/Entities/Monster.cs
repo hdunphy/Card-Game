@@ -2,6 +2,7 @@
 using Assets.Scripts.Entities.Scriptable;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -140,8 +141,9 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     private void SetDead()
     {
+        var _statuses = Statuses.Keys.ToList();
         //remove events
-        foreach(var _status in Statuses.Keys)
+        foreach(var _status in _statuses)
         {
             RemoveStatus(_status);
         }

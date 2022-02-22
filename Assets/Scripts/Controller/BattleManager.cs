@@ -36,13 +36,6 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(StartBattle());
     }
 
-    private void BattleOver(MonsterController _controller)
-    {
-        string message = _controller == PlayerLoader ? "Player 2" : "Player 1";
-        EndButton.enabled = false;
-        UserMessage.Instance.SendMessageToUser(message + " Has won");
-    }
-
     private void OnDestroy()
     {
         EventManager.Instance.SelectMonster -= SetSelectedMonster;
@@ -67,11 +60,19 @@ public class BattleManager : MonoBehaviour
         EndButton.enabled = true;
     }
 
+    private void BattleOver(MonsterController _controller)
+    {
+        string message = _controller == PlayerLoader ? "Player 2" : "Player 1";
+        EndButton.enabled = false;
+        UserMessage.Instance.SendMessageToUser(message + " Has won");
+    }
+
     private void GetNextTurnState()
     {
         ActiveController.GetNextTurnState();
     }
 
+    //Called from button
     public void EndTurn()
     {
         if (playerTurn == PlayerTurn.PlayerTwo)

@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
         {
             var controller = FindObjectsOfType<MonsterController>().First(m => m.HasMonster(target)); //should never be null
-            foreach (var monster in controller.monsters.Where(m => m.IsInPlay))
+            foreach (var monster in controller.Monsters.Where(m => m.IsInPlay))
             {
                 cardAction.InvokeAction(source, monster, card);
             }

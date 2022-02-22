@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
     {
         Hand = hand;
 
-        attackBehavior.SetTurnStategy(Hand, SelfController.monsters, OtherController.monsters);
+        attackBehavior.SetTurnStategy(Hand, SelfController.Monsters, OtherController.Monsters);
 
         StartCoroutine(AttackPhase());
     }

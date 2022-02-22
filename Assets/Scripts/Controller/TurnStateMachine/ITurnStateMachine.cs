@@ -10,5 +10,4 @@ public interface ITurnStateMachine
     UnityEvent NewStateAlert { get; set; }
 
     TurnStateEnum GetNextState();
-    void ProcessState();
 }

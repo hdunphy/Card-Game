@@ -25,14 +25,14 @@ public abstract class DeckHandler : MonoBehaviour
 
     private void Start()
     {
-        //EventManager.Instance.DrawCards += DrawCards;
         EventManager.Instance.DiscardCard += DiscardCard;
+        EventManager.Instance.BattleOver += Instance_BattleOver;
     }
 
     private void OnDestroy()
     {
-        //EventManager.Instance.DrawCards -= DrawCards;
         EventManager.Instance.DiscardCard -= DiscardCard;
+        EventManager.Instance.BattleOver -= Instance_BattleOver;
     }
 
     public void StartTurn()
@@ -44,6 +44,8 @@ public abstract class DeckHandler : MonoBehaviour
 
         //Begin Turn
     }
+
+    private void Instance_BattleOver(MonsterController obj) => DiscardHand();
 
     protected abstract Card AddCardToHand(Card _card, Transform transform);
     protected abstract void UpdateHandUI(List<Card> CardsInHand);

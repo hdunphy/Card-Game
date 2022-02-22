@@ -11,9 +11,4 @@ public class AttackTurnState : ITurnStateMachine
     {
         return TurnStateEnum.PostTurn;
     }
-
-    public void ProcessState()
-    {
-        throw new System.NotImplementedException();
-    }
 }
