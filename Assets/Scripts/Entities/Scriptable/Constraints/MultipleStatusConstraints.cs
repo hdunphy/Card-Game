@@ -13,7 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
             foreach(var StatusConstraint in StatusConstraints)
             {
-                isValid = isValid && (source.HasStatus(StatusConstraint.Status) ^ StatusConstraint.HasStatus);
+                isValid = isValid && (source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus);
             }
 
             return isValid;

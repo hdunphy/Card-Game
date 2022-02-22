@@ -103,5 +103,7 @@ public class MonsterController : MonoBehaviour
         return monsters.Contains(_monster);
     }
 
+    public void DrawCards(int numberOfCards) => deckController.DrawCards(numberOfCards);
+
     public List<Card> GetHand() { return deckController.GetHand(); }
 }

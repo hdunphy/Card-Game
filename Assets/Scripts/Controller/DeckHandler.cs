@@ -49,7 +49,7 @@ public abstract class DeckHandler : MonoBehaviour
     protected abstract void UpdateHandUI(List<Card> CardsInHand);
     protected abstract void DiscardCardImpl(Card _card);
 
-    private void DrawCards(int _numberOfCards)
+    public void DrawCards(int _numberOfCards)
     {
         int cardsToDraw = DrawPile.Count > _numberOfCards ? _numberOfCards : DrawPile.Count;
         int cardsRemaining = _numberOfCards - cardsToDraw;
