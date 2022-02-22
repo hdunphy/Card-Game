@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.References;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,6 +35,27 @@ public class MonsterController : MonoBehaviour
             TurnStateEvent _event = stateEvents.Find(x => x.StateEnum.Equals(_enum));
             if (_event != null)
                 TurnStateMachine[_enum].NewStateAlert = _event.Event;
+        }
+
+        EventManager.Instance.MonsterDied += Instance_MonsterDied;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.MonsterDied -= Instance_MonsterDied;
+    }
+
+    private void Instance_MonsterDied(Monster _monster)
+    {
+        if (HasMonster(_monster))
+        {
+            if(!monsters.Any(m => m.IsInPlay))
+            { //if all monsters are not in play
+                //EventManager.Instance.OnBattleOverTrigger(this);
+            }
+        //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(_monster.StartTurn);
+        //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(delegate { _monster.SetIsTurn(true); });
+        //TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.RemoveListener(delegate { _monster.SetIsTurn(false); });
         }
     }
 

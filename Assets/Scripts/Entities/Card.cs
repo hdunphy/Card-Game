@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,8 @@ public class Card : MonoBehaviour
 
     public void OnBeginDrag()
     {
+        ToggleOtherCardInteractions(false);
+
         HoverEffect.enabled = false;
         Dragger.Instance.StartDragging(transform);
     }
@@ -47,6 +50,22 @@ public class Card : MonoBehaviour
             HoverEffect.enabled = true;
             HoverEffect.ReturnToNormalPosition();
         }
+        ToggleOtherCardInteractions(true);
+    }
+
+    private void ToggleOtherCardInteractions(bool isDisabled)
+    {
+        var cards = FindObjectsOfType<Card>().Where(c => c != this && c.gameObject.activeSelf);
+        foreach (var _card in cards)
+        {
+            _card.ToggleInteractions(isDisabled);
+        }
+    }
+
+    public void ToggleInteractions(bool isDisabled)
+    {
+        HoverEffect.enabled = isDisabled;
+        DragAndDrop.enabled = isDisabled;
     }
 
     public void SetSiblingIndex(int i) => siblingIndex = i;

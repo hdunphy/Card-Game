@@ -21,6 +21,7 @@ public class EventManager : MonoBehaviour
     public event Action<Monster> SelectMonster;
     public event Action<Monster, Card> SelectTarget;
     public event Action<Monster> UpdateSelectedMonster;
+    public event Action<Monster> MonsterDied;
     public event Action<Card> DiscardCard;
     public event Action GetNextTurnState;
     public event Action ResetSelected;
@@ -33,6 +34,11 @@ public class EventManager : MonoBehaviour
     public void OnUpdateSelectedMonsterTrigger(Monster _monster)
     {
         UpdateSelectedMonster?.Invoke(_monster);
+    }
+
+    public void OnMonsterDiedTrigger(Monster _monster)
+    {
+        MonsterDied?.Invoke(_monster);
     }
 
     public void OnDiscardCardTrigger(Card _card)
