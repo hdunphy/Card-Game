@@ -25,6 +25,7 @@ public class EventManager : MonoBehaviour
     public event Action<Card> DiscardCard;
     public event Action GetNextTurnState;
     public event Action ResetSelected;
+    public event Action<MonsterController> BattleOver;
 
     public void OnSelectMonsterTrigger(Monster _monster)
     {
@@ -59,5 +60,10 @@ public class EventManager : MonoBehaviour
     public void OnSelectTargetTrigger(Monster target, Card card)
     {
         SelectTarget?.Invoke(target, card);
+    }
+
+    public void OnBattleOverTrigger(MonsterController monsterController)
+    {
+        BattleOver?.Invoke(monsterController);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Assets.Scripts.Entities;
 using System;
+using UnityEngine.UI;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -12,6 +13,7 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private MonsterController PlayerLoader;
     [SerializeField] private MonsterController EnemyLoader;
+    [SerializeField] private Button EndButton;
 
     //Change later
     public List<MonsterData> PlayerData;
@@ -29,8 +31,16 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectTarget += TargetSelected;
         EventManager.Instance.GetNextTurnState += GetNextTurnState;
         EventManager.Instance.ResetSelected += ResetSelected;
+        EventManager.Instance.BattleOver += BattleOver;
 
         StartCoroutine(StartBattle());
+    }
+
+    private void BattleOver(MonsterController _controller)
+    {
+        string message = _controller == PlayerLoader ? "Player 2" : "Player 1";
+        EndButton.enabled = false;
+        UserMessage.Instance.SendMessageToUser(message + " Has won");
     }
 
     private void OnDestroy()
@@ -38,6 +48,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.SelectMonster -= SetSelectedMonster;
         EventManager.Instance.GetNextTurnState -= GetNextTurnState;
         EventManager.Instance.ResetSelected -= ResetSelected;
+        EventManager.Instance.BattleOver -= BattleOver;
     }
 
     private IEnumerator StartBattle()
@@ -52,6 +63,8 @@ public class BattleManager : MonoBehaviour
         /* -- Initiate Battle -- */
         //Start players turn
         ActiveController.StartTurn();
+
+        EndButton.enabled = true;
     }
 
     private void GetNextTurnState()

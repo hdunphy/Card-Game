@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum TurnStateEnum { PreTurn, AttackTurn, PostTurn }
+public enum TurnStateEnum { PreTurn, AttackTurn, PostTurn, End }
 public interface ITurnStateMachine
 {
     UnityEvent NewStateAlert { get; set; }

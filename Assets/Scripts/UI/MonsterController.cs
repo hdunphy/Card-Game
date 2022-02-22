@@ -51,7 +51,7 @@ public class MonsterController : MonoBehaviour
         {
             if(!monsters.Any(m => m.IsInPlay))
             { //if all monsters are not in play
-                //EventManager.Instance.OnBattleOverTrigger(this);
+                EventManager.Instance.OnBattleOverTrigger(this);
             }
         //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(_monster.StartTurn);
         //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(delegate { _monster.SetIsTurn(true); });
