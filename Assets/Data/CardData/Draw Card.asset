@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
-  m_Name: Vine Wip
+  m_Name: Draw Card
   m_EditorClassIdentifier: 
-  cardName: Vine Wip
-  cardDescription: Slap Enemy with a newly grown vine
+  cardName: Draw Card
+  cardDescription: Draw a card
   cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
   energyCost: 1
-  targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
+  targetType: {fileID: 11400000, guid: e655f526aa8559e42a9cf8d6d8443e99, type: 2}
   cardAlignment: 4
-  attackModifier: 0.3
-  cardAction: {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  attackModifier: 0
+  cardAction: {fileID: 11400000, guid: e79087b2aa8a8c54ead408202ea5bd37, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}
