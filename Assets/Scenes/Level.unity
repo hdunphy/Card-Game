@@ -8840,6 +8840,7 @@ GameObject:
   - component: {fileID: 1937687278}
   - component: {fileID: 1937687277}
   - component: {fileID: 1937687276}
+  - component: {fileID: 1937687279}
   m_Layer: 0
   m_Name: Interactable
   m_TagString: Untagged
@@ -9508,3 +9509,31 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1937687279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937687274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a95ec40f0c95ea4fa0c88c315a1a1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 1
+  OnTimer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1937687279}
+        m_TargetAssemblyTypeName: PlayerEnterInteractable, Assembly-CSharp
+        m_MethodName: TimerOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

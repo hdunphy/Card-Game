@@ -181,5 +181,10 @@ namespace Assets.Scripts.References
 
             return randomValue;
         }
+
+        public static float GetRandomFloat()
+        {
+            return (float)Random.NextDouble();
+        }
     }
 }
