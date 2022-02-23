@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3579931459
+    locked: 0
+  - name: Ground
+    uniqueID: 2688822213
+    locked: 0
+  - name: Environment
+    uniqueID: 4226638929
+    locked: 0
+  - name: Player
+    uniqueID: 4251075201
+    locked: 0
+  - name: Collision Layer
+    uniqueID: 1126596527
+    locked: 0
