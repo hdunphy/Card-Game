@@ -10,7 +10,7 @@ namespace Assets.Scripts.Entities.Drops
 
     }
 
-    public interface IDropScriptableObject { }
+    public abstract class IDropScriptableObject : ScriptableObject { }
 
 
     [Serializable]

@@ -15,15 +15,32 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private MonsterController EnemyLoader;
     [SerializeField] private Button EndButton;
 
-    //Change later
+    //TODO: Remove
     public List<MonsterData> PlayerData;
     public List<MonsterData> EnemyData;
+    //Change later
     public List<CardData> Deck;
 
     //private variables
     private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
     private Monster SelectedMonster;
     private PlayerTurn playerTurn;
+
+    public static BattleManager Singleton { get; private set; }
+
+    private void Awake()
+    {
+        //Singleton pattern On Awake set the singleton to this.
+        //There should only be one GameLayer that can be accessed statically
+        if (Singleton == null)
+        {
+            Singleton = this;
+        }
+        else
+        { //if GameSceneController already exists then destory this. We don't want duplicates
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
@@ -33,7 +50,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.ResetSelected += ResetSelected;
         EventManager.Instance.BattleOver += BattleOver;
 
-        StartCoroutine(StartBattle());
+        //StartCoroutine(StartBattle());
     }
 
     private void OnDestroy()
@@ -44,14 +61,21 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.BattleOver -= BattleOver;
     }
 
-    private IEnumerator StartBattle()
+    public void StartBattle(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
     {
         /* -- Set up Battle -- */
-        LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
+        //LoadTeams(PlayerData.Select(x => { return new MonsterInstance(x, 10); }), EnemyData.Select(x => { return new MonsterInstance(x, 10); }));
+        PlayerLoader.BattleSetUp(playerData, Deck);
+        EnemyLoader.BattleSetUp(enemyData, new List<CardData>(), true);
 
         playerTurn = PlayerTurn.PlayerOne;
 
-        yield return new WaitForSeconds(1);
+        StartCoroutine(StartTurnAfterSeconds(1));
+    }
+
+    private IEnumerator StartTurnAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
 
         /* -- Initiate Battle -- */
         //Start players turn
@@ -84,12 +108,6 @@ public class BattleManager : MonoBehaviour
             playerTurn = PlayerTurn.PlayerTwo;
         }
         GetNextTurnState();
-    }
-
-    public void LoadTeams(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
-    {
-        PlayerLoader.BattleSetUp(playerData, Deck);
-        EnemyLoader.BattleSetUp(enemyData, new List<CardData>(), true);
     }
 
     public void SetSelectedMonster(Monster _monster)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MonsterData", menuName = "Data/Create Monster Data")]
-public class MonsterData : ScriptableObject, IDropScriptableObject
+public class MonsterData : IDropScriptableObject
 {
     [SerializeField] private Sprite sprite;
     [SerializeField] private int health;

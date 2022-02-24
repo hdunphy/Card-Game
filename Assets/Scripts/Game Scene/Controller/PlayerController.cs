@@ -1,13 +1,23 @@
+using Assets.Scripts.Entities;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public List<MonsterInstance> Monsters { get; private set; }
+    //Replace
+    public List<MonsterData> PlayerData;
+
     IMovement Movement;
     Vector2 movementVector;
+
+
     // Start is called before the first frame update
     void Start()
     {
         Movement = GetComponent<IMovement>();
+        Monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
     }
 
     // Update is called once per frame
