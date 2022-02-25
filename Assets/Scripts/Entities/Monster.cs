@@ -105,10 +105,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         SetEnergy();
     }
 
-    private int GetDeathExp()
-    {
-        return 100;
-    }
+    private int GetDeathExp() => Data.GetDeathExp();
 
     public void ApplyStatus(BaseStatus status, int _count)
     {

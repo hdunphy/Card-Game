@@ -182,6 +182,10 @@ namespace Assets.Scripts.References
             return randomValue;
         }
 
+        /// <summary>
+        /// Returns a random floating-point number that is greater than or equal to 0.0, and less than 1.0.
+        /// </summary>
+        /// <returns>float range[0,1]</returns>
         public static float GetRandomFloat()
         {
             return (float)Random.NextDouble();

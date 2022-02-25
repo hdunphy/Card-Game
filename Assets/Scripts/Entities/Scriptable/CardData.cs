@@ -1,10 +1,9 @@
-﻿using Assets.Scripts.Entities.Scriptable;
-using System;
-using System.Linq;
+﻿using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.Entities.Scriptable;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
-public class CardData : ScriptableObject
+public class CardData : IDropScriptableObject
 {
     [SerializeField] private string cardName;
     [SerializeField] private string cardDescription;

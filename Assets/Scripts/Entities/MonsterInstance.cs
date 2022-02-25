@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.References;
+﻿using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.References;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
@@ -47,8 +49,8 @@ namespace Assets.Scripts.Entities
         public int AddExperience(int _xp, int levelUps = 0)
         {
             int xpToNextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
-            
-            if(_xp > xpToNextLevel)
+
+            if (_xp > xpToNextLevel)
             {
                 Experiance += xpToNextLevel;
                 Level++;
@@ -70,7 +72,26 @@ namespace Assets.Scripts.Entities
         private int CalculateStat(int baseStat, int modifier)
         {
             //floor(floor((2 * B + I + E) * L / 100 + 5) * N)
-            return (int) Math.Floor((double)(((2 * baseStat) + modifier) * Level / 100) + 5);
+            return (int)Math.Floor((double)(((2 * baseStat) + modifier) * Level / 100) + 5);
+        }
+
+        public int GetDeathExp() => Rules.Instance.GetExpNextLevel(this) / 5;
+
+        public CardData GetCardDrop()
+        {
+            List<DropChance> wildCardDrops = new List<DropChance>();
+            int total = Enumerable.Range(0, WildDeck.Count).Sum();
+            for (int i = 0; i < WildDeck.Count; i++)
+            {
+                wildCardDrops.Add(new DropChance
+                {
+                    DropObject = WildDeck[i],
+                    IsEmpty = false,
+                    RollChance = (float)i / total
+                });
+            }
+
+            return (CardData)new DropTable(wildCardDrops).GetDrop();
         }
     }
 }

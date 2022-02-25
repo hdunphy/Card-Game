@@ -5,14 +5,32 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities.Drops
 {
-    public class DropTable : MonoBehaviour
+    public class DropTableInstance : MonoBehaviour
     {
         [SerializeField] private List<DropChance> drops;
+
+        private DropTable DropTable;
+
+        private void Start()
+        {
+            DropTable = new DropTable(drops);
+        }
+
+        public IDropScriptableObject GetDrop() => DropTable.GetDrop();
+    }
+
+    public class DropTable
+    {
+        private readonly List<DropChance> drops;
+
+        public DropTable(List<DropChance> drops)
+        {
+            this.drops = drops;
+        }
 
         public IDropScriptableObject GetDrop()
         {
             IDropScriptableObject dropObject = null;
-            float Total = drops.Sum(x => x.RollChance);
             float currentChance = 0;
             float roll = Rules.GetRandomFloat();
 

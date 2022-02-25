@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class RandomEncounter : MonoBehaviour
 {
-    [SerializeField] private DropTable DropTable;
+    [SerializeField] private DropTableInstance DropTable;
     [SerializeField, Range(0, 3)] private int MaxMonsters;
     [SerializeField, Range(1, 98)] private int MinMonsterLevel;
     [SerializeField, Range(2, 99)] private int MaxMonsterLevel;
