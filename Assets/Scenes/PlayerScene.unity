@@ -166,8 +166,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdfdea2f1ff055439a67c61df5244db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 1777988945}
+  LevelCamera: {fileID: 891500462}
   BattleSceneName: BattleScene
   LevelSceneName: Level
+--- !u!114 &891500462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -3949649474796620874, guid: dff6aba8a4bb16c4cbe5eead8a146259, type: 3}
+  m_PrefabInstance: {fileID: 1853101799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3507eab04fe1a4fbd333c00a107525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1128797897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,6 +238,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5764e8808a202d84f9f03583fa4895b7, type: 3}
+--- !u!114 &1777988945 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2505605168106303827, guid: 5764e8808a202d84f9f03583fa4895b7, type: 3}
+  m_PrefabInstance: {fileID: 1128797897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e48379d4f5270448cbfd87573d60da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1853101799
 PrefabInstance:
   m_ObjectHideFlags: 0

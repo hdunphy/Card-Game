@@ -2,9 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +9,8 @@ public class GameSceneController : MonoBehaviour
 {
     public static GameSceneController Singleton { get; private set; }
 
+    [SerializeField] private PlayerController Player;
+    [SerializeField] private CameraController LevelCamera;
     [SerializeField] private string BattleSceneName;
     [SerializeField] private string LevelSceneName; //TODO will need anotherway to get/set this with more levels
 
@@ -31,13 +30,32 @@ public class GameSceneController : MonoBehaviour
 
     public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters)
     {
-        FindObjectOfType<PlayerController>().gameObject.SetActive(false);
-        FindObjectOfType<CameraController>().gameObject.SetActive(false);
+        ToggleLevelSceneObjects(false);
 
         SceneManager.UnloadSceneAsync(LevelSceneName);
 
         StartCoroutine(LoadSceneAndThen(BattleSceneName, LoadSceneMode.Additive, () =>
             BattleManager.Singleton.StartBattle(playerMonsters, enemyMonsters)));
+    }
+
+    public void LoadLevelScene(float seconds)
+    {
+        StartCoroutine(LoadLevelSceneWait(seconds));
+    }
+
+    private IEnumerator LoadLevelSceneWait(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        SceneManager.UnloadSceneAsync(BattleSceneName);
+
+        StartCoroutine(LoadSceneAndThen(LevelSceneName, LoadSceneMode.Additive, () => ToggleLevelSceneObjects(true)));
+    }
+
+    private void ToggleLevelSceneObjects(bool _isActive)
+    {
+        Player.gameObject.SetActive(_isActive);
+        LevelCamera.gameObject.SetActive(_isActive);
     }
 
     private IEnumerator LoadSceneAndThen(string sceneName, LoadSceneMode mode, Action action)

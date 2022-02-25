@@ -15,9 +15,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private MonsterController EnemyLoader;
     [SerializeField] private Button EndButton;
 
-    //TODO: Remove
-    public List<MonsterData> PlayerData;
-    public List<MonsterData> EnemyData;
     //Change later
     public List<CardData> Deck;
 
@@ -37,7 +34,7 @@ public class BattleManager : MonoBehaviour
             Singleton = this;
         }
         else
-        { //if GameSceneController already exists then destory this. We don't want duplicates
+        { //if BattleManager already exists then destory this. We don't want duplicates
             Destroy(this);
         }
     }
@@ -49,8 +46,6 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.GetNextTurnState += GetNextTurnState;
         EventManager.Instance.ResetSelected += ResetSelected;
         EventManager.Instance.BattleOver += BattleOver;
-
-        //StartCoroutine(StartBattle());
     }
 
     private void OnDestroy()
@@ -89,6 +84,7 @@ public class BattleManager : MonoBehaviour
         string message = _controller == PlayerLoader ? "Player 2" : "Player 1";
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
+        GameSceneController.Singleton.LoadLevelScene(2);
     }
 
     private void GetNextTurnState()
