@@ -78,12 +78,17 @@ public class BattleManager : MonoBehaviour
         EndButton.enabled = true;
     }
 
+    /// <summary>
+    /// Triggered when battle has been lost
+    /// </summary>
+    /// <param name="_controller">The controller of the losing side</param>
     private void BattleOver(MonsterController _controller)
     {
-        string message = _controller == PlayerLoader ? "Player 2" : "Player 1";
+        bool didPlayerOneWin = _controller == EnemyLoader;
+        string message = didPlayerOneWin ? "Player 1" : "Player 2";
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
-        GameSceneController.Singleton.LoadLevelScene(2);
+        GameSceneController.Singleton.LoadLevelScene(2, didPlayerOneWin);
     }
 
     private void GetNextTurnState()

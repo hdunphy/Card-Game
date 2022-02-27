@@ -14,6 +14,8 @@ public class GameSceneController : MonoBehaviour
     [SerializeField] private string BattleSceneName;
     [SerializeField] private string LevelSceneName; //TODO will need anotherway to get/set this with more levels
 
+    private IEncounter EncounterCaller;
+
     private void Awake()
     {
         //Singleton pattern On Awake set the singleton to this.
@@ -28,8 +30,9 @@ public class GameSceneController : MonoBehaviour
         }
     }
 
-    public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters)
+    public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters, IEncounter _encounterCaller)
     {
+        EncounterCaller = _encounterCaller;
         ToggleLevelSceneObjects(false);
 
         SceneManager.UnloadSceneAsync(LevelSceneName);
@@ -38,24 +41,33 @@ public class GameSceneController : MonoBehaviour
             BattleManager.Singleton.StartBattle(playerMonsters, enemyMonsters)));
     }
 
-    public void LoadLevelScene(float seconds)
+    public void LoadLevelScene(float seconds, bool didPlayerOneWin)
     {
-        StartCoroutine(LoadLevelSceneWait(seconds));
+        StartCoroutine(LoadLevelSceneWait(seconds, didPlayerOneWin));
     }
 
-    private IEnumerator LoadLevelSceneWait(float seconds)
+    private IEnumerator LoadLevelSceneWait(float seconds, bool didPlayerOneWin)
     {
         yield return new WaitForSeconds(seconds);
 
         SceneManager.UnloadSceneAsync(BattleSceneName);
 
-        StartCoroutine(LoadSceneAndThen(LevelSceneName, LoadSceneMode.Additive, () => ToggleLevelSceneObjects(true)));
+        StartCoroutine(LoadSceneAndThen(LevelSceneName, LoadSceneMode.Additive, () => LoadLevelScene(didPlayerOneWin)));
     }
 
     private void ToggleLevelSceneObjects(bool _isActive)
     {
         Player.gameObject.SetActive(_isActive);
         LevelCamera.gameObject.SetActive(_isActive);
+    }
+
+    private void LoadLevelScene(bool didPlayerOneWin)
+    {
+        ToggleLevelSceneObjects(true);
+        if (didPlayerOneWin)
+        {
+            FindObjectOfType<RewardsController>().Show(EncounterCaller.GetRewards());
+        }
     }
 
     private IEnumerator LoadSceneAndThen(string sceneName, LoadSceneMode mode, Action action)

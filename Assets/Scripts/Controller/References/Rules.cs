@@ -36,7 +36,7 @@ namespace Assets.Scripts.References
         private static readonly float EFFECTIVE = 2f;
         private static readonly float SAME_TYPE_ADVANTAGE = 1.5f;
         private static readonly float SECONDARY_TYPE_ADVANTAGE = 0.75f;
-        private static readonly int SEED = 1;
+        private static readonly int SEED = 2;
 
         private static System.Random Random;
 

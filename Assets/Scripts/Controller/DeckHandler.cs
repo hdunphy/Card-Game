@@ -138,6 +138,7 @@ public abstract class DeckHandler : MonoBehaviour
             _card.SetCardData(data);
             _card.gameObject.SetActive(false);
             DrawPile.Add(_card);
+            DrawPile.Shuffle();
         }
         UpdateCardCounts();
     }
