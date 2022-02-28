@@ -56,11 +56,12 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.BattleOver -= BattleOver;
     }
 
-    public void StartBattle(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData)
+    public void StartBattle(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData, 
+        List<CardData> playerCards, List<CardData> enemyCards)
     {
         /* -- Set up Battle -- */
-        PlayerLoader.BattleSetUp(playerData, Deck);
-        EnemyLoader.BattleSetUp(enemyData, new List<CardData>(), true);
+        PlayerLoader.BattleSetUp(playerData, playerCards);
+        EnemyLoader.BattleSetUp(enemyData, enemyCards, true);
 
         playerTurn = PlayerTurn.PlayerOne;
 

@@ -87,6 +87,12 @@ MonoBehaviour:
   PlayerData:
   - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
   - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  PlayerCards:
+  - {fileID: 11400000, guid: b5b946124c5d4fa409a47226ca9cacad, type: 2}
+  - {fileID: 11400000, guid: 76c34944871ab2f4ba91a8d415cd3852, type: 2}
+  - {fileID: 11400000, guid: b0754c318565f4b47b7b1e3db56015e7, type: 2}
+  - {fileID: 11400000, guid: c43eeda4b95508e44907f4f945b04331, type: 2}
+  - {fileID: 11400000, guid: 84a994f605581c6479016a625f3556fd, type: 2}
 --- !u!114 &2505605168106303826
 MonoBehaviour:
   m_ObjectHideFlags: 0

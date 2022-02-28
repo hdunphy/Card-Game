@@ -42,7 +42,8 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
         if (monsters.Any())
         {
-            GameSceneController.Singleton.LoadBattleScene(FindObjectOfType<PlayerController>().Monsters, monsters, this);
+            var player = FindObjectOfType<PlayerController>();
+            GameSceneController.Singleton.LoadBattleScene(player.Monsters, monsters, player.PlayerCards, new List<CardData>(), this);
         }
     }
 

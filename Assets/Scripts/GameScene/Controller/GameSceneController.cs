@@ -30,7 +30,8 @@ public class GameSceneController : MonoBehaviour
         }
     }
 
-    public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters, IEncounter _encounterCaller)
+    public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters, 
+        List<CardData> playerCards, List<CardData> enemyCards, IEncounter _encounterCaller)
     {
         EncounterCaller = _encounterCaller;
         ToggleLevelSceneObjects(false);
@@ -38,7 +39,7 @@ public class GameSceneController : MonoBehaviour
         SceneManager.UnloadSceneAsync(LevelSceneName);
 
         StartCoroutine(LoadSceneAndThen(BattleSceneName, LoadSceneMode.Additive, () =>
-            BattleManager.Singleton.StartBattle(playerMonsters, enemyMonsters)));
+            BattleManager.Singleton.StartBattle(playerMonsters, enemyMonsters, playerCards, enemyCards)));
     }
 
     public void LoadLevelScene(float seconds, bool didPlayerOneWin)
@@ -73,6 +74,10 @@ public class GameSceneController : MonoBehaviour
     private IEnumerator LoadSceneAndThen(string sceneName, LoadSceneMode mode, Action action)
     {
         yield return SceneManager.LoadSceneAsync(sceneName, mode);
+
+        //wait for two frames
+        yield return null;
+        yield return null;
 
         action.Invoke();
     }
