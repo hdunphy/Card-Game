@@ -224,6 +224,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2505605168106303827, guid: 5764e8808a202d84f9f03583fa4895b7, type: 3}
+      propertyPath: PlayerCards.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2505605168106303827, guid: 5764e8808a202d84f9f03583fa4895b7, type: 3}
+      propertyPath: PlayerCards.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 84a994f605581c6479016a625f3556fd, type: 2}
     - target: {fileID: 2505605168106303830, guid: 5764e8808a202d84f9f03583fa4895b7, type: 3}
       propertyPath: m_RootOrder
       value: 1

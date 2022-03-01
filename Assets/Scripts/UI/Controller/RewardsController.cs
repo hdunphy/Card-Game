@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI.Controller
 {
-    public class RewardsController : MonoBehaviour, ISelectabaleCardController
+    public class RewardsController : MonoBehaviour
     {
         [SerializeField] private Transform CardListParent;
         [SerializeField] private SelectableCard CardRewardPrefab;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.UI.Controller;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,8 +9,8 @@ public class Card : MonoBehaviour
     [SerializeField] private Image DisableCover;
     [SerializeField] private HoverEffect HoverEffect;
     [SerializeField] private DragAndDrop DragAndDrop;
-    [SerializeField] private CardUIController UIController;
 
+    private ICardUI UIController;
     private CardData Data;
     private int siblingIndex;
     private bool playedThisTurn;
@@ -18,6 +19,7 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
+        UIController = GetComponentInChildren<ICardUI>();
         DragAndDrop.SetRectTransform(Dragger.Instance.GetComponent<RectTransform>());
         EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
     }

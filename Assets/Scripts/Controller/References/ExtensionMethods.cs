@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.References
 {
@@ -15,6 +16,15 @@ namespace Assets.Scripts.References
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        public static Transform Clear(this Transform transform)
+        {
+            foreach (Transform child in transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+            return transform;
         }
     }
 }

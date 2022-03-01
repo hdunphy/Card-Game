@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.UI.Controller
 {
@@ -20,21 +19,24 @@ namespace Assets.Scripts.UI.Controller
                 Text.text = _count.ToString();
                 if(DisabledCover != null)
                 {
-                    DisabledCover.SetActive(_count <= 0);
+                    bool _isActive = _count <= 0;
+                    DisabledCover.SetActive(_isActive);
+                    Card.enabled = !_isActive;
                 }
             }
         }
 
         private void OnDestroy()
         {
-            Card.OnSelected -= DecrementCount;
+            if(Card != null)
+                Card.OnSelected -= DecrementCount;
         }
 
         public void Setup(int count, SelectableCard card)
         {
-            Count = count;
             Card = card;
             DisabledCover = Instantiate(DisabledCoverPrefab, Card.transform);
+            Count = count;
 
             Card.OnSelected += DecrementCount;
         }
