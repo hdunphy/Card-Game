@@ -47,7 +47,7 @@ public class RewardsController : MonoBehaviour
     public void OnContinueClicked()
     {
         var SelectedCards = CardRewards.Where(c => c.IsSelected).Select(c => c.CardData);
-        FindObjectOfType<PlayerController>().AddCards(SelectedCard);
+        FindObjectOfType<PlayerController>().DeckHolder.AllCards.AddRange(SelectedCards);
 
         RewardCanvas.SetActive(false);
     }
