@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Disabled Cover
       objectReference: {fileID: 0}
+    - target: {fileID: 2868740216985798173, guid: a3cac1a04a48f5c4aaf109468fa15df6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5712322309688564890, guid: a3cac1a04a48f5c4aaf109468fa15df6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

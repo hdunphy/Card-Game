@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 616273824}
   - component: {fileID: 616273825}
+  - component: {fileID: 616273826}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -170,6 +171,37 @@ MonoBehaviour:
   LevelCamera: {fileID: 891500462}
   BattleSceneName: BattleScene
   LevelSceneName: Level
+--- !u!114 &616273826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616273823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aacf2c316bb8594fac9f20ccf8efa35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CardAlignmentReferences:
+  - Sprite: {fileID: -7115396137046201765, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 0
+  - Sprite: {fileID: -7803222650122623249, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 1
+  - Sprite: {fileID: -9217841746203433644, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 2
+  - Sprite: {fileID: -121748547742896105, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 3
+  - Sprite: {fileID: 2447709974479400878, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 4
+  - Sprite: {fileID: 851543591584934459, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 5
+  - Sprite: {fileID: -2898261802373803631, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 6
+  - Sprite: {fileID: 5680248586458458738, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+    Enum: 7
+  - Sprite: {fileID: 21300000, guid: 8a9bbdb396616444cb3ef35d09ddb7f2, type: 3}
+    Enum: 8
 --- !u!114 &891500462 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3949649474796620874, guid: dff6aba8a4bb16c4cbe5eead8a146259, type: 3}

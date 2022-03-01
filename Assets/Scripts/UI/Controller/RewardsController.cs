@@ -1,54 +1,63 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RewardsController : MonoBehaviour
+namespace Assets.Scripts.UI.Controller
 {
-    [SerializeField] private Transform CardListParent;
-    [SerializeField] private CardReward CardRewardPrefab;
-    [SerializeField] private GameObject RewardCanvas;
-
-    private CardData SelectedCard;
-    private List<CardReward> CardRewards;
-
-    private void Start()
+    public class RewardsController : MonoBehaviour, ISelectabaleCardController
     {
-        RewardCanvas.SetActive(false);
-        CardRewards = new List<CardReward>();
-    }
+        [SerializeField] private Transform CardListParent;
+        [SerializeField] private SelectableCard CardRewardPrefab;
+        [SerializeField] private GameObject RewardCanvas;
 
-    public void Show(List<CardData> cards)
-    {
-        foreach (var reward in CardRewards)
+        private List<SelectableCard> CardRewards;
+
+        private void Start()
         {
-            Destroy(reward.gameObject);
+            RewardCanvas.SetActive(false);
+            CardRewards = new List<SelectableCard>();
         }
-        CardRewards.Clear();
 
-        RewardCanvas.SetActive(true);
-        foreach (var _cardData in cards)
+        public void Show(List<CardData> cards)
         {
-            var cardReward = Instantiate(CardRewardPrefab, CardListParent);
-            cardReward.SetCardData(_cardData, this);
-            CardRewards.Add(cardReward);
-        }
-    }
+            foreach (var reward in CardRewards)
+            {
+                Destroy(reward.gameObject);
+            }
+            CardRewards.Clear();
 
-    public void SelectCard(CardReward selected)
-    {
-        foreach (var reward in CardRewards)
+            RewardCanvas.SetActive(true);
+            foreach (var _cardData in cards)
+            {
+                var cardReward = Instantiate(CardRewardPrefab, CardListParent);
+                cardReward.SetCardData(_cardData);
+                cardReward.OnSelected += SelectCard;
+                CardRewards.Add(cardReward);
+            }
+        }
+
+        public void SelectCard(SelectableCard selected)
         {
-            reward.IsSelected = (selected == reward) && !reward.IsSelected;
+            foreach (var reward in CardRewards)
+            {
+                reward.IsSelected = (selected == reward) && !reward.IsSelected;
+            }
         }
-    }
 
-    public void OnContinueClicked()
-    {
-        var SelectedCards = CardRewards.Where(c => c.IsSelected).Select(c => c.CardData);
-        FindObjectOfType<PlayerController>().DeckHolder.AllCards.AddRange(SelectedCards);
+        public void OnContinueClicked()
+        {
+            var SelectedCards = CardRewards.Where(c => c.IsSelected).Select(c => c.CardData);
+            FindObjectOfType<PlayerController>().DeckHolder.AllCards.AddRange(SelectedCards);
 
-        RewardCanvas.SetActive(false);
+            RewardCanvas.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            foreach(var reward in CardRewards)
+            {
+                reward.OnSelected -= SelectCard;
+            }
+        }
     }
 }

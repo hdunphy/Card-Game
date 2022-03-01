@@ -1,12 +1,12 @@
+using Assets.Scripts.UI.Controller;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardReward : MonoBehaviour, IPointerDownHandler
+public class SelectableCard : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private CardUIController UIController;
     [SerializeField] private GameObject Highlight;
-
-    private RewardsController RewardsController;
 
     private bool _isSelected;
     public bool IsSelected
@@ -19,6 +19,7 @@ public class CardReward : MonoBehaviour, IPointerDownHandler
         }
     }
     public CardData CardData { get; private set; }
+    public event Action<SelectableCard> OnSelected;
 
     private void Start()
     {
@@ -28,13 +29,13 @@ public class CardReward : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        RewardsController.SelectCard(this);
+        OnSelected?.Invoke(this);
+        //CardController.SelectCard(this);
     }
 
-    public void SetCardData(CardData cardData, RewardsController rewardsController)
+    public void SetCardData(CardData cardData)
     {
         CardData = cardData;
-        RewardsController = rewardsController;
         UIController.SetCardData(cardData);
     }
 }
