@@ -6,7 +6,7 @@ public class DeckBuilderUI : MonoBehaviour
 
     private void Start()
     {
-        DeckBuilderCanvas.gameObject.SetActive(false);
+        //DeckBuilderCanvas.gameObject.SetActive(false);
     }
 
     public void Show()
