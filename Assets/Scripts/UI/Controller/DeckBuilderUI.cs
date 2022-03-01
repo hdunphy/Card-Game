@@ -18,6 +18,7 @@ namespace Assets.Scripts.UI.Controller
 
         private List<SelectableCard> AvailableCards;
         private List<SelectableCard> CurrentCards;
+        private IDeckHolder DeckHolder;
 
         private void Start()
         {
@@ -30,33 +31,39 @@ namespace Assets.Scripts.UI.Controller
         public void Show()
         {
             DeckBuilderCanvas.gameObject.SetActive(true);
-            var player = FindObjectOfType<PlayerController>();
+            DeckHolder = FindObjectOfType<PlayerController>().DeckHolder;
 
+            GetAvailableCards();
+            GetCurrentCards();
+        }
+
+        public void Hide()
+        {
             ClearCards();
-            GetAvailableCards(player.DeckHolder);
-            GetCurrentCards(player.DeckHolder);
+            DeckBuilderCanvas.gameObject.SetActive(false);
         }
 
         private void ClearCards()
         {
-            foreach(var card in AvailableCards)
-            {
-                Destroy(card);
-            }
-            foreach (var card in CurrentCards)
-            {
-                Destroy(card);
-            }
+            //foreach(var card in AvailableCards)
+            //{
+            //    Destroy(card);
+            //}
+            //foreach (var card in CurrentCards)
+            //{
+            //    Destroy(card);
+            //}
 
             AvailableCardsParent.transform.Clear();
+            CurrentDeckParent.transform.Clear();
 
             AvailableCards.Clear();
             CurrentCards.Clear();
         }
 
-        private void GetAvailableCards(IDeckHolder deckHolder)
+        private void GetAvailableCards()
         {
-            var _allCards = deckHolder.AllCards.GroupBy(c => c).ToList();
+            var _allCards = DeckHolder.AllCards.GroupBy(c => c).ToList();
             Transform cardRow = null;
 
             for (int i = 0; i < _allCards.Count; i++)
@@ -69,55 +76,87 @@ namespace Assets.Scripts.UI.Controller
                 //Create selectable
                 var _card = Instantiate(CardPrefab, cardRow);
                 _card.SetCardData(_allCards[i].Key);
-                _card.OnSelected += AddCard;
+                _card.OnSelected += AddCardToCurrentDeck;
                 AvailableCards.Add(_card);
 
                 //Create quantity
-                int count = _allCards[i].Count() - deckHolder.CurrentDeck.Count(c => c == _allCards[i].Key);
+                int count = _allCards[i].Count() - DeckHolder.CurrentDeck.Count(c => c == _allCards[i].Key);
                 var qty = Instantiate(QuantityPrefab, _card.transform);
                 qty.Setup(count, _card);
             }
 
             var rtransform = AvailableCardsParent.GetComponent<RectTransform>();
-            rtransform.sizeDelta = new Vector2(rtransform.rect.width, AvailableCardsParent.childCount * cardRow.GetComponent<RectTransform>().rect.height);
+            rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, AvailableCardsParent.childCount * cardRow.GetComponent<RectTransform>().rect.height);
         }
 
-        private void GetCurrentCards(IDeckHolder deckHolder)
+        private void GetCurrentCards()
         {
-            var currentCards = deckHolder.CurrentDeck.GroupBy(c => c).ToList();
+            var currentCards = DeckHolder.CurrentDeck.GroupBy(c => c).ToList();
             for (int i = 0; i < currentCards.Count; i++)
             {
-                //Create selectable
-                var _cardGO = Instantiate(CurrentCardPrefab, CurrentDeckParent);
-                _cardGO.SetCardData(currentCards[i].Key);
-                _cardGO.OnSelected += RemoveCard;
-                CurrentCards.Add(_cardGO);
-
-                //Create quantity
-                int count = currentCards[i].Count();
-                var qty = Instantiate(QuantityPrefab, _cardGO.transform);
-                qty.Setup(count, _cardGO);
+                var cardGroup = currentCards[i];
+                AddCurrentCard(cardGroup.Key, cardGroup.Count());
             }
 
             var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
-            rtransform.sizeDelta = new Vector2(rtransform.rect.width, CurrentDeckParent.childCount * CurrentCardPrefab.GetComponent<RectTransform>().rect.height);
+            rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, CurrentDeckParent.childCount * CurrentCardPrefab.GetComponent<RectTransform>().rect.height);
         }
 
-        public void AddCard(SelectableCard selectableCard)
+        private void AddCurrentCard(CardData card, int count)
+        {
+            //Create selectable
+            var _cardGO = Instantiate(CurrentCardPrefab, CurrentDeckParent);
+            _cardGO.SetCardData(card);
+            CurrentCards.Add(_cardGO);
+
+            //Create quantity
+            var qty = Instantiate(QuantityPrefab, _cardGO.transform);
+            qty.Setup(count, _cardGO);
+            _cardGO.OnSelected += RemoveCard; //TODO: Fix this race condition
+        }
+
+        public void AddCardToCurrentDeck(SelectableCard selectableCard)
         {
             Debug.Log($"Added a card: {selectableCard.name}");
+            var _currentCard = CurrentCards.FirstOrDefault(c => c.CardData == selectableCard.CardData);
+            if(_currentCard != null)
+            {
+                _currentCard.GetComponentInChildren<Quantity>().Count++;
+            }
+            else
+            {
+                AddCurrentCard(selectableCard.CardData, 1);
+            }
+
+            DeckHolder.CurrentDeck.Add(selectableCard.CardData);
         }
 
         public void RemoveCard(SelectableCard selectableCard)
         {
             Debug.Log($"Removed a card: {selectableCard.name}");
+            var qty = selectableCard.GetComponentInChildren<Quantity>();
+            if (qty.Count <= 0)
+            {
+                //TODO: Shouldn't be happening here
+                var c = CurrentCards.FirstOrDefault(c => c == selectableCard);
+                Destroy(c.gameObject);
+            }
+
+            var _availableCard = AvailableCards.FirstOrDefault(c => c.CardData == selectableCard.CardData);
+            _availableCard.GetComponentInChildren<Quantity>().Count++;
+
+            DeckHolder.CurrentDeck.Remove(selectableCard.CardData);
         }
 
         private void OnDestroy()
         {
             foreach(var card in AvailableCards)
             {
-                card.OnSelected -= AddCard;
+                card.OnSelected -= AddCardToCurrentDeck;
+            }
+            foreach (var card in CurrentCards)
+            {
+                card.OnSelected -= RemoveCard;
             }
         }
     }

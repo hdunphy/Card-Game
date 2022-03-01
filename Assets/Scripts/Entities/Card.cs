@@ -17,9 +17,13 @@ public class Card : MonoBehaviour
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
-    private void Start()
+    private void Awake()
     {
         UIController = GetComponentInChildren<ICardUI>();
+    }
+
+    private void Start()
+    {
         DragAndDrop.SetRectTransform(Dragger.Instance.GetComponent<RectTransform>());
         EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
     }

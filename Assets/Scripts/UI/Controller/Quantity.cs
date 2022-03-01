@@ -17,6 +17,7 @@ namespace Assets.Scripts.UI.Controller
             {
                 _count = value;
                 Text.text = _count.ToString();
+                //Should trigger an event or something
                 if(DisabledCover != null)
                 {
                     bool _isActive = _count <= 0;
