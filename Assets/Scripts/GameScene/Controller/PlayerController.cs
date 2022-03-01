@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     IMovement Movement;
     Vector2 movementVector;
 
+    private IInteractable Interactable;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +29,20 @@ public class PlayerController : MonoBehaviour
         movementVector.x = Input.GetAxisRaw("Horizontal");
         movementVector.y = Input.GetAxisRaw("Vertical");
         Movement.SetMoveDirection(movementVector);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interactable.GetInteraction();
+        }
     }
 
     public void AddCards(CardData selectedCard)
     {
         PlayerCards.Add(selectedCard);
+    }
+
+    public void SetInteraction(IInteractable interactable)
+    {
+        Interactable = interactable;
     }
 }
