@@ -98,8 +98,11 @@ namespace Assets.Scripts.UI.Controller
                 AddCurrentCard(cardGroup.Key, cardGroup.Count());
             }
 
-            var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
-            rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, CurrentDeckParent.childCount * CurrentCardPrefab.GetComponent<RectTransform>().rect.height);
+            if (CurrentCards.Any())
+            {
+                var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
+                rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, CurrentDeckParent.childCount * CurrentCards[0].GetComponent<RectTransform>().rect.height);
+            }
         }
 
         private void AddCurrentCard(CardData card, int count)
@@ -111,6 +114,10 @@ namespace Assets.Scripts.UI.Controller
 
             //Create quantity
             var qty = Instantiate(QuantityPrefab, _cardGO.transform);
+            var rect = qty.GetComponent<RectTransform>();
+            rect.anchorMax = new Vector2(0, .5f);
+            rect.anchorMin = new Vector2(0, .5f);
+            rect.anchoredPosition = new Vector2(12.5f, 0);
             qty.Setup(count, _cardGO);
             _cardGO.OnSelected += RemoveCard; //TODO: Fix this race condition
         }
