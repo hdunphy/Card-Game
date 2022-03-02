@@ -98,8 +98,11 @@ namespace Assets.Scripts.UI.Controller
                 AddCurrentCard(cardGroup.Key, cardGroup.Count());
             }
 
-            var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
-            rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, CurrentDeckParent.childCount * CurrentCardPrefab.GetComponent<RectTransform>().rect.height);
+            if (CurrentCards.Any())
+            {
+                var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
+                rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, CurrentDeckParent.childCount * CurrentCards[0].GetComponent<RectTransform>().rect.height);
+            }
         }
 
         private void AddCurrentCard(CardData card, int count)

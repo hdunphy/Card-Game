@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         Movement = GetComponent<IMovement>();
         Monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
 
-        DeckHolder = new PlayerDeckHolder(PlayerCards, new List<List<CardData>> { PlayerCards });
+        DeckHolder = new PlayerDeckHolder(PlayerCards, new List<List<CardData>> { new List<CardData>(PlayerCards) });
     }
 
     // Update is called once per frame
