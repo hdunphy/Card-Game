@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractionTrigger : MonoBehaviour, IInteractable
+public class InteractionTrigger : MonoBehaviour, IPlayerInteractable
 {
     [SerializeField] private GameObject CanInteractDisplay;
     [SerializeField] private UnityEvent OnInteractionEvent;
@@ -11,7 +11,7 @@ public class InteractionTrigger : MonoBehaviour, IInteractable
         CanInteractDisplay.SetActive(false);
     }
 
-    public void GetInteraction()
+    public void Interact(PlayerController player)
     {
         OnInteractionEvent?.Invoke();
     }
@@ -35,7 +35,7 @@ public class InteractionTrigger : MonoBehaviour, IInteractable
     }
 }
 
-public interface IInteractable
+public interface IPlayerInteractable
 {
-    public void GetInteraction();
+    public void Interact(PlayerController player);
 }
