@@ -114,6 +114,10 @@ namespace Assets.Scripts.UI.Controller
 
             //Create quantity
             var qty = Instantiate(QuantityPrefab, _cardGO.transform);
+            var rect = qty.GetComponent<RectTransform>();
+            rect.anchorMax = new Vector2(0, .5f);
+            rect.anchorMin = new Vector2(0, .5f);
+            rect.anchoredPosition = new Vector2(12.5f, 0);
             qty.Setup(count, _cardGO);
             _cardGO.OnSelected += RemoveCard; //TODO: Fix this race condition
         }
