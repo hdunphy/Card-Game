@@ -30,7 +30,11 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     public bool IsInPlay => CurrentHealth > 0;
     public int TotalHealth => Data.Health;
     public bool IsTurn { get; private set; }
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth
+    {
+        get => Data.CurrentHealth;
+        private set => Data.CurrentHealth = value;
+    }
     public int EnergyAvailable { get; private set; }
     public float AttackModifier { get; set; }
     public float DefenseModifier { get; set; }
@@ -56,11 +60,11 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     {
         if (!DisableCover.gameObject.activeSelf)
         {
-            if(eventData.button == PointerEventData.InputButton.Left)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
                 EventManager.Instance.OnSelectMonsterTrigger(this);
             }
-            else if(eventData.button == PointerEventData.InputButton.Right)
+            else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 EventManager.Instance.OnResetSelectedTrigger();
             }
@@ -126,7 +130,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     }
 
     public bool HasStatus(BaseStatus status) => Statuses.ContainsKey(status);
-    
+
     public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Statuses[status].Count);
 
     public void RemoveStatus(BaseStatus status)
@@ -140,7 +144,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     {
         var _statuses = Statuses.Keys.ToList();
         //remove events
-        foreach(var _status in _statuses)
+        foreach (var _status in _statuses)
         {
             RemoveStatus(_status);
         }
@@ -230,7 +234,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(eventData.pointerPress.TryGetComponent(out Card card))
+        if (eventData.pointerPress.TryGetComponent(out Card card))
         {
             EventManager.Instance.OnSelectTargetTrigger(this, card);
         }

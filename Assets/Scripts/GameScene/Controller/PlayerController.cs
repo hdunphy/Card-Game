@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public List<MonsterInstance> Monsters { get; private set; }
+    public IEnumerable<MonsterInstance> PlayableMonsters { get => monsters.Where( m => m.CurrentHealth > 0); }
     //Replace
     public List<MonsterData> PlayerData;
     [SerializeField] private List<CardData> PlayerCards;
@@ -13,13 +13,15 @@ public class PlayerController : MonoBehaviour
     IMovement Movement;
 
     private IPlayerInteractable Interactable;
+    private List<MonsterInstance> monsters;
+
     public IDeckHolder DeckHolder { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         Movement = GetComponent<IMovement>();
-        Monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
+        monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
 
         DeckHolder = new PlayerDeckHolder(PlayerCards, new List<List<CardData>> { new List<CardData>(PlayerCards) });
     }

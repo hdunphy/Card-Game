@@ -63,6 +63,9 @@ public class MainMenu : MonoBehaviour
     public void OnContinue()
     {
         Debug.Log("OnContinue");
+
+        SceneManager.UnloadSceneAsync(GameSceneController.MainMenuScene);
+        GameSceneController.Singleton.StartGame();
     }
 
     public void OnOptions()

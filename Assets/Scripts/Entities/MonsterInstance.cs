@@ -16,6 +16,7 @@ namespace Assets.Scripts.Entities
         public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
         public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
+        public int CurrentHealth { get; set; }
         public int Energy { get; private set; }
         public int Level { get; private set; }
         public int Experiance { get; private set; }
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Entities
             Name = monsterData.name;
             Energy = BaseData.Energy;
             CardDraw = BaseData.CardDraw;
+            CurrentHealth = Health;
 
             Experiance = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
