@@ -1,18 +1,18 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
+using Assets.Scripts.GameScene.Entities;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Entities.SaveSystem
 {
-    public class SaveStationController : MonoBehaviour, IPlayerInteractable
+    public class SaveStation : MonoBehaviour, IPlayerInteractable
     {
         [SerializeField] private SpriteRenderer SpriteRenderer;
         [SerializeField] private Sprite OffSprite;
         [SerializeField] private Sprite OnSprite;
-        [SerializeField] private Text SaveStationText;
+        [SerializeField] private TMPro.TMP_Text SaveStationText;
 
-        private const string OnEnterText = "Press Up to Save";
+        private const string OnEnterText = "Press E to Save";
         private const string OnSaveText = "Saving...";
         private const string OnSavedText = "Saved";
 
@@ -40,8 +40,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         public void Interact(PlayerController controller)
         {
             SaveStationText.text = OnSaveText;
-            SaveData.Current.PlayerPosition = controller.transform.position;
-            SaveData.Current.PlayerSceneName = gameObject.scene.name;
+            controller.SavePlayerData();
             if (SerializationManager.Save(SaveData.Current.SaveName, SaveData.Current))
             {
                 Debug.Log("Game Saved");

@@ -56,3 +56,6 @@ TagManager:
   - name: Collision Layer
     uniqueID: 1126596527
     locked: 0
+  - name: Text
+    uniqueID: 3033877159
+    locked: 0

@@ -2,6 +2,7 @@
 using Assets.Scripts.Entities.Scriptable;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
 public class CardData : IDropScriptableObject
 {

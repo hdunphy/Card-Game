@@ -74,7 +74,6 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     public void SetUp(MonsterInstance _data)
     {
         Data = _data;
-        CurrentHealth = Data.Health;
         EnergyAvailable = Data.Energy;
         MonsterName.text = Data.Name;
 

@@ -1,12 +1,10 @@
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Entities
 {
-    public class InteractionTrigger : MonoBehaviour, IPlayerInteractable
+    public class HealStationInteractable : MonoBehaviour, IPlayerInteractable
     {
         [SerializeField] private GameObject CanInteractDisplay;
-        [SerializeField] private UnityEvent OnInteractionEvent;
 
         private void Start()
         {
@@ -15,7 +13,7 @@ namespace Assets.Scripts.GameScene.Entities
 
         public void Interact(PlayerController player)
         {
-            OnInteractionEvent?.Invoke();
+            player.HealMonsters();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

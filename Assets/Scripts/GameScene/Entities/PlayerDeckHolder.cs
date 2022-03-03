@@ -8,6 +8,7 @@ public interface IDeckHolder
     public List<CardData> CurrentDeck { get; }
 }
 
+[System.Serializable]
 public class PlayerDeckHolder : IDeckHolder
 {
     public List<CardData> AllCards { get; private set; }

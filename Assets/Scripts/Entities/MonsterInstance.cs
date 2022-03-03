@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
+    [Serializable]
     public class MonsterInstance
     {
         private readonly MonsterData BaseData;

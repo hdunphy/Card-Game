@@ -1,4 +1,7 @@
 using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.SaveSystem;
+using Assets.Scripts.GameScene.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     public void SetMoveDirection(Vector2 movementVector) => Movement.SetMoveDirection(movementVector);
 
+    public void HealMonsters() => monsters.ForEach((monster) => monster.CurrentHealth = monster.Health);
+
     public void Interact() => Interactable?.Interact(this);
 
     /// <summary>
@@ -39,6 +44,14 @@ public class PlayerController : MonoBehaviour
         transform.position = loadPosition; //Move player to position
         Camera.main.transform.position = new Vector3(loadPosition.x, loadPosition.y, Camera.main.transform.position.z); //Move camera to position
         Movement.SetCanMove(true); //re-enable player movement
+    }
+
+    public void SavePlayerData()
+    {
+        SaveData.Current.PlayerPosition = transform.position;
+        SaveData.Current.PlayerSceneName = gameObject.scene.name;
+        SaveData.Current.DeckHolder = DeckHolder;
+        SaveData.Current.PlayerMonsters = monsters;
     }
 
     /// <summary>
