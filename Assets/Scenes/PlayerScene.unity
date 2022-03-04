@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 616273824}
   - component: {fileID: 616273825}
   - component: {fileID: 616273826}
+  - component: {fileID: 616273827}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -205,6 +206,33 @@ MonoBehaviour:
     Enum: 7
   - Sprite: {fileID: 21300000, guid: 8a9bbdb396616444cb3ef35d09ddb7f2, type: 3}
     Enum: 8
+--- !u!114 &616273827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616273823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512016b16f728774087e493aadc41948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards:
+  - {fileID: 11400000, guid: 84a994f605581c6479016a625f3556fd, type: 2}
+  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
+  - {fileID: 11400000, guid: b03ba5bd2a1692148bac16d77ead14d7, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 099d766b75600cf458e741bd3a8fa4ed, type: 2}
+  - {fileID: 11400000, guid: bb65d53c135113b4b86c423fbb0bc7dc, type: 2}
+  - {fileID: 11400000, guid: 2aa9bd44352586b41bd46445ae679545, type: 2}
+  - {fileID: 11400000, guid: b5b946124c5d4fa409a47226ca9cacad, type: 2}
+  - {fileID: 11400000, guid: 76c34944871ab2f4ba91a8d415cd3852, type: 2}
+  - {fileID: 11400000, guid: b0754c318565f4b47b7b1e3db56015e7, type: 2}
+  - {fileID: 11400000, guid: 95cf3deeb764d234b9353fff719f4346, type: 2}
+  - {fileID: 11400000, guid: c43eeda4b95508e44907f4f945b04331, type: 2}
+  Monsters:
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
 --- !u!1 &994381226
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Entities.Drops;
+﻿using Assets.Scripts.Controller.References;
+using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.References;
 using System;
 using System.Collections.Generic;
@@ -6,13 +8,12 @@ using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
-    [Serializable]
     public class MonsterInstance
     {
         private readonly MonsterData BaseData;
-        private readonly int AttackModifier;
-        private readonly int DefenseModifier;
-        private readonly int HealthModifier;
+        public readonly int AttackModifier;
+        public readonly int DefenseModifier;
+        public readonly int HealthModifier;
 
         public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
@@ -20,9 +21,11 @@ namespace Assets.Scripts.Entities
         public int CurrentHealth { get; set; }
         public int Energy { get; private set; }
         public int Level { get; private set; }
-        public int Experiance { get; private set; }
+        public int Experience { get; private set; }
         public string Name { get; private set; }
         public int CardDraw { get; private set; }
+
+        public string DataName => BaseData.name;
 
         public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
         public MonsterAlignment MonsterAlignment { get => BaseData.MonsterAlignments; }
@@ -32,16 +35,33 @@ namespace Assets.Scripts.Entities
         {
             BaseData = monsterData;
             Level = _level;
-            Name = monsterData.name;
-            Energy = BaseData.Energy;
-            CardDraw = BaseData.CardDraw;
             CurrentHealth = Health;
 
-            Experiance = Rules.Instance.GetExp(this);
+            Experience = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);
             HealthModifier = Rules.GetRandomInt(0, 31);
+            
+            SetFieldsFromData();
+        }
 
+        public MonsterInstance(MonsterSaveModel monsterSaveModel)
+        {
+            BaseData = ScriptableObjectReference.Singleton.GetScriptableObject<MonsterData>(monsterSaveModel.MonsterDataName);
+            Level = monsterSaveModel.Level;
+            Experience = monsterSaveModel.Experience;
+            AttackModifier = monsterSaveModel.AttackModifier;
+            CurrentHealth = monsterSaveModel.CurrentHealth;
+            DefenseModifier = monsterSaveModel.DefenseModifier;
+
+            SetFieldsFromData();
+        }
+
+        private void SetFieldsFromData()
+        {
+            Name = BaseData.name;
+            Energy = BaseData.Energy;
+            CardDraw = BaseData.CardDraw;
             WildDeck = BaseData.WildCards;
             if (BaseData.Level30Card != null && Level >= 30)
                 WildDeck.Add(BaseData.Level30Card);
@@ -51,23 +71,23 @@ namespace Assets.Scripts.Entities
 
         public int AddExperience(int _xp, int levelUps = 0)
         {
-            int xpToNextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
+            int xpToNextLevel = Rules.Instance.GetExpNextLevel(this) - Experience;
 
             if (_xp > xpToNextLevel)
             {
-                Experiance += xpToNextLevel;
+                Experience += xpToNextLevel;
                 Level++;
                 levelUps = AddExperience(_xp - xpToNextLevel, ++levelUps);
             }
             else
-                Experiance += _xp;
+                Experience += _xp;
 
             return levelUps;
         }
 
         public float GetExperiencePercentage()
         {
-            int currentExp = Experiance - Rules.Instance.GetExp(this);
+            int currentExp = Experience - Rules.Instance.GetExp(this);
             int nextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
             return (float)currentExp / nextLevel;
         }

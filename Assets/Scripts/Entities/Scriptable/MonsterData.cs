@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 [CreateAssetMenu(fileName = "MonsterData", menuName = "Data/Create Monster Data")]
 public class MonsterData : IDropScriptableObject
 {

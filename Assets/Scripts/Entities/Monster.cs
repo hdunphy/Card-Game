@@ -223,7 +223,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     private void UpdateTooltip()
     {
-        TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experiance}", "Stats");
+        TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experience}", "Stats");
     }
 
     public MonsterAlignment GetMonsterAlignment()

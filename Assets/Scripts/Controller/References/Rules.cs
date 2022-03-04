@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.SaveSystem;
 
 namespace Assets.Scripts.References
 {
@@ -86,7 +87,7 @@ namespace Assets.Scripts.References
                 { new AlignmentCombination { Source = CardAlignment.Darkness, Target = CardAlignment.Light }, EFFECTIVE },
             };
 
-            Random = new System.Random(SEED);
+            Random = SaveData.Current.Random ?? new System.Random(SEED);
         }
 
         public static Rules Instance
@@ -96,6 +97,8 @@ namespace Assets.Scripts.References
                 return instance;
             }
         }
+
+        public System.Random GetRandom() => Random;
 
         public int GetAttackDamage(Monster source, Monster target, Card _card)
         {

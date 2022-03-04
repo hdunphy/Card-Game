@@ -1,6 +1,7 @@
-using System.Collections;
+using Assets.Scripts.Controller.References;
+using Assets.Scripts.Entities.SaveSystem;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
 public interface IDeckHolder
 {
@@ -8,24 +9,32 @@ public interface IDeckHolder
     public List<CardData> CurrentDeck { get; }
 }
 
-[System.Serializable]
+public class Deck
+{
+    public string Name { get; set; }
+    public List<CardData> Cards { get; set; }
+}
+
 public class PlayerDeckHolder : IDeckHolder
 {
     public List<CardData> AllCards { get; private set; }
-    private List<List<CardData>> Decks { get; set; }
+    public List<Deck> Decks { get; private set; }
     private int CurrentDeckIndex { get; set; }
-    public List<CardData> CurrentDeck => Decks[CurrentDeckIndex];
+    public List<CardData> CurrentDeck => Decks[CurrentDeckIndex].Cards;
 
     public PlayerDeckHolder(List<CardData> allCards)
     {
         AllCards = allCards;
-        Decks = new List<List<CardData>> {
-            new List<CardData>()
+        Decks = new List<Deck> {
+            new Deck{
+                Cards = new List<CardData>(),
+                Name = "Deck 1" 
+            }
         };
         CurrentDeckIndex = 0;
     }
 
-    public PlayerDeckHolder(List<CardData> allCards, List<List<CardData>> decks, int currentDeck = 0)
+    public PlayerDeckHolder(List<CardData> allCards, List<Deck> decks, int currentDeck = 0)
     {
         AllCards = allCards;
         Decks = decks;

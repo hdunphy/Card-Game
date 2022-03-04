@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
 using Assets.Scripts.GameScene.Entities;
+using Assets.Scripts.References;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,11 @@ namespace Assets.Scripts.Entities.SaveSystem
         private const string OnEnterText = "Press E to Save";
         private const string OnSaveText = "Saving...";
         private const string OnSavedText = "Saved";
+
+        private void Start()
+        {
+            SaveStationText.enabled = false;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -40,7 +46,11 @@ namespace Assets.Scripts.Entities.SaveSystem
         public void Interact(PlayerController controller)
         {
             SaveStationText.text = OnSaveText;
+
+            SaveData.Current.PlayerSceneName = gameObject.scene.name;
+            SaveData.Current.Random = Rules.Instance.GetRandom();
             controller.SavePlayerData();
+            
             if (SerializationManager.Save(SaveData.Current.SaveName, SaveData.Current))
             {
                 Debug.Log("Game Saved");

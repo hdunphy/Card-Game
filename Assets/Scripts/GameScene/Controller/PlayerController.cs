@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public IEnumerable<MonsterInstance> PlayableMonsters { get => monsters.Where( m => m.CurrentHealth > 0); }
+    public IEnumerable<MonsterInstance> PlayableMonsters { get => monsters.Where(m => m.CurrentHealth > 0); }
     //Replace
     public List<MonsterData> PlayerData;
     [SerializeField] private List<CardData> PlayerCards;
@@ -23,10 +23,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Movement = GetComponent<IMovement>();
-        monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
-
-        DeckHolder = new PlayerDeckHolder(PlayerCards, new List<List<CardData>> { new List<CardData>(PlayerCards) });
+        if(Movement == null)
+            Movement = GetComponent<IMovement>();
     }
 
     public void SetMoveDirection(Vector2 movementVector) => Movement.SetMoveDirection(movementVector);
@@ -43,15 +41,18 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = loadPosition; //Move player to position
         Camera.main.transform.position = new Vector3(loadPosition.x, loadPosition.y, Camera.main.transform.position.z); //Move camera to position
+
+        if (Movement == null)
+            Movement = GetComponent<IMovement>();
+
         Movement.SetCanMove(true); //re-enable player movement
     }
 
     public void SavePlayerData()
     {
         SaveData.Current.PlayerPosition = transform.position;
-        SaveData.Current.PlayerSceneName = gameObject.scene.name;
-        SaveData.Current.DeckHolder = DeckHolder;
-        SaveData.Current.PlayerMonsters = monsters;
+        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DeckHolder);
+        SaveData.Current.PlayerMonsters = monsters.Select(m => new MonsterSaveModel(m)).ToList();
     }
 
     /// <summary>
@@ -61,6 +62,24 @@ public class PlayerController : MonoBehaviour
     public void OnLoad(Vector3 loadPosition)
     {
         EnterRoom(loadPosition);
+
+        if(SaveData.Current.DeckHolder == null)
+        {
+            DeckHolder = new PlayerDeckHolder(PlayerCards, new List<Deck> { new Deck { Cards = new List<CardData>(PlayerCards) } });
+        }
+        else
+        {
+            DeckHolder = SaveData.Current.DeckHolder.GetDeckHolder();
+        }
+
+        if(SaveData.Current.PlayerMonsters == null)
+        {
+            monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
+        }
+        else
+        {
+            monsters = SaveData.Current.PlayerMonsters.Select(m => new MonsterInstance(m)).ToList();
+        }
     }
 
     public void SetInteraction(IPlayerInteractable interactable)
