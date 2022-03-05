@@ -19,5 +19,6 @@ MonoBehaviour:
   targetType: {fileID: 11400000, guid: 1e3bae39b9fe0eb42a7cd767be287e91, type: 2}
   cardAlignment: 2
   attackModifier: 0.8
-  cardAction: {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  cardActions:
+  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}

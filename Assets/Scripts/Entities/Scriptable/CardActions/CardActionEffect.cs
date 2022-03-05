@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
+    [CreateAssetMenu(fileName = "CardEffect", menuName = "Data/Card Action/Create Card Effect")]
     public class CardActionEffect : CardAction
     {
         [SerializeField] private CardAction Action;
