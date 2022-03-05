@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.Entities.Scriptable;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
@@ -12,7 +13,7 @@ public class CardData : IDropScriptableObject
     [SerializeField] private CardTarget targetType;
     [SerializeField] private CardAlignment cardAlignment;
     [SerializeField, Range(0, 1.5f)] private float attackModifier;
-    [SerializeField] private CardAction cardAction;
+    [SerializeField] private List<CardAction> cardActions;
     [SerializeField] private BaseConstraint cardConstraint;
 
     public string CardName { get => cardName; }
@@ -25,7 +26,7 @@ public class CardData : IDropScriptableObject
     public BaseConstraint CardConstraint { get => cardConstraint; }
 
     public void InvokeAction(Monster source, Monster target, Card card) =>
-        TargetType.InvokeAction(cardAction, source, target, card);
+        cardActions.ForEach((cardAction) => TargetType.InvokeAction(cardAction, source, target, card));
 }
 
 public enum CardAlignment { Fire, Water, Earth, Air, Nature, Ice, Light, Darkness, None }
