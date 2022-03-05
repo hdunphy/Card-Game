@@ -13,7 +13,14 @@ namespace Assets.Scripts.Entities.Scriptable
 
             foreach(var StatusConstraint in StatusConstraints)
             {
-                isValid = isValid && (source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus);
+                bool meetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+
+                if (!meetsStatusConstraint)
+                {
+                    string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
+                    UserMessage.Instance.SendMessageToUser($"{source.name} {canHave} have the status: {StatusConstraint.Status.name}");
+                }
+                isValid = isValid && meetsStatusConstraint;
             }
 
             return isValid;

@@ -108,7 +108,7 @@ public abstract class DeckHandler : MonoBehaviour
             UpdateHandUI(CardsInHand);
         }
         else
-            UserMessage.Instance.SendMessageToUser($"Could not remove card!\nInstanceId: {_card.GetInstanceID()}");
+            Debug.LogWarning($"Could not remove card!\nInstanceId: {_card.GetInstanceID()}");
     }
 
     private void ShuffleDiscardIntoDrawpile()

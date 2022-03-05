@@ -76,7 +76,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         Data = _data;
         EnergyAvailable = Data.Energy;
         MonsterName.text = Data.Name;
-
+        name = Data.Name;
 
         MonsterSprite.sprite = Data.Sprite;
         //MonsterSprite.rectTransform.localScale = new Vector3(-1, 1, 1); //flipping the sprite but also flips other alignments
@@ -112,12 +112,15 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void ApplyStatus(BaseStatus status, int _count)
     {
+        bool applied = true;
+
         if (Statuses.ContainsKey(status))
         {
             var count = Statuses[status].AddCount(_count);
             if (count == 0)
             {
                 RemoveStatus(status);
+                applied = false;
             }
         }
         else
@@ -125,6 +128,11 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
             var icon = Instantiate(StatusIconPrefab, StatusParent);
             icon.SetStatus(status, _count);
             Statuses.Add(status, icon);
+        }
+
+        if (applied)
+        {
+            UserMessage.Instance.SendMessageToUser($"{status.name} was applied to {name}");
         }
     }
 
@@ -134,6 +142,10 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void RemoveStatus(BaseStatus status)
     {
+        if (IsInPlay)
+        {
+            UserMessage.Instance.SendMessageToUser($"{name} lost the {status.name} status");
+        }
         Destroy(Statuses[status].gameObject);
         Statuses.Remove(status);
         status.RemoveStatus(this);
@@ -141,6 +153,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     private void SetDead()
     {
+        UserMessage.Instance.SendMessageToUser($"{name} has fainted");
         var _statuses = Statuses.Keys.ToList();
         //remove events
         foreach (var _status in _statuses)
@@ -157,9 +170,18 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void TakeDamage(int damage, Monster source)
     {
-        float startPercent = (float)CurrentHealth / Data.Health;
-        float finalPercent = (float)(CurrentHealth -= damage) / Data.Health;
-        StartCoroutine(UpdateHealthUI(startPercent, finalPercent, source));
+        if (damage != 0)
+        {
+            if (source != null)
+            {
+                string effect = damage < 0 ? $"was healed {damage}" : $"took {damage} damage ";
+                UserMessage.Instance.SendMessageToUser($"{name} {effect} from {source.name}");
+            }
+
+            float startPercent = (float)CurrentHealth / Data.Health;
+            float finalPercent = (float)(CurrentHealth -= damage) / Data.Health;
+            StartCoroutine(UpdateHealthUI(startPercent, finalPercent, source));
+        }
     }
 
     private IEnumerator UpdateHealthUI(float startPercent, float finalPercent, Monster source)
@@ -188,7 +210,10 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     private void UpdateExperienceUI(int expGained)
     {
         int levelUps = Data.AddExperience(expGained);
-        Debug.Log($"LevelUps: {levelUps}");
+
+        string levelUpText = levelUps < 1 ? "" : $" and gained {levelUps} levels";
+        UserMessage.Instance.SendMessageToUser($"{name} gained {expGained} xp{levelUpText}");
+
         if (levelUps > 0)
         {
             LeanTween.scale(ExperienceTransform, new Vector3(1, 1), .75f)

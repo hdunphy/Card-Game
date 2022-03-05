@@ -98,6 +98,7 @@ public class Card : MonoBehaviour
     public void SetCardData(CardData _data)
     {
         Data = _data;
+        name = Data.CardName;
         UIController.SetCardData(_data);
 
         gameObject.AddComponent<TooltipTrigger>().SetText($"Card has power: {Power}");

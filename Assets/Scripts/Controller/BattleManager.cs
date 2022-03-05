@@ -124,6 +124,9 @@ public class BattleManager : MonoBehaviour
     {
         if(card.IsValidAction(SelectedMonster, target))
         {
+            string source = SelectedMonster?.name ?? target.name;
+            UserMessage.Instance.SendMessageToUser($"{source} used {card.name} on {target.name}");
+            
             card.InvokeAction(SelectedMonster, target);
         }
         else

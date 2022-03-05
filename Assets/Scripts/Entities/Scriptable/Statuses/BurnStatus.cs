@@ -38,6 +38,7 @@ namespace Assets.Scripts.Entities.Scriptable
         {
             int dmg = GetDamage(monster.TotalHealth, count);
             monster.TakeDamage(dmg, null); //TODO: pass source some how
+            UserMessage.Instance.SendMessageToUser($"{monster.name} took {dmg} {GetTooltipHeader(count)} damage");
         }
 
         protected virtual int GetDamage(int health, int count)

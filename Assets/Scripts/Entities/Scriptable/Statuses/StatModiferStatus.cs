@@ -18,6 +18,12 @@ namespace Assets.Scripts.Entities.Scriptable
 
         private void OnEnable()
         {
+            if(PropertyName == null)
+            {
+                Debug.LogWarning($"{name} has PropertyName set to null");
+                return;
+            }
+
             ModifierProperty = typeof(Monster).GetProperty(PropertyName);
 
             if(ModifierProperty == null || ModifierProperty.PropertyType != typeof(float))
