@@ -13,7 +13,7 @@ namespace Assets.Scripts.UI
 
         public void AddMessageToLog(string message)
         {
-            Logs.Add(message);
+            Logs.Insert(0, message);
 
             StopCoroutine(ShowLog());
             StartCoroutine(ShowLog());
