@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e01d02375e451449a0e4f574928432c, type: 3}
-  m_Name: Sharp
+  m_Name: Strength
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 412806360417562724, guid: e62b5e908cb293640929c3fd2a48babf, type: 3}
   Modifier: 1.25
-  PositiveSprite: {fileID: -7115396137046201765, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
-  NegativeSprite: {fileID: -7803222650122623249, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+  PositiveSprite: {fileID: 412806360417562724, guid: e62b5e908cb293640929c3fd2a48babf, type: 3}
+  NegativeSprite: {fileID: 4390828945791132085, guid: e62b5e908cb293640929c3fd2a48babf, type: 3}
+  PropertyName: AttackModifier
+  PositiveName: Strengthened
+  NegativeName: Weakened

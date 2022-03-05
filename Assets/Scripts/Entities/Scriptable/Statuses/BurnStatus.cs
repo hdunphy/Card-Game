@@ -40,7 +40,7 @@ namespace Assets.Scripts.Entities.Scriptable
             monster.TakeDamage(dmg, null); //TODO: pass source some how
         }
 
-        int GetDamage(int health, int count)
+        protected virtual int GetDamage(int health, int count)
         {
             var damage = health * GetModifier(count);
             return Mathf.Clamp(Mathf.FloorToInt(damage), 1, health);
