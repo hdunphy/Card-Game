@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="USS/CardEditor.uss" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; width: 100%; height: 100%; min-height: 350px;">
+        <ui:VisualElement name="left-pane" class="left-pane">
+            <ui:VisualElement name="add-container" class="button-container" style="position: relative;">
+                <ui:Button text="Add New Card" display-tooltip-when-elided="true" name="add-new-card" class="add-button" style="-unity-text-align: middle-center; padding-left: 10px; padding-right: 10px; width: 100%; height: 20px; align-items: center; flex-direction: row;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="card-list-container" class="card-list">
+                <ui:ListView focusable="true" name="card-list-view" style="flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="right-pane" class="right-pane">
+            <ui:ScrollView name="card-info-scroll" style="width: 100%; height: 100%;">
+                <ui:VisualElement name="cad-info-box" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

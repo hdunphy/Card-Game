@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
   m_Name: Draw Card
   m_EditorClassIdentifier: 
-  cardName: Draw Card
+  name: Draw Card
   cardDescription: Draw a card
   cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
   energyCost: 1

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
-  m_Name: Scratch
+  m_Name: Daze
   m_EditorClassIdentifier: 
-  cardName: Scratch
-  cardDescription: Scratch enemy
-  cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
-  energyCost: 1
+  name: Daze
+  cardDescription: Apply Daze
+  cardSprite: {fileID: 21300000, guid: 5f7fa9a7940a64e79b5a42d9f661d42c, type: 3}
+  energyCost: 0
   targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
   cardAlignment: 8
-  attackModifier: 0.2
+  attackModifier: 0
   cardActions:
-  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  - {fileID: 11400000, guid: 0b1ad45ddea8cf84199f85f8e8bea41c, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}

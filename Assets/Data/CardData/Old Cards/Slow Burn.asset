@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
-  m_Name: Rest
+  m_Name: Slow Burn
   m_EditorClassIdentifier: 
-  name: Rest
-  cardDescription: Monster falls asleep and heals while asleep
+  name: Slow Burn
+  cardDescription: Burn Enemy
   cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
   energyCost: 2
   targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
-  cardAlignment: 8
-  attackModifier: 0
+  cardAlignment: 0
+  attackModifier: 0.1
   cardActions:
-  - {fileID: 11400000, guid: da996e82de56a4042a6909c2a507c956, type: 2}
-  - {fileID: 11400000, guid: 5430f7838b2d0004794a08abd9dcaba9, type: 2}
+  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  - {fileID: 11400000, guid: f180648c4ba9663409b4da5d194cf243, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}

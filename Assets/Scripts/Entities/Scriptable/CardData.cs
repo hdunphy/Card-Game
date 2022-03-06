@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
 public class CardData : IDropScriptableObject
 {
-    [SerializeField] private string cardName;
+    [SerializeField] private new string name;
     [SerializeField] private string cardDescription;
     [SerializeField] private Sprite cardSprite;
     [SerializeField] private int energyCost;
@@ -16,7 +16,7 @@ public class CardData : IDropScriptableObject
     [SerializeField] private List<CardAction> cardActions;
     [SerializeField] private BaseConstraint cardConstraint;
 
-    public string CardName { get => cardName; }
+    public string CardName { get => name; }
     public string CardDescription { get => cardDescription; }
     public Sprite CardSprite { get => cardSprite; }
     public int EnergyCost { get => energyCost; }
@@ -27,6 +27,16 @@ public class CardData : IDropScriptableObject
 
     public void InvokeAction(Monster source, Monster target, Card card) =>
         cardActions.ForEach((cardAction) => TargetType.InvokeAction(cardAction, source, target, card));
+
+    private void OnValidate()
+    {
+        if (!string.IsNullOrEmpty(name))
+        {
+            string thisFileNewName = name;
+            string assetPath = UnityEditor.AssetDatabase.GetAssetPath(this.GetInstanceID());
+            UnityEditor.AssetDatabase.RenameAsset(assetPath, thisFileNewName);
+        }
+    }
 }
 
 public enum CardAlignment { Fire, Water, Earth, Air, Nature, Ice, Light, Darkness, None }

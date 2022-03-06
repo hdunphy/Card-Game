@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
-  m_Name: Hide
+  m_Name: Burn
   m_EditorClassIdentifier: 
-  cardName: Hide
-  cardDescription: Hide self from attack
-  cardSprite: {fileID: 21300000, guid: 8377de42c815a634b8f567efe89367fe, type: 3}
-  energyCost: 2
-  targetType: {fileID: 11400000, guid: e655f526aa8559e42a9cf8d6d8443e99, type: 2}
-  cardAlignment: 7
+  name: Burn
+  cardDescription: Apply Burn to Enemy
+  cardSprite: {fileID: -7115396137046201765, guid: 921f99c12b0d1314987f4536e30cc8cf, type: 3}
+  energyCost: 0
+  targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
+  cardAlignment: 0
   attackModifier: 0
   cardActions:
-  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  - {fileID: 11400000, guid: f180648c4ba9663409b4da5d194cf243, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}

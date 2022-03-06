@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f629fddc2b67349a1811dca7a9e455, type: 3}
-  m_Name: Daze
+  m_Name: Whirlpool
   m_EditorClassIdentifier: 
-  cardName: Daze
-  cardDescription: Apply Daze
-  cardSprite: {fileID: 21300000, guid: 5f7fa9a7940a64e79b5a42d9f661d42c, type: 3}
-  energyCost: 0
-  targetType: {fileID: 11400000, guid: 29f1f4b7052929149b9aa18b86ec9695, type: 2}
-  cardAlignment: 8
-  attackModifier: 0
+  name: Whirlpool
+  cardDescription: Monster creates a whirlpool and draws a card
+  cardSprite: {fileID: 21300000, guid: 8a9bbdb396616444cb3ef35d09ddb7f2, type: 3}
+  energyCost: 1
+  targetType: {fileID: 0}
+  cardAlignment: 1
+  attackModifier: 0.2
   cardActions:
-  - {fileID: 11400000, guid: 0b1ad45ddea8cf84199f85f8e8bea41c, type: 2}
+  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  - {fileID: 11400000, guid: e79087b2aa8a8c54ead408202ea5bd37, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}
