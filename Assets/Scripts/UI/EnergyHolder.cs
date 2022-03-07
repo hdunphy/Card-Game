@@ -20,6 +20,11 @@ public class EnergyHolder : MonoBehaviour
 
     public void SetEnergy(int energyAvailable, int totalEnergy)
     {
+        if(energyAvailable < 0)
+        {
+            Debug.LogError("Energy can't be less than 0 : " + energyAvailable);
+        }
+
         EnergyValue.text = $"{energyAvailable}/{totalEnergy}";
 
         int couplesNeeded = Mathf.CeilToInt((float)totalEnergy / BatteryCouple.FULL_CAPCITY);

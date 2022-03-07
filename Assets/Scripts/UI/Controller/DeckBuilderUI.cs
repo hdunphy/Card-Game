@@ -45,15 +45,6 @@ namespace Assets.Scripts.UI.Controller
 
         private void ClearCards()
         {
-            //foreach(var card in AvailableCards)
-            //{
-            //    Destroy(card);
-            //}
-            //foreach (var card in CurrentCards)
-            //{
-            //    Destroy(card);
-            //}
-
             AvailableCardsParent.transform.Clear();
             CurrentDeckParent.transform.Clear();
 
@@ -101,7 +92,7 @@ namespace Assets.Scripts.UI.Controller
             if (CurrentCards.Any())
             {
                 var rtransform = CurrentDeckParent.GetComponent<RectTransform>();
-                rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, CurrentDeckParent.childCount * CurrentCards[0].GetComponent<RectTransform>().rect.height);
+                rtransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, CurrentDeckParent.childCount * (CurrentCards[0].GetComponent<RectTransform>().rect.height + 15));
             }
         }
 
@@ -126,7 +117,7 @@ namespace Assets.Scripts.UI.Controller
         {
             Debug.Log($"Added a card: {selectableCard.name}");
             var _currentCard = CurrentCards.FirstOrDefault(c => c.CardData == selectableCard.CardData);
-            if(_currentCard != null)
+            if (_currentCard != null)
             {
                 _currentCard.GetComponentInChildren<Quantity>().Count++;
             }
@@ -157,7 +148,7 @@ namespace Assets.Scripts.UI.Controller
 
         private void OnDestroy()
         {
-            foreach(var card in AvailableCards)
+            foreach (var card in AvailableCards)
             {
                 card.OnSelected -= AddCardToCurrentDeck;
             }

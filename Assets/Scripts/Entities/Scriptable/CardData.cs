@@ -28,6 +28,7 @@ public class CardData : IDropScriptableObject
     public void InvokeAction(Monster source, Monster target, Card card) =>
         cardActions.ForEach((cardAction) => TargetType.InvokeAction(cardAction, source, target, card));
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         if (!string.IsNullOrEmpty(name))
@@ -37,6 +38,7 @@ public class CardData : IDropScriptableObject
             UnityEditor.AssetDatabase.RenameAsset(assetPath, thisFileNewName);
         }
     }
+#endif
 }
 
 public enum CardAlignment { Fire, Water, Earth, Air, Nature, Ice, Light, Darkness, None }

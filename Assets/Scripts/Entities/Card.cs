@@ -80,6 +80,8 @@ public class Card : MonoBehaviour
         HoverEffect.enabled = false;
         playedThisTurn = true;
         Data.InvokeAction(source, target, this);
+        //TODO: improve this below
+        (source ?? target).PlayCard(this); //use null check for self targeting. 
     }
 
     public bool CheckConstraints(Monster source) => Data.CardConstraint.CheckConstraint(source, this);

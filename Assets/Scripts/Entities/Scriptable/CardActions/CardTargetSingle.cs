@@ -8,7 +8,6 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
         {
             cardAction.InvokeAction(source, target, card);
-            source.PlayCard(card);
         }
     }
 }
