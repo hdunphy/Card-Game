@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea691d7bfb7b64c4090426ce714cae33, type: 3}
-  m_Name: Apply Strengthen
+  m_Script: {fileID: 11500000, guid: f1bb8ac78d523a34280757f54f89e093, type: 3}
+  m_Name: Add Energy
   m_EditorClassIdentifier: 
-  Status: {fileID: 11400000, guid: f8506673044934340b098f68f0443831, type: 2}
-  Count: 1
+  EnergyAdded: 1

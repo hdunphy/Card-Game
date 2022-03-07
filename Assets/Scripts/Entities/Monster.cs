@@ -168,6 +168,12 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
 
+    public void AddEnergy(int _energy)
+    {
+        EnergyAvailable += _energy;
+        SetEnergy();
+    }
+
     public void TakeDamage(int damage, Monster source)
     {
         if (damage != 0)
