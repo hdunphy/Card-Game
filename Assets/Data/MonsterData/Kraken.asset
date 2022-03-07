@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6687dc19e763048a2466cfc58aac3b, type: 3}
+  m_Name: Kraken
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: e1e143ee207074b42834d2c0109f2a33, type: 3}
+  health: 58
+  attack: 80
+  defense: 87
+  energy: 2
+  cardDraw: 3
+  monsterAlignments:
+    Primary: 1
+    Secondary: 8
+  wildCards:
+  - {fileID: 11400000, guid: 7c05b565a6bd5b74f9cfe8fd349023b9, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+  - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
+  - {fileID: 11400000, guid: 1fe4d59d5801d1b49a69edbf07015838, type: 2}
+  - {fileID: 11400000, guid: 6ec3e783b69ea5a448310a8f5746874f, type: 2}
+  level30Card: {fileID: 11400000, guid: 80e15b09ca403f840b1cf3d886aa9171, type: 2}
+  level50Card: {fileID: 11400000, guid: 967b0fdd9f523dd428c497caa2dbd73a, type: 2}

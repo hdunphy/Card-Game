@@ -21,9 +21,29 @@ public class RandomAttacking : IEnemyAttackBehavior
             Card _card = GetCard(attacker);
             Monster defender = GetDefender(OtherMonsters);
 
-            EventManager.Instance.OnSelectMonsterTrigger(attacker);
-            EventManager.Instance.OnSelectTargetTrigger(defender, _card);
-            EventManager.Instance.OnSelectMonsterTrigger(defender);
+            List<Monster> availableMonsters = new List<Monster>(OtherMonsters);
+            while(!_card.IsValidAction(attacker, defender))
+            {
+                availableMonsters.Remove(defender);
+                if(availableMonsters.Count == 0)
+                {
+                    defender = attacker;
+                    break;
+                }
+
+                defender = GetDefender(availableMonsters);
+            }
+
+            if(!_card.IsValidAction(attacker, defender))
+            {
+                Hand.Remove(_card);
+            }
+            else
+            {
+                EventManager.Instance.OnSelectMonsterTrigger(attacker);
+                EventManager.Instance.OnSelectTargetTrigger(defender, _card);
+                EventManager.Instance.OnSelectMonsterTrigger(defender);
+            }
 
             EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
 

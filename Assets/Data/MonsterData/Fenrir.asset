@@ -20,7 +20,7 @@ MonoBehaviour:
   cardDraw: 3
   monsterAlignments:
     Primary: 0
-    Secondary: 7
+    Secondary: 8
   wildCards:
   - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
   - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
