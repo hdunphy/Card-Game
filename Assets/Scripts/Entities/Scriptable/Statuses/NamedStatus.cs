@@ -40,6 +40,10 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void DoEffect(Monster monster, int count)
         {
+            if(count > 1)
+            {
+                UserMessage.Instance.SendMessageToUser($"{monster.name} is {name} for {count} more turn(s)");
+            }
             monster.ApplyStatus(this, -1);
         }
 

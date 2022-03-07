@@ -7,6 +7,15 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] private StatusConstraint StatusConstraint;
         public override bool CheckConstraint(Monster source, Card card)
-            => base.CheckConstraint(source, card) && (source.HasStatus(StatusConstraint.Status) ^ StatusConstraint.HasStatus);
+        {
+            bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+
+            if (!MeetsStatusConstraint)
+            {
+                string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
+                UserMessage.Instance.SendMessageToUser($"{source.name} {canHave} have the status: {StatusConstraint.Status.name}");
+            }
+            return base.CheckConstraint(source, card) && MeetsStatusConstraint;
+        }
     }
 }

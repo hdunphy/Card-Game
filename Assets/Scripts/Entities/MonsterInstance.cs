@@ -22,7 +22,7 @@ namespace Assets.Scripts.Entities
         public int Energy { get; private set; }
         public int Level { get; private set; }
         public int Experience { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int CardDraw { get; private set; }
 
         public string DataName => BaseData.name;

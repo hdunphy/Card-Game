@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UserMessage : MonoBehaviour
 {
     public static UserMessage Instance;
+
+    IDisplayLog DisplayLog;
 
     private void Awake()
     {
@@ -19,8 +22,14 @@ public class UserMessage : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        DisplayLog = GetComponent<IDisplayLog>();
+    }
+
     public void SendMessageToUser(string _msg)
     {
+        DisplayLog.AddMessageToLog(_msg);
         Debug.LogWarning(_msg);
     }
 }

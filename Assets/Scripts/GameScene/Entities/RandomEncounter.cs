@@ -37,7 +37,9 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
             if (_drop != null)
             {
-                monsters.Add(new MonsterInstance((MonsterData)_drop, monsterLevel));
+                var _monster = new MonsterInstance((MonsterData)_drop, monsterLevel);
+                _monster.Name = "Wild " + _monster.Name;
+                monsters.Add(_monster);
             }
         }
 
