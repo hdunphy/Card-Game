@@ -80,7 +80,6 @@ public class CardEditorWindow : EditorWindow
 
                     if (cardProperty.name.Equals("name", System.StringComparison.InvariantCultureIgnoreCase))
                     {
-                        Debug.Log("Found Prop");
                         prop.RegisterValueChangeCallback((ev) =>
                         {
                             CreateCardListView();
