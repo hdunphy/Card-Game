@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   sprite: {fileID: -8211022945955410972, guid: e62b5e908cb293640929c3fd2a48babf, type: 3}
-  damage: 5
+  damage: 1
