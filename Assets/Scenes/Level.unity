@@ -12468,9 +12468,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drops:
-  - RollChance: 1
+  - RollChance: 0.75
     IsEmpty: 0
     DropObject: {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  - RollChance: 0.25
+    IsEmpty: 0
+    DropObject: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
 --- !u!114 &1937687281
 MonoBehaviour:
   m_ObjectHideFlags: 0
