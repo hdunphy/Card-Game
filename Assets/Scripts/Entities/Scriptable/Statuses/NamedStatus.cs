@@ -10,7 +10,6 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] private new string name;
         [SerializeField] private string Description;
-        [SerializeField] private int Length;
 
         private Dictionary<Monster, UnityAction> MonsterActions = new Dictionary<Monster, UnityAction>();
 

@@ -42,11 +42,14 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator AttackPhase()
     {
+        yield return new WaitForSeconds(SecondsBetweenAttack);
+
         while (GetNextAttack())
         {
             yield return new WaitForSeconds(SecondsBetweenAttack);
         }
 
+        //BattleManager.Singleton.EndTurn();
         EventManager.Instance.OnGetNextTurnStateTrigger();
     }
 

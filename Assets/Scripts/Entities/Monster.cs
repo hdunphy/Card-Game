@@ -54,6 +54,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     {
         EnergyAvailable = TotalEnergy;
         SetEnergy();
+        IsTurn = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)

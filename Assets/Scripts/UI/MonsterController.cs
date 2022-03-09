@@ -59,9 +59,6 @@ public class MonsterController : MonoBehaviour
             { //if all monsters are not in play
                 EventManager.Instance.OnBattleOverTrigger(this);
             }
-        //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(_monster.StartTurn);
-        //TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.RemoveListener(delegate { _monster.SetIsTurn(true); });
-        //TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.RemoveListener(delegate { _monster.SetIsTurn(false); });
         }
     }
 
@@ -90,7 +87,6 @@ public class MonsterController : MonoBehaviour
 
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_monster.StartTurn);
-            TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(delegate { _monster.SetIsTurn(true); });
             TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _monster.SetIsTurn(false); });
 
             CardDraw += _data.CardDraw - index;

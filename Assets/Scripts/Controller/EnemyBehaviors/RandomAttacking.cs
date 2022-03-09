@@ -21,6 +21,9 @@ public class RandomAttacking : IEnemyAttackBehavior
             Card _card = GetCard(attacker);
             Monster defender = GetDefender(OtherMonsters);
 
+            //disable user message so not to get bombarded by failed attempts
+            UserMessage.Instance.enabled = false;
+
             List<Monster> availableMonsters = new List<Monster>(OtherMonsters);
             while(!_card.IsValidAction(attacker, defender))
             {
@@ -34,7 +37,9 @@ public class RandomAttacking : IEnemyAttackBehavior
                 defender = GetDefender(availableMonsters);
             }
 
-            if(!_card.IsValidAction(attacker, defender))
+            UserMessage.Instance.enabled = true;
+
+            if (!_card.IsValidAction(attacker, defender))
             {
                 Hand.Remove(_card);
             }
@@ -43,9 +48,9 @@ public class RandomAttacking : IEnemyAttackBehavior
                 EventManager.Instance.OnSelectMonsterTrigger(attacker);
                 EventManager.Instance.OnSelectTargetTrigger(defender, _card);
                 EventManager.Instance.OnSelectMonsterTrigger(defender);
-            }
 
-            EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
+                EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
+            }
 
             hasAttack = CanAttack(out _);
         }
