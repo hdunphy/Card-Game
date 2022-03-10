@@ -12,22 +12,28 @@ public class HoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private UnityEvent OnHoverStart;
     [SerializeField] private UnityEvent OnHoverEnd;
 
-    LTDescr move = null;
-    LTDescr scale = null;
+    int move = -1;
+    int scale = -1;
 
     private void OnDisable()
     {
-        if(move != null)
-            LeanTween.cancel(move.id);
-        if(scale != null)
-            LeanTween.cancel(scale.id);
+        if(move != -1)
+        {
+            move = -1;
+            LeanTween.cancel(move);
+        }
+        if(scale != -1)
+        {
+            scale = -1;
+            LeanTween.cancel(scale);
+        }
     }
 
     public void ReturnToNormalPosition()
     {
         OnHoverEnd.Invoke();
-        move = LeanTween.moveLocalY(gameObject, 0, Timing).setFrom(Movement);
-        scale = LeanTween.scale(gameObject, Vector3.one, Timing);
+        move = LeanTween.moveLocalY(gameObject, 0, Timing).setFrom(Movement).id;
+        scale = LeanTween.scale(gameObject, Vector3.one, Timing).id;
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -39,7 +45,7 @@ public class HoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         //transform.SetAsLastSibling();
         OnHoverStart.Invoke();
-        move = LeanTween.moveLocalY(gameObject, Movement, Timing).setFrom(0);
-        scale = LeanTween.scale(gameObject, Vector3.one * Scaling, Timing);
+        move = LeanTween.moveLocalY(gameObject, Movement, Timing).setFrom(0).id;
+        scale = LeanTween.scale(gameObject, Vector3.one * Scaling, Timing).id;
     }
 }

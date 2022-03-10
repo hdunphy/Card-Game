@@ -28,8 +28,8 @@ public class RandomEncounter : MonoBehaviour, IEncounter
     {
         monsters.Clear();
 
-        int monsterSpawns = Rules.GetRandomInt(0, MaxMonsters);
-        int monsterLevel = Rules.GetRandomInt(MinMonsterLevel, MaxMonsterLevel);
+        int monsterSpawns = Rules.GetRandomInt(0, MaxMonsters + 1);
+        int monsterLevel = Rules.GetRandomInt(MinMonsterLevel, MaxMonsterLevel + 1);
 
         for (int i = 0; i < monsterSpawns; i++)
         {
