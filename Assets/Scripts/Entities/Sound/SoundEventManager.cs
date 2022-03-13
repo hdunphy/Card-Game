@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities.Sound
 {
+    [CreateAssetMenu(fileName = "Sound Manager", menuName = "Data/Sounds/Sound Manager")]
     public class SoundEventManager : ScriptableObject
     {
         [SerializeField] private List<Sound> Sounds;

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea691d7bfb7b64c4090426ce714cae33, type: 3}
   m_Name: Apply Sleep Status
   m_EditorClassIdentifier: 
-  Status: {fileID: 0}
-  Count: 0
+  Status: {fileID: 11400000, guid: e80e6da798e637b4b89a5aafe94e622b, type: 2}
+  Count: 3

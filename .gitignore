@@ -10,6 +10,9 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+# Too many Audio Files:
+Assets/Ultimate SFX Bundle - HD Remaster/
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
