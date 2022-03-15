@@ -1,10 +1,18 @@
-﻿using Assets.Scripts.References;
+﻿using Assets.Scripts.Entities.Sound;
+using Assets.Scripts.References;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class DeckHandler : MonoBehaviour
 {
     [SerializeField] protected HandManager HandManager;
+    [Header("Sounds")]
+    [SerializeField] protected SoundEventManager CardSoundManager;
+    [SerializeField] protected string ShuffleCardsSound;
+    [SerializeField] protected string DiscardCardSound;
+    [SerializeField] protected string DrawCardSound;
     [Header("Prefabs")]
     [SerializeField] protected Card CardPrefab;
     [Header("UI Locations")]
@@ -59,6 +67,7 @@ public abstract class DeckHandler : MonoBehaviour
         for (int i = 0; i < cardsToDraw; i++)
         {
             CardsInHand.Add(AddCardToHand(DrawPile[i], HandManager.HandContainer.transform));
+            CardSoundManager.PlaySoundAfterDelay(DrawCardSound, 0.1f * i);
         }
 
         DrawPile.RemoveRange(0, cardsToDraw);
@@ -71,6 +80,7 @@ public abstract class DeckHandler : MonoBehaviour
             if (DiscardPile.Count > 0)
             {
                 ShuffleDiscardIntoDrawpile();
+                CardSoundManager.PlaySound(ShuffleCardsSound);
                 DrawCards(cardsRemaining);
             }
             else
@@ -87,9 +97,15 @@ public abstract class DeckHandler : MonoBehaviour
 
     public void DiscardHand()
     {
+        StartCoroutine(DiscardHand_Coroutine());
+    }
+
+    private IEnumerator DiscardHand_Coroutine()
+    {
         while (CardsInHand.Count > 0)
         {
             DiscardCard(CardsInHand[0]);
+            yield return null;
         }
     }
 
@@ -106,6 +122,7 @@ public abstract class DeckHandler : MonoBehaviour
         {
             DiscardCardImpl(_card);
             UpdateHandUI(CardsInHand);
+            CardSoundManager.PlaySound(DiscardCardSound);
         }
         else
             Debug.LogWarning($"Could not remove card!\nInstanceId: {_card.GetInstanceID()}");

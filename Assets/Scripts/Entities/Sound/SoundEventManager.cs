@@ -64,5 +64,10 @@ namespace Assets.Scripts.Entities.Sound
                 _sound.AudioSource.Play();
             }
         }
+
+        public void PlaySoundAfterDelay(string name, float delay)
+        {
+            LeanTween.delayedCall(delay, () => PlaySound(name));
+        }
     }
 }

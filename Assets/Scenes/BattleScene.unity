@@ -1175,6 +1175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandManager: {fileID: 2031949607}
+  CardSoundManager: {fileID: 11400000, guid: 63bf488baf4ded344a018ba3d869bc5a, type: 2}
+  ShuffleCardsSound: Shuffle
+  DiscardCardSound: Discard Card
+  DrawCardSound: Draw Card
   CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
   GO_DrawPile: {fileID: 1189608356}
   GO_DiscardPile: {fileID: 268385763}
@@ -1440,6 +1444,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandManager: {fileID: 106777029}
+  CardSoundManager: {fileID: 11400000, guid: 63bf488baf4ded344a018ba3d869bc5a, type: 2}
+  ShuffleCardsSound: Shuffle
+  DiscardCardSound: Discard Card
+  DrawCardSound: Draw Card
   CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
   GO_DrawPile: {fileID: 2100119898}
 --- !u!4 &602442007
@@ -2850,6 +2858,7 @@ GameObject:
   - component: {fileID: 1234609933}
   - component: {fileID: 1234609932}
   - component: {fileID: 1234609931}
+  - component: {fileID: 1234609934}
   m_Layer: 0
   m_Name: Battle Manager
   m_TagString: Untagged
@@ -2911,6 +2920,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1234609934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234609930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49524384c851a3049a68e0de64f6b67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundEventManager: {fileID: 11400000, guid: 63bf488baf4ded344a018ba3d869bc5a, type: 2}
 --- !u!1 &1418830392
 GameObject:
   m_ObjectHideFlags: 0
