@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.Entities.Scriptable;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,8 +26,18 @@ public class CardData : IDropScriptableObject
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
     public BaseConstraint CardConstraint { get => cardConstraint; }
 
-    public void InvokeAction(Monster source, Monster target, Card card) =>
-        cardActions.ForEach((cardAction) => TargetType.InvokeAction(cardAction, source, target, card));
+    public IEnumerator InvokeAction(Monster source, Monster target, Card card)
+    {
+        foreach(var cardAction in cardActions)
+        {
+            TargetType.InvokeAction(cardAction, source, target, card);
+
+            yield return new WaitForSeconds(1); //parameterize this somewhere
+        }
+
+        //TODO: improve this below
+        (source ?? target).PlayCard(card); //use null check for self targeting. 
+    }
 
 #if UNITY_EDITOR
     private void OnValidate()

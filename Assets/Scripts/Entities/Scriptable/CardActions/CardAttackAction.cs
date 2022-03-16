@@ -10,6 +10,8 @@ namespace Assets.Scripts.Entities.Scriptable
         {
             float damage = Rules.Instance.GetAttackDamage(source, target, card);
             target.TakeDamage(Mathf.FloorToInt(damage), source);
+
+            base.InvokeAction(source, target, card);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         public override void InvokeAction(Monster source, Monster target, Card card)
         {
             Status.ApplyStatus(source, Count);
+            base.InvokeAction(source, target, card);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void InvokeAction(Monster source, Monster target, Card card)
         {
             Status.ApplyStatus(target, Count);
+            base.InvokeAction(source, target, card);
         }
     }
 }

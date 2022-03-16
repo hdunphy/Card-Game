@@ -4,9 +4,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
-    //[CreateAssetMenu(fileName = "CardAction", menuName = "Data/Create Card Action")]
     public abstract class CardAction : ScriptableObject
     {
-        public abstract void InvokeAction(Monster source, Monster target, Card card);
+        [SerializeField] protected AudioClip Clip;
+        
+        public virtual void InvokeAction(Monster source, Monster target, Card card)
+        {
+            //Need someway to adjust volume here. Maybe global volume settings?
+            AudioSource.PlayClipAtPoint(Clip, target.gameObject.transform.position);
+        }
     }
 }
