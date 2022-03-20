@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03128134e32392e48b9495b0df5c084e, type: 3}
+  m_Name: Game Scene Sounds
+  m_EditorClassIdentifier: 
+  Sounds:
+  - name: Successful Save
+    clip: {fileID: 8300000, guid: 6d4ae3d45a138b44d863c6d4a2a71259, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Heal Station
+    clip: {fileID: 8300000, guid: 8256f0e0934112643b12598528050aee, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Battle Music
+    clip: {fileID: 8300000, guid: a998c2f3a729eb346bca87bde1af6acd, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 1
+    PlayOnStart: 1
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Enter Battle
+    clip: {fileID: 8300000, guid: dc4c763a2f4d4f846b8bc919397424c2, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Open Deck Builder
+    clip: {fileID: 8300000, guid: 5497e8b064b6da14bbc365eebc3ad6d7, type: 3}
+    Volume: 1
+    Pitch: 2
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Click Card
+    clip: {fileID: 8300000, guid: 88416fc19eeda3146a92e069060a5bcb, type: 3}
+    Volume: 1
+    Pitch: 1.5
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: 8145143341290218866, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}

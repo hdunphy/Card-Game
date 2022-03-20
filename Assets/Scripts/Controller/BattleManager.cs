@@ -127,7 +127,7 @@ public class BattleManager : MonoBehaviour
             string source = SelectedMonster?.name ?? target.name;
             UserMessage.Instance.SendMessageToUser($"{source} used {card.name} on {target.name}");
             
-            card.InvokeAction(SelectedMonster, target);
+            StartCoroutine(card.InvokeAction(SelectedMonster, target));
         }
         else
         {

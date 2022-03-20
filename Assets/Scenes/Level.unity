@@ -154,6 +154,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanInteractDisplay: {fileID: 485024867}
+  OnHeal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+        m_TargetAssemblyTypeName: Assets.Scripts.Entities.Sound.SoundEventManager,
+          Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Heal Station
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!58 &47767335
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7573,6 +7589,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+        m_TargetAssemblyTypeName: Assets.Scripts.Entities.Sound.SoundEventManager,
+          Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Open Deck Builder
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &203348556
 Transform:
   m_ObjectHideFlags: 0
@@ -8836,6 +8865,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &859313396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 859313398}
+  - component: {fileID: 859313397}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &859313397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859313396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49524384c851a3049a68e0de64f6b67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundEventManager: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+--- !u!4 &859313398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859313396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &879971159
 GameObject:
   m_ObjectHideFlags: 0
@@ -9004,6 +9077,22 @@ MonoBehaviour:
   OffSprite: {fileID: -4192254035607559706, guid: a4a61fd3e165fed47a59010488d696f7, type: 3}
   OnSprite: {fileID: 8469930268675565860, guid: a4a61fd3e165fed47a59010488d696f7, type: 3}
   SaveStationText: {fileID: 356714926}
+  OnSave:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+        m_TargetAssemblyTypeName: Assets.Scripts.Entities.Sound.SoundEventManager,
+          Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Successful Save
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!58 &882131066
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12491,6 +12580,22 @@ MonoBehaviour:
   MinMonsterLevel: 1
   MaxMonsterLevel: 15
   RewardsController: {fileID: 191415044}
+  OnStartEncounter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+        m_TargetAssemblyTypeName: Assets.Scripts.Entities.Sound.SoundEventManager,
+          Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Enter Battle
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1937687282
 MonoBehaviour:
   m_ObjectHideFlags: 0

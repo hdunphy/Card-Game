@@ -19,7 +19,7 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     PlayOnStart: 0
-    AudioMixerGroup: {fileID: 0}
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
     AudioSource: {fileID: 0}
   - name: Discard Card
     clip: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     PlayOnStart: 0
-    AudioMixerGroup: {fileID: 0}
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
     AudioSource: {fileID: 0}
   - name: Draw Card
     clip: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
@@ -35,7 +35,7 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     PlayOnStart: 0
-    AudioMixerGroup: {fileID: 0}
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
     AudioSource: {fileID: 0}
   - name: Debuff
     clip: {fileID: 8300000, guid: ad8b4489e35546f41a2f8550e6bfbfec, type: 3}
@@ -43,7 +43,7 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     PlayOnStart: 0
-    AudioMixerGroup: {fileID: 0}
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
     AudioSource: {fileID: 0}
   - name: Buff
     clip: {fileID: 8300000, guid: cae3abe49934cc945812b00835c4ba3a, type: 3}
@@ -51,5 +51,37 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     PlayOnStart: 0
-    AudioMixerGroup: {fileID: 0}
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Add Energy
+    clip: {fileID: 8300000, guid: 3813e9a6baf92f746aac58235a3887cf, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Get Card
+    clip: {fileID: 8300000, guid: b7d67c5f404661e4d852421358117d6f, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Take Damage
+    clip: {fileID: 8300000, guid: 580aefa5e32c50447b05b8083dc07e68, type: 3}
+    Volume: 0.25
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: 5ab00aa6bfe2c37468e995927891c167, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
     AudioSource: {fileID: 0}

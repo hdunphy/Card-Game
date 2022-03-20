@@ -51,8 +51,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7e9f535bf3fcc43836be7bbcbfe65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIController: {fileID: 5784880287320243598}
   Highlight: {fileID: 7096905465421622073}
+  OnSelectedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b79a86410d39ea7469a221ecfc287250, type: 2}
+        m_TargetAssemblyTypeName: Assets.Scripts.Entities.Sound.SoundEventManager,
+          Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click Card
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7337959627487229715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,14 +265,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4759548340444836302, guid: a07ca8a05d8828f4cbd5f8ffeecb108e, type: 3}
   m_PrefabInstance: {fileID: 4876407722529245679}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5784880287320243598 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1433410236578935905, guid: a07ca8a05d8828f4cbd5f8ffeecb108e, type: 3}
-  m_PrefabInstance: {fileID: 4876407722529245679}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61ff1256b36a31b42b3e0f36f7e0a135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -1,11 +1,13 @@
 using Assets.Scripts.UI.Controller;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class SelectableCard : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private GameObject Highlight;
+    [SerializeField] private UnityEvent OnSelectedEvent;
 
     private ICardUI UIController;
     private bool _isSelected;
@@ -30,6 +32,7 @@ public class SelectableCard : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         OnSelected?.Invoke(this);
+        OnSelectedEvent?.Invoke();
     }
 
     public void SetCardData(CardData cardData)

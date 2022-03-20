@@ -5,6 +5,7 @@ using Assets.Scripts.UI.Controller;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RandomEncounter : MonoBehaviour, IEncounter
 {
@@ -16,6 +17,9 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
     [Header("Components")]
     [SerializeField] private RewardsController RewardsController;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnStartEncounter;
 
     List<MonsterInstance> monsters;
 
@@ -45,6 +49,7 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
         if (monsters.Any())
         {
+            OnStartEncounter?.Invoke();
             var player = FindObjectOfType<PlayerController>();
             GameSceneController.Singleton.LoadBattleScene(player.PlayableMonsters, monsters, player.DeckHolder.CurrentDeck, new List<CardData>(), this);
         }

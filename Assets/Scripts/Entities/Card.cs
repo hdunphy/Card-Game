@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.UI.Controller;
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -75,11 +76,12 @@ public class Card : MonoBehaviour
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
-    public void InvokeAction(Monster source, Monster target)
+    public IEnumerator InvokeAction(Monster source, Monster target)
     {
         HoverEffect.enabled = false;
         playedThisTurn = true;
-        StartCoroutine(Data.InvokeAction(source, target, this));
+
+        yield return Data.InvokeAction(source, target, this);
     }
 
     public bool CheckConstraints(Monster source) => Data.CardConstraint.CheckConstraint(source, this);

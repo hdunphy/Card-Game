@@ -3,6 +3,7 @@ using Assets.Scripts.GameScene.Entities;
 using Assets.Scripts.References;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.SaveSystem
 {
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         [SerializeField] private Sprite OffSprite;
         [SerializeField] private Sprite OnSprite;
         [SerializeField] private TMPro.TMP_Text SaveStationText;
+        [SerializeField] private UnityEvent OnSave;
 
         private const string OnEnterText = "Press E to Save";
         private const string OnSaveText = "Saving...";
@@ -50,11 +52,13 @@ namespace Assets.Scripts.Entities.SaveSystem
             SaveData.Current.PlayerSceneName = gameObject.scene.name;
             SaveData.Current.Random = Rules.Instance.GetRandom();
             controller.SavePlayerData();
-            
+            StartCoroutine(SaveFlash());
+
             if (SerializationManager.Save(SaveData.Current.SaveName, SaveData.Current))
             {
                 Debug.Log("Game Saved");
-                StartCoroutine(SaveFlash());
+                SaveStationText.text = OnSavedText;
+                OnSave?.Invoke();
             }
             else
             {
@@ -72,8 +76,6 @@ namespace Assets.Scripts.Entities.SaveSystem
             SpriteRenderer.sprite = OffSprite;
             yield return new WaitForSeconds(.5f);
             SpriteRenderer.sprite = OnSprite;
-
-            SaveStationText.text = OnSavedText;
         }
     }
 }
