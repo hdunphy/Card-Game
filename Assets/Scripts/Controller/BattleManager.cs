@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using Assets.Scripts.Entities;
-using System;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -14,6 +13,12 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private MonsterController PlayerLoader;
     [SerializeField] private MonsterController EnemyLoader;
     [SerializeField] private Button EndButton;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnPlayerWin;
+    [SerializeField] private UnityEvent OnPlayerLose;
+    [SerializeField] private UnityEvent OnCardError;
+    [SerializeField] private UnityEvent OnEndTurn;
 
     //Change later
     public List<CardData> Deck;
@@ -86,9 +91,14 @@ public class BattleManager : MonoBehaviour
     private void BattleOver(MonsterController _controller)
     {
         bool didPlayerOneWin = _controller == EnemyLoader;
+        
+        var _event = didPlayerOneWin ? OnPlayerWin : OnPlayerLose;
+        _event?.Invoke();
+        
         string message = didPlayerOneWin ? "Player 1" : "Player 2";
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
+        
         GameSceneController.Singleton.LoadLevelScene(2, didPlayerOneWin);
     }
 
@@ -100,6 +110,8 @@ public class BattleManager : MonoBehaviour
     //Called from button
     public void EndTurn()
     {
+        OnEndTurn?.Invoke();
+
         if (playerTurn == PlayerTurn.PlayerTwo)
         {
             playerTurn = PlayerTurn.PlayerOne;
@@ -132,6 +144,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             //give message and return card to normal position
+            OnCardError?.Invoke();
         }
     }
 

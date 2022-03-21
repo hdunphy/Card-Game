@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: Card Sounds
   m_EditorClassIdentifier: 
   Sounds:
+  - name: Battle Music
+    clip: {fileID: 8300000, guid: a998c2f3a729eb346bca87bde1af6acd, type: 3}
+    Volume: 0.75
+    Pitch: 1
+    Loop: 1
+    PlayOnStart: 1
+    AudioMixerGroup: {fileID: 5177116023780806680, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
   - name: Shuffle
     clip: {fileID: 8300000, guid: 3fba6a5d795a1e54ba1bf47e4cb6a9b2, type: 3}
     Volume: 1
@@ -79,6 +87,46 @@ MonoBehaviour:
     AudioSource: {fileID: 0}
   - name: Heal
     clip: {fileID: 8300000, guid: 5ab00aa6bfe2c37468e995927891c167, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: End Turn
+    clip: {fileID: 8300000, guid: 526fef77e22d85e458340eda6870ac88, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Card Error
+    clip: {fileID: 8300000, guid: 88f69da05047a5f4fb11135e68f9b258, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Monster Dies
+    clip: {fileID: 8300000, guid: 246ff91137bdcb2429ac4526f7498b36, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Win Battle
+    clip: {fileID: 8300000, guid: cd13ab58c591ed343af3517413419d01, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    PlayOnStart: 0
+    AudioMixerGroup: {fileID: -4422813225007779429, guid: b58a1c159da298b46bdba4a75b45ac42, type: 2}
+    AudioSource: {fileID: 0}
+  - name: Lost Battle
+    clip: {fileID: 8300000, guid: 83da737df1f569d48895fa8e0c98c9e3, type: 3}
     Volume: 1
     Pitch: 1
     Loop: 0
