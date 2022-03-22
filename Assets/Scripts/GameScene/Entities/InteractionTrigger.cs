@@ -6,7 +6,7 @@ namespace Assets.Scripts.GameScene.Entities
     public class InteractionTrigger : MonoBehaviour, IPlayerInteractable
     {
         [SerializeField] private GameObject CanInteractDisplay;
-        [SerializeField] private UnityEvent OnInteractionEvent;
+        [SerializeField] private UnityEvent<PlayerController> OnInteractionEvent;
 
         private void Start()
         {
@@ -15,7 +15,7 @@ namespace Assets.Scripts.GameScene.Entities
 
         public void Interact(PlayerController player)
         {
-            OnInteractionEvent?.Invoke();
+            OnInteractionEvent?.Invoke(player);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
