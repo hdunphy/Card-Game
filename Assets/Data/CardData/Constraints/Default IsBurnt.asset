@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50889a22402b478468b636c6ee89f3c6, type: 3}
+  m_Name: Default IsBurnt
+  m_EditorClassIdentifier: 
+  StatusConstraints:
+  - Status: {fileID: 11400000, guid: abfac4054515acd41b0a4f5a157484aa, type: 2}
+    HasStatus: 0
+  - Status: {fileID: 11400000, guid: e80e6da798e637b4b89a5aafe94e622b, type: 2}
+    HasStatus: 0
+  - Status: {fileID: 11400000, guid: c1c20fa5dbcdf9341a62ddece83a6b3c, type: 2}
+    HasStatus: 1

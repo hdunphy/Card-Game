@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -104,5 +105,7 @@ public class CardEditorWindow : EditorWindow
             var path = AssetDatabase.GUIDToAssetPath(guids[i]);
             cards[i] = AssetDatabase.LoadAssetAtPath<CardData>(path);
         }
+
+        cards = cards.OrderBy(c => c.CardName).ToArray();
     }
 }
