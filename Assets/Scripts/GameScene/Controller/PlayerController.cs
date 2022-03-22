@@ -1,5 +1,6 @@
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.SaveSystem;
+using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,28 +9,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public IEnumerable<MonsterInstance> PlayableMonsters { get => monsters.Where(m => m.CurrentHealth > 0); }
-    //Replace
-    public List<MonsterData> PlayerData;
-    [SerializeField] private List<CardData> PlayerCards;
+    [SerializeField] private TrainerController trainerController;
 
     IMovement Movement;
-
     private IPlayerInteractable Interactable;
-    private List<MonsterInstance> monsters;
 
-    public IDeckHolder DeckHolder { get; private set; }
+    public TrainerController TrainerController => trainerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(Movement == null)
+        if (Movement == null)
             Movement = GetComponent<IMovement>();
     }
 
     public void SetMoveDirection(Vector2 movementVector) => Movement.SetMoveDirection(movementVector);
-
-    public void HealMonsters() => monsters.ForEach((monster) => monster.CurrentHealth = monster.Health);
 
     public void Interact() => Interactable?.Interact(this);
 
@@ -51,8 +45,8 @@ public class PlayerController : MonoBehaviour
     public void SavePlayerData()
     {
         SaveData.Current.PlayerPosition = transform.position;
-        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DeckHolder);
-        SaveData.Current.PlayerMonsters = monsters.Select(m => new MonsterSaveModel(m)).ToList();
+        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)TrainerController.DeckHolder);
+        SaveData.Current.PlayerMonsters = TrainerController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
     }
 
     /// <summary>
@@ -63,23 +57,8 @@ public class PlayerController : MonoBehaviour
     {
         EnterRoom(loadPosition);
 
-        if(SaveData.Current.DeckHolder == null)
-        {
-            DeckHolder = new PlayerDeckHolder(PlayerCards, new List<Deck> { new Deck { Cards = new List<CardData>(PlayerCards) } });
-        }
-        else
-        {
-            DeckHolder = SaveData.Current.DeckHolder.GetDeckHolder();
-        }
-
-        if(SaveData.Current.PlayerMonsters == null)
-        {
-            monsters = PlayerData.Select(d => new MonsterInstance(d, 10)).ToList();
-        }
-        else
-        {
-            monsters = SaveData.Current.PlayerMonsters.Select(m => new MonsterInstance(m)).ToList();
-        }
+        TrainerController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
+        TrainerController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MonsterInstance(m)).ToList());
     }
 
     public void SetInteraction(IPlayerInteractable interactable)
