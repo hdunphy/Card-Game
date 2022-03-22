@@ -23,10 +23,10 @@ MonoBehaviour:
     Secondary: 8
   wildCards:
   - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
-  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
-  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
-  - {fileID: 11400000, guid: c096ec671ff1cb74da769a04a011d731, type: 2}
-  - {fileID: 11400000, guid: c43eeda4b95508e44907f4f945b04331, type: 2}
-  level30Card: {fileID: 0}
-  level50Card: {fileID: 0}
+  - {fileID: 11400000, guid: a032046aa23fe8b46a82b45f87e9b8e8, type: 2}
+  - {fileID: 11400000, guid: a5251872f599d28429db8c158cff3904, type: 2}
+  - {fileID: 11400000, guid: 30dbc53091e8f9e428f78549cde413ca, type: 2}
+  - {fileID: 11400000, guid: 4f169ab2baaecbe4ba806a40be494b5a, type: 2}
+  - {fileID: 11400000, guid: ddd39980c411412479348802b12a9a09, type: 2}
+  level30Card: {fileID: 11400000, guid: 211fc1b03ea95e844b65770d7450b9ce, type: 2}
+  level50Card: {fileID: 11400000, guid: dee9dce9230007b45a11d110c6ce7d7e, type: 2}
