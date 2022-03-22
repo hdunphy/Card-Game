@@ -139,6 +139,8 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
     public bool HasStatus(BaseStatus status) => Statuses.ContainsKey(status);
 
+    public int GetStatusCount(BaseStatus status) => HasStatus(status) ? Statuses[status].Count : 0;
+
     public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Statuses[status].Count);
 
     public void RemoveStatus(BaseStatus status)

@@ -20,6 +20,6 @@ MonoBehaviour:
   cardAlignment: 0
   attackModifier: 0.1
   cardActions:
-  - {fileID: 11400000, guid: 218a1a9cc3189f649b98149db31d4d3a, type: 2}
+  - {fileID: 11400000, guid: 46423d31b5b05e54d8478fac2ccbd491, type: 2}
   - {fileID: 11400000, guid: a2b0c084b357f3a448c8892f9f177960, type: 2}
   cardConstraint: {fileID: 11400000, guid: 28cadc9325f722d44a5f8aa0c59a1dc6, type: 2}

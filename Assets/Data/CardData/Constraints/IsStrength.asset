@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd6fc7503fe79a4c87c1756bea8cf59, type: 3}
-  m_Name: IsStrengthened
+  m_Script: {fileID: 11500000, guid: 069b4e0ac70b76949889bb928c0f3066, type: 3}
+  m_Name: IsStrength
   m_EditorClassIdentifier: 
   StatusConstraint:
     Status: {fileID: 11400000, guid: f8506673044934340b098f68f0443831, type: 2}
     HasStatus: 1
-  StatusCountIsPositive: 1
