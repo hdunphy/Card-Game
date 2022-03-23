@@ -120,6 +120,9 @@ public class BattleManager : MonoBehaviour
         {
             playerTurn = PlayerTurn.PlayerTwo;
         }
+
+        ResetSelected();
+
         GetNextTurnState();
     }
 
