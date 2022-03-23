@@ -42,6 +42,9 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator AttackPhase()
     {
+        //disable user message so not to get bombarded by failed attempts
+        UserMessage.Instance.CanSendMessage = false;
+
         yield return new WaitForSeconds(SecondsBetweenAttack);
 
         while (GetNextAttack())
@@ -49,7 +52,7 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(SecondsBetweenAttack);
         }
 
-        //BattleManager.Singleton.EndTurn();
+        UserMessage.Instance.CanSendMessage = true;
         EventManager.Instance.OnGetNextTurnStateTrigger();
     }
 

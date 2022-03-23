@@ -1,11 +1,11 @@
 ﻿using Assets.Scripts.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UserMessage : MonoBehaviour
 {
     public static UserMessage Instance;
+
+    public bool CanSendMessage;
 
     IDisplayLog DisplayLog;
 
@@ -25,10 +25,14 @@ public class UserMessage : MonoBehaviour
     private void Start()
     {
         DisplayLog = GetComponent<IDisplayLog>();
+
+        CanSendMessage = true;
     }
 
     public void SendMessageToUser(string _msg)
     {
+        if (!CanSendMessage) return;
+
         DisplayLog.AddMessageToLog(_msg);
         Debug.LogWarning(_msg);
     }

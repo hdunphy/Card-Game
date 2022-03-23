@@ -133,7 +133,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
         if (applied)
         {
-            UserMessage.Instance.SendMessageToUser($"{status.name} was applied to {name}");
+            UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Statuses[status].Count)} was applied to {name}");
         }
     }
 

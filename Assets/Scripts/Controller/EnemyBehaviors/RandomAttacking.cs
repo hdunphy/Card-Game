@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RandomAttacking : IEnemyAttackBehavior
@@ -17,39 +14,39 @@ public class RandomAttacking : IEnemyAttackBehavior
 
         if (hasAttack)
         {
-            Monster attacker = GetAttacker(SelfMonsters, minCardEnergy);
-            Card _card = GetCard(attacker);
-            Monster defender = GetDefender(OtherMonsters);
-
-            //disable user message so not to get bombarded by failed attempts
-            UserMessage.Instance.enabled = false;
+            Monster source = GetSource(SelfMonsters, minCardEnergy);
+            Card _card = GetCard(source);
+            Monster target = GetTarget(OtherMonsters);
 
             List<Monster> availableMonsters = new List<Monster>(OtherMonsters);
-            while(!_card.IsValidAction(attacker, defender))
+            while(!CheckIsCardValid(_card, source, target))
             {
-                availableMonsters.Remove(defender);
+                availableMonsters.Remove(target);
                 if(availableMonsters.Count == 0)
                 {
-                    defender = attacker;
+                    target = source;
                     break;
                 }
 
-                defender = GetDefender(availableMonsters);
+                target = GetTarget(availableMonsters);
             }
 
-            UserMessage.Instance.enabled = true;
-
-            if (!_card.IsValidAction(attacker, defender))
+            if (CheckIsCardValid(_card, source, target))
             {
-                Hand.Remove(_card);
+                UserMessage.Instance.CanSendMessage = true;
+
+                EventManager.Instance.OnSelectMonsterTrigger(source);
+                EventManager.Instance.OnSelectTargetTrigger(target, _card);
+                EventManager.Instance.OnSelectMonsterTrigger(target);
+
+                EventManager.Instance.OnSelectMonsterTrigger(source); //to deselect
+
+                //disable user message so not to get bombarded by failed attempts
+                UserMessage.Instance.CanSendMessage = false;
             }
             else
             {
-                EventManager.Instance.OnSelectMonsterTrigger(attacker);
-                EventManager.Instance.OnSelectTargetTrigger(defender, _card);
-                EventManager.Instance.OnSelectMonsterTrigger(defender);
-
-                EventManager.Instance.OnSelectMonsterTrigger(attacker); //to deselect
+                Hand.Remove(_card);
             }
 
             hasAttack = CanAttack(out _);
@@ -57,6 +54,9 @@ public class RandomAttacking : IEnemyAttackBehavior
 
         return hasAttack;
     }
+
+    private bool CheckIsCardValid(Card card, Monster source, Monster target) =>
+        card.IsValidAction(source, target) && source.EnergyAvailable >= card.EnergyCost;
 
     private bool CanAttack(out int minCardEnergy)
     {
@@ -68,7 +68,7 @@ public class RandomAttacking : IEnemyAttackBehavior
         return SelfMonsters.Count() > 0 && OtherMonsters.Count() > 0 && maxMonsterEnergy >= minCardEnergy;
     }
 
-    private Monster GetDefender(List<Monster> availableOponents)
+    private Monster GetTarget(List<Monster> availableOponents)
     {
         return availableOponents[Random.Range(0, availableOponents.Count())];
     }
@@ -79,18 +79,18 @@ public class RandomAttacking : IEnemyAttackBehavior
         return possiblecards[Random.Range(0, possiblecards.Count())];
     }
 
-    private Monster GetAttacker(List<Monster> availableAttackers, int minCardEnergy)
+    private Monster GetSource(List<Monster> availableSources, int minCardEnergy)
     {
-        int RandIndex = Random.Range(0, availableAttackers.Count());
-        Monster attacker = availableAttackers[RandIndex];
+        int RandIndex = Random.Range(0, availableSources.Count());
+        Monster source = availableSources[RandIndex];
 
-        if(attacker.EnergyAvailable < minCardEnergy)
+        if(source.EnergyAvailable < minCardEnergy)
         {
-            availableAttackers.Remove(attacker);
-            attacker = GetAttacker(availableAttackers, minCardEnergy);
+            availableSources.Remove(source);
+            source = GetSource(availableSources, minCardEnergy);
         }
 
-        return attacker;
+        return source;
     }
 
     public void SetTurnStategy(List<Card> hand, IEnumerable<Monster> selfMonsters, IEnumerable<Monster> otherMonsters)
