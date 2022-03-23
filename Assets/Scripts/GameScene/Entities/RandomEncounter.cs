@@ -51,8 +51,8 @@ public class RandomEncounter : MonoBehaviour, IEncounter
         {
             OnStartEncounter?.Invoke();
             var player = FindObjectOfType<PlayerController>();
-            GameSceneController.Singleton.LoadBattleScene(player.TrainerController.PlayableMonsters, monsters, 
-                player.TrainerController.DeckHolder.CurrentDeck, new List<CardData>(), this);
+            GameSceneController.Singleton.LoadBattleScene(player.SharedController.PlayableMonsters, monsters, 
+                player.SharedController.DeckHolder.CurrentDeck, new List<CardData>(), this);
         }
     }
 

@@ -31,7 +31,7 @@ namespace Assets.Scripts.UI.Controller
         public void Show()
         {
             DeckBuilderCanvas.gameObject.SetActive(true);
-            DeckHolder = FindObjectOfType<PlayerController>().TrainerController.DeckHolder;
+            DeckHolder = FindObjectOfType<PlayerController>().SharedController.DeckHolder;
 
             GetAvailableCards();
             GetCurrentCards();

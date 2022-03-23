@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Entities
 {
-
     public class PlayerEnterInteractable : MonoBehaviour
     {
         private ITriggerable Triggerable;

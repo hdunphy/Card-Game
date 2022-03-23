@@ -6,7 +6,7 @@ namespace Assets.Scripts.GameScene.Entities
     {
         public void Interact(PlayerController player)
         {
-            player.TrainerController.HealMonsters();
+            player.SharedController.HealMonsters();
         }
     }
 }

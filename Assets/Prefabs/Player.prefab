@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e48379d4f5270448cbfd87573d60da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainerController: {fileID: 6100250102517698589}
+  sharedController: {fileID: 6100250102517698589}
 --- !u!114 &6100250102517698589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,14 +100,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MonsterData:
-  - {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-  - {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+  - MonsterData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+    Level: 10
+  - MonsterData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+    Level: 10
   StartingDeck:
-  - {fileID: 11400000, guid: 6ec3e783b69ea5a448310a8f5746874f, type: 2}
+  - {fileID: 11400000, guid: 8e5d7a5b1d7d95d4bb74521061f22084, type: 2}
   - {fileID: 11400000, guid: e66051f3d60724f4982f7874b90d4d43, type: 2}
   - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
   - {fileID: 11400000, guid: 7c05b565a6bd5b74f9cfe8fd349023b9, type: 2}
-  - {fileID: 11400000, guid: bc7ae3d79e4e5aa4da2e34334dde0ca5, type: 2}
+  - {fileID: 11400000, guid: 40eca63994a2cbf4bb4a4b56b8926efc, type: 2}
   - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
   - {fileID: 11400000, guid: 833a63ad9074f314db06823b91f7b693, type: 2}
   - {fileID: 11400000, guid: 15180cac62c0faa428c7c9af8373d9fc, type: 2}

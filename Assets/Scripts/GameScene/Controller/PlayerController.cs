@@ -2,19 +2,17 @@ using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private TrainerController trainerController;
+    [SerializeField] private SharedController sharedController;
 
     IMovement Movement;
     private IPlayerInteractable Interactable;
 
-    public TrainerController TrainerController => trainerController;
+    public SharedController SharedController => sharedController;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +43,8 @@ public class PlayerController : MonoBehaviour
     public void SavePlayerData()
     {
         SaveData.Current.PlayerPosition = transform.position;
-        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)TrainerController.DeckHolder);
-        SaveData.Current.PlayerMonsters = TrainerController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
+        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)SharedController.DeckHolder);
+        SaveData.Current.PlayerMonsters = SharedController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
     }
 
     /// <summary>
@@ -57,8 +55,8 @@ public class PlayerController : MonoBehaviour
     {
         EnterRoom(loadPosition);
 
-        TrainerController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
-        TrainerController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MonsterInstance(m)).ToList());
+        SharedController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
+        SharedController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MonsterInstance(m)).ToList());
     }
 
     public void SetInteraction(IPlayerInteractable interactable)

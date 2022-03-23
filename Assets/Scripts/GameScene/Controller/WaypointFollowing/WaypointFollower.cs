@@ -13,6 +13,7 @@ namespace Assets.Scripts.GameScene.Controller.WaypointFollowing
         [SerializeField] private List<Vector2> Waypoints;
         [SerializeField] private PathType PathType;
         [SerializeField] private float SecondsAtWaypoint;
+        [SerializeField] private Transform DirectionDependentObject;
 
         private IMovement Movement;
         private IWaypointPathType WaypointPathType;
@@ -60,6 +61,8 @@ namespace Assets.Scripts.GameScene.Controller.WaypointFollowing
             {
                 Vector2 direction = (Waypoints[CurrentWaypoint] - (Vector2)transform.position).normalized;
                 Movement.SetMoveDirection(direction);
+
+                DirectionDependentObject.right = direction;
             }
         }
 
