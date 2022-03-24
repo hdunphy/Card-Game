@@ -101,9 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterData:
   - MonsterData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-    Level: 50
+    Level: 5
   - MonsterData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-    Level: 53
+    Level: 5
   StartingDeck:
   - {fileID: 11400000, guid: 8e5d7a5b1d7d95d4bb74521061f22084, type: 2}
   - {fileID: 11400000, guid: e66051f3d60724f4982f7874b90d4d43, type: 2}

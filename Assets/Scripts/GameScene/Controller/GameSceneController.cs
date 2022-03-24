@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.SaveSystem;
+using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.UI.Controller;
 using System;
 using System.Collections;
@@ -23,11 +24,12 @@ public class GameSceneController : MonoBehaviour
     public GameState CurrentGameState { get; private set; }
     public static string MainMenuScene { get => "MainMenu"; }
 
-    public enum GameState { InGame, Paused, Menu }
+    public enum GameState { InGame, Paused, Menu, Battle }
 
     private IEncounter EncounterCaller;
     private PlayerController player;
     private CameraController cam;
+    public event Action<bool> OnPaused;
 
     private void Awake()
     {
@@ -81,6 +83,14 @@ public class GameSceneController : MonoBehaviour
         StartCoroutine(LoadInitialScene(InitialSceneToLoad));
     }
 
+    public void PauseGame(bool isPaused)
+    {
+        CurrentGameState = isPaused ? GameState.Paused : GameState.InGame;
+
+        OnPaused?.Invoke(isPaused);
+    }
+
+
     /// <summary>
     /// Which scene to load initially and all essential objects
     /// </summary>
@@ -113,6 +123,8 @@ public class GameSceneController : MonoBehaviour
     {
         StartCoroutine(LoadLevelSceneWait(seconds, didPlayerOneWin));
     }
+
+    public void LoadMainMenu() => SceneManager.LoadScene(MainMenuScene);
 
     private IEnumerator LoadLevelSceneWait(float seconds, bool didPlayerOneWin)
     {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Controller
 {
@@ -12,6 +7,16 @@ namespace Assets.Scripts.GameScene.Controller
         [SerializeField] private PlayerController Player;
 
         Vector2 movementVector;
+
+        private void Awake()
+        {
+            GameSceneController.Singleton.OnPaused += OnPaused;
+        }
+
+        private void OnDestroy()
+        {
+            GameSceneController.Singleton.OnPaused -= OnPaused;
+        }
 
         // Update is called once per frame
         void Update()
@@ -24,6 +29,16 @@ namespace Assets.Scripts.GameScene.Controller
             {
                 Player.Interact();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameSceneController.Singleton.PauseGame(true);
+            }
+        }
+
+        private void OnPaused(bool isPaused)
+        {
+            enabled = !isPaused;
         }
     }
 }
