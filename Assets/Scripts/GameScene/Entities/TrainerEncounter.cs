@@ -7,7 +7,7 @@ namespace Assets.Scripts.GameScene.Entities
 {
     public class TrainerEncounter : MonoBehaviour, IEncounter
     {
-        [SerializeField] private SharedController TrainerController;
+        [SerializeField] private TrainerController TrainerController;
         [SerializeField] private List<CardData> CardRewards;
         [Header("Events")]
         [SerializeField] private UnityEvent OnStartEncounter;
@@ -19,7 +19,11 @@ namespace Assets.Scripts.GameScene.Entities
             if(collision.TryGetComponent(out PlayerController _player))
             {
                 player = _player;
-                GetEncounter();
+
+                if (TrainerController.CanBattle)
+                {
+                    GetEncounter();
+                }
             }
         }
 
@@ -34,10 +38,14 @@ namespace Assets.Scripts.GameScene.Entities
         public void GetEncounter()
         {
             OnStartEncounter?.Invoke();
-            GameSceneController.Singleton.LoadBattleScene(player.SharedController.PlayableMonsters, TrainerController.PlayableMonsters,
-                player.SharedController.DeckHolder.CurrentDeck, TrainerController.DeckHolder.CurrentDeck, this);
+            GameSceneController.Singleton.LoadBattleScene(player.SharedController.PlayableMonsters, TrainerController.SharedController.PlayableMonsters,
+                player.SharedController.DeckHolder.CurrentDeck, TrainerController.SharedController.DeckHolder.CurrentDeck, this);
         }
 
-        public List<CardData> GetRewards() => CardRewards;
+        public List<CardData> GetRewards()
+        {
+            TrainerController.LostBattle();
+            return CardRewards;
+        }
     }
 }

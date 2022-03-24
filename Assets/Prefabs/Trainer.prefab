@@ -58,7 +58,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1914818937679071383
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80513b2c7db39f140bb9defc8c77ada4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Johnny Boy
   sharedController: {fileID: 1914818937679071382}
 --- !u!114 &1914818937679071382
 MonoBehaviour:
@@ -306,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ab3b9e3feb470e4493800c53bc2cbed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrainerController: {fileID: 1914818937679071382}
+  TrainerController: {fileID: 7709343910368225694}
   CardRewards:
   - {fileID: 11400000, guid: 7c624cf60bd54a5429ad39032cba6f21, type: 2}
   - {fileID: 11400000, guid: 80e15b09ca403f840b1cf3d886aa9171, type: 2}

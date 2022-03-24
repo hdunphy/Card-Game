@@ -164,8 +164,8 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
             RemoveStatus(_status);
         }
 
-        EventManager.Instance.OnMonsterDiedTrigger(this);
         TooltipSystem.Hide();
+        EventManager.Instance.OnMonsterDiedTrigger(this);
         gameObject.SetActive(false);
     }
 

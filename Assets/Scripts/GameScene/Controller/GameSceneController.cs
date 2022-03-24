@@ -132,9 +132,14 @@ public class GameSceneController : MonoBehaviour
     private void LoadLevelScene(bool didPlayerOneWin)
     {
         ToggleLevelSceneObjects(true);
+
         if (didPlayerOneWin)
         {
             FindObjectOfType<RewardsController>().Show(EncounterCaller.GetRewards());
+        }
+        else
+        {
+            player.EnterRoom(SaveData.Current.PlayerPosition);
         }
     }
 

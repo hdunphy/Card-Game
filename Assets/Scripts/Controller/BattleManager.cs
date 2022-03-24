@@ -20,9 +20,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private UnityEvent OnCardError;
     [SerializeField] private UnityEvent OnEndTurn;
 
-    //Change later
-    public List<CardData> Deck;
-
     //private variables
     private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
     private Monster SelectedMonster;
@@ -98,6 +95,8 @@ public class BattleManager : MonoBehaviour
         string message = didPlayerOneWin ? "Player 1" : "Player 2";
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
+
+        FindObjectOfType<EnemyController>().StopAllCoroutines();
         
         GameSceneController.Singleton.LoadLevelScene(2, didPlayerOneWin);
     }

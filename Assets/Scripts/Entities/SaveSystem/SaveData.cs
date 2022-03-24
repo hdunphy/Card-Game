@@ -28,6 +28,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         private List<MonsterSaveModel> playerMonsters; //list of player's monsters
         private DeckHolderSaveModel deckHolder;  //holds player cards and deck list
         private System.Random random; //hold the random state so we can continue
+        private Dictionary<string, bool> TrainersCanBattle; //Reference to which trainers can battle at the moment
 
         public Vector3 PlayerPosition { get => playerPosition; set => playerPosition = value; } 
         public string SaveName { get => saveName; set => saveName = value; }
@@ -39,6 +40,24 @@ namespace Assets.Scripts.Entities.SaveSystem
         public SaveData()
         {
             SaveName = "save1"; //Set here for now, but for multiple saves will need to set somewhere else
+            TrainersCanBattle = new Dictionary<string, bool>();
+        }
+
+        public bool GetTrainerCanBattle(string name)
+        {
+            return !TrainersCanBattle.TryGetValue(name, out bool canBattle) || canBattle;
+        }
+
+        public void SetTrainerCanBattle(string name, bool canBattle)
+        {
+            if (TrainersCanBattle.ContainsKey(name))
+            {
+                TrainersCanBattle[name] = canBattle;
+            }
+            else
+            {
+                TrainersCanBattle.Add(name, canBattle);
+            }
         }
     }
 }

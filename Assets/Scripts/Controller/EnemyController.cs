@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -51,7 +52,11 @@ public class EnemyController : MonoBehaviour
         }
 
         UserMessage.Instance.CanSendMessage = true;
-        EventManager.Instance.OnGetNextTurnStateTrigger();
+
+        if (OtherController.Monsters.Any(m => m.IsInPlay))
+        {
+            EventManager.Instance.OnGetNextTurnStateTrigger();
+        }
     }
 
     public bool GetNextAttack()
