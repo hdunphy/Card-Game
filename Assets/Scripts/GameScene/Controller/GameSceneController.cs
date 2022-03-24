@@ -152,6 +152,7 @@ public class GameSceneController : MonoBehaviour
         else
         {
             player.EnterRoom(SaveData.Current.PlayerPosition);
+            player.SharedController.HealMonsters();
         }
     }
 
