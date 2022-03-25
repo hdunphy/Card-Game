@@ -50,13 +50,6 @@ public class Tooltip : MonoBehaviour
             position.y = Screen.height - RectTransform.rect.height;
 
         transform.position = position + Offset;
-
-        //float pivotX = position.x / Screen.width;
-        //float pivotY = position.y / Screen.height;
-
-        //RectTransform.pivot = new Vector2(pivotX, pivotY);
-
-        //transform.position = position;
     }
 
     private void UpdateTooltipSize()

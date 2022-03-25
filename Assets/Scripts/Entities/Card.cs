@@ -102,8 +102,6 @@ public class Card : MonoBehaviour
         Data = _data;
         name = Data.CardName;
         UIController.SetCardData(_data);
-
-        gameObject.AddComponent<TooltipTrigger>().SetText($"Card has power: {Power}");
     }
 
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)

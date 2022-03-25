@@ -7,6 +7,8 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] public Sprite Sprite;
 
+        public abstract string TooltipText { get; }
+
         public virtual bool IsValidAction(Monster source, Monster target, Card card)
         {
             bool notNullSource = source != null;

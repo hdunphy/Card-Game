@@ -5,6 +5,8 @@ namespace Assets.Scripts.Entities.Scriptable
     [CreateAssetMenu(fileName = "Target Self", menuName = "Data/Card Target/Create Target Self")]
     public class CardTargetSelf : CardTarget
     {
+        public override string TooltipText => "Can target itself (the selected Monster)";
+
         public override bool IsValidAction(Monster source, Monster target, Card card)
         {
             bool notNullTarget = target != null;
