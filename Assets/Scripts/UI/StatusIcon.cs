@@ -29,6 +29,7 @@ public class StatusIcon : MonoBehaviour
         Count = _count;
         StatusSprite.sprite = Status.GetSprite(_count);
         StatusCount.text = Count.ToString();
+        UpdateTooltip();
     }
 
     public int AddCount(int _count)

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Scriptable;
+using Assets.Scripts.UI.Tooltips;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     [SerializeField] private Gradient HealthGradient;
     [SerializeField] private Transform StatusParent;
     [SerializeField] private StatusIcon StatusIconPrefab;
+    [SerializeField] private GameObject DescriptionToolTipTrigger;
 
     private TooltipTrigger TooltipTrigger;
     private MonsterInstance Data;
@@ -95,11 +97,20 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
 
         Statuses = new Dictionary<BaseStatus, StatusIcon>();
 
-        TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
-
+        SetUpToolTips();
         SetEnergy();
         UpdateHealthText();
         UpdateTooltip();
+    }
+
+    private void SetUpToolTips()
+    {
+        TooltipTrigger = DescriptionToolTipTrigger.AddComponent<TooltipTrigger>();
+        var tooltipComponents = GetComponentsInChildren<ITooltipComponent>();
+        foreach (var tooltipComponent in tooltipComponents)
+        {
+            tooltipComponent.SetData(Data.BaseData);
+        }
     }
 
     public void PlayCard(Card selectedCard)

@@ -10,11 +10,11 @@ namespace Assets.Scripts.Entities
 {
     public class MonsterInstance
     {
-        private readonly MonsterData BaseData;
         public readonly int AttackModifier;
         public readonly int DefenseModifier;
         public readonly int HealthModifier;
 
+        public MonsterData BaseData { get; }
         public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
         public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
