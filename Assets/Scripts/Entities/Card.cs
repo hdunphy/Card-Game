@@ -93,7 +93,12 @@ public class Card : MonoBehaviour
         DisableCover.gameObject.SetActive(false);
         if (_monster != null)
         {
-            DisableCover.gameObject.SetActive(_monster.EnergyAvailable < EnergyCost);
+            UserMessage.Instance.CanSendMessage = false;
+
+            bool isCardPlayable = CheckConstraints(_monster);
+            DisableCover.gameObject.SetActive(isCardPlayable);
+
+            UserMessage.Instance.CanSendMessage = true;
         }
     }
 
