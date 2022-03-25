@@ -13,14 +13,10 @@ public class StatusIcon : MonoBehaviour
 
     private TooltipTrigger TooltipTrigger;
 
-    private void Start()
-    {
-        TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
-    }
-
     public void SetStatus(BaseStatus status, int _count)
     {
         Status = status;
+        TooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
         SetCount(_count);
     }
 
