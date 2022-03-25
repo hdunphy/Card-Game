@@ -95,7 +95,7 @@ public class Card : MonoBehaviour
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = CheckConstraints(_monster);
+            bool isCardPlayable = !CheckConstraints(_monster);
             DisableCover.gameObject.SetActive(isCardPlayable);
 
             UserMessage.Instance.CanSendMessage = true;
