@@ -5,6 +5,7 @@ public class UserMessage : MonoBehaviour
 {
     public static UserMessage Instance;
 
+    [HideInInspector]
     public bool CanSendMessage;
 
     IDisplayLog DisplayLog;

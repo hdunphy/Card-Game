@@ -6,6 +6,10 @@ namespace Assets.Scripts.UI
 {
     public class ScrollableLog : MonoBehaviour, IDisplayLog
     {
+        [SerializeField] private bool HideLogAfterMessage;
+        [Range(1, 10)]
+        [SerializeField] private float MessageDisplayDurationSeconds;
+
         private bool showLog;
         Vector2 scroll;
 
@@ -23,9 +27,12 @@ namespace Assets.Scripts.UI
         {
             showLog = true;
 
-            yield return new WaitForSeconds(7f);
+            yield return new WaitForSeconds(MessageDisplayDurationSeconds);
 
-            showLog = false;
+            if (HideLogAfterMessage)
+            {
+                showLog = false;
+            }
         }
 
         private void OnGUI()
@@ -55,12 +62,6 @@ namespace Assets.Scripts.UI
         void Start()
         {
             Logs = new List<string>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }
