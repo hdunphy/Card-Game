@@ -9,18 +9,22 @@ namespace Assets.Scripts.Entities.Scriptable
     public class NamedStatus : BaseStatus
     {
         [SerializeField] private new string name;
-        [SerializeField] private string Description;
+        [SerializeField] private string description;
+        [SerializeField] private int maxCount;
 
-        private Dictionary<Monster, UnityAction> MonsterActions = new Dictionary<Monster, UnityAction>();
+        private readonly Dictionary<Monster, UnityAction> _monsterActions = new Dictionary<Monster, UnityAction>();
 
         public override void ApplyStatus(Monster monster, int count)
         {
-            base.ApplyStatus(monster, count);
+            int currentCount = monster.GetStatusCount(this);
+            int _count = Mathf.Clamp(count, count, maxCount - currentCount);
+            
+            base.ApplyStatus(monster, _count);
 
-            if (!MonsterActions.ContainsKey(monster))
+            if (!_monsterActions.ContainsKey(monster))
             {
                 UnityAction action = delegate { monster.GetStatusEffect(this); };
-                MonsterActions.Add(monster, action);
+                _monsterActions.Add(monster, action);
 
                 FindObjectsOfType<MonsterController>().First(m => m.HasMonster(monster))
                     .AddListenerToTurnStateMachine(TurnStateEnum.PreTurn, action);
@@ -32,9 +36,9 @@ namespace Assets.Scripts.Entities.Scriptable
             base.RemoveStatus(monster);
 
             FindObjectsOfType<MonsterController>().First(m => m.HasMonster(monster))
-                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, MonsterActions[monster]);
+                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, _monsterActions[monster]);
 
-            MonsterActions.Remove(monster);
+            _monsterActions.Remove(monster);
         }
 
         public override void DoEffect(Monster monster, int count)
@@ -46,7 +50,7 @@ namespace Assets.Scripts.Entities.Scriptable
             monster.ApplyStatus(this, -1);
         }
 
-        public override string GetTooltip(int count) => $"{Description}. Lasts for {count} turns;";
+        public override string GetTooltip(int count) => $"{description}. Lasts for {count} turns;";
 
         public override string GetTooltipHeader(int count) => name;
     }
