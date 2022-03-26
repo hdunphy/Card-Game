@@ -19,7 +19,7 @@ namespace Assets.Scripts.Entities.SaveSystem
 
         public Deck GetPlayerDeckHolder() => new Deck
         {
-            Cards = CardDataNames.Select(n => ScriptableObjectReference.Singleton.GetScriptableObject<CardData>(n)).ToList(),
+            Cards = CardDataNames.Select(n => ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<CardData>(n)).ToList(),
             Name = Name
         };
     }

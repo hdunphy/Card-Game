@@ -47,7 +47,7 @@ namespace Assets.Scripts.Entities
 
         public MonsterInstance(MonsterSaveModel monsterSaveModel)
         {
-            BaseData = ScriptableObjectReference.Singleton.GetScriptableObject<MonsterData>(monsterSaveModel.MonsterDataName);
+            BaseData = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MonsterData>(monsterSaveModel.MonsterDataName);
             Level = monsterSaveModel.Level;
             Experience = monsterSaveModel.Experience;
             AttackModifier = monsterSaveModel.AttackModifier;

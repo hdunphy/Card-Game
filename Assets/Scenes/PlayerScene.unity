@@ -215,45 +215,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 616273823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512016b16f728774087e493aadc41948, type: 3}
+  m_Script: {fileID: 11500000, guid: 81cec3b9c28a4ee449a88b0e860954d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cards:
-  - {fileID: 11400000, guid: 6ec3e783b69ea5a448310a8f5746874f, type: 2}
-  - {fileID: 11400000, guid: 7c624cf60bd54a5429ad39032cba6f21, type: 2}
-  - {fileID: 11400000, guid: 967b0fdd9f523dd428c497caa2dbd73a, type: 2}
-  - {fileID: 11400000, guid: a032046aa23fe8b46a82b45f87e9b8e8, type: 2}
-  - {fileID: 11400000, guid: e66051f3d60724f4982f7874b90d4d43, type: 2}
-  - {fileID: 11400000, guid: dee9dce9230007b45a11d110c6ce7d7e, type: 2}
-  - {fileID: 11400000, guid: a5251872f599d28429db8c158cff3904, type: 2}
-  - {fileID: 11400000, guid: 31aa04ed2e6369d4aa4cfd28ee96e2f8, type: 2}
-  - {fileID: 11400000, guid: 211fc1b03ea95e844b65770d7450b9ce, type: 2}
-  - {fileID: 11400000, guid: 0f9b908001dff794b9960199fa2f7902, type: 2}
-  - {fileID: 11400000, guid: a6eb960362d694446b6cb4aa27cd23cc, type: 2}
-  - {fileID: 11400000, guid: 80e15b09ca403f840b1cf3d886aa9171, type: 2}
-  - {fileID: 11400000, guid: 8e5d7a5b1d7d95d4bb74521061f22084, type: 2}
-  - {fileID: 11400000, guid: 40eca63994a2cbf4bb4a4b56b8926efc, type: 2}
-  - {fileID: 11400000, guid: ddd39980c411412479348802b12a9a09, type: 2}
-  - {fileID: 11400000, guid: ce3bc08ede1054446b164d723a986d73, type: 2}
-  - {fileID: 11400000, guid: 4f169ab2baaecbe4ba806a40be494b5a, type: 2}
-  - {fileID: 11400000, guid: c583bfdab4d35384086f01a9c7c441b6, type: 2}
-  - {fileID: 11400000, guid: 30dbc53091e8f9e428f78549cde413ca, type: 2}
-  - {fileID: 11400000, guid: 5e476abec9db1d04b9d34dacde2b46b5, type: 2}
-  - {fileID: 11400000, guid: 15180cac62c0faa428c7c9af8373d9fc, type: 2}
-  - {fileID: 11400000, guid: c47946ab7e6e14747b011c2ae90c3789, type: 2}
-  - {fileID: 11400000, guid: 0e849a16e6c445f4b8cbe4ada517d968, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
-  - {fileID: 11400000, guid: ac81836b084acd147b15f54421d53bad, type: 2}
-  - {fileID: 11400000, guid: 7c05b565a6bd5b74f9cfe8fd349023b9, type: 2}
-  - {fileID: 11400000, guid: aa71c2cc2785afd4eafd05e6b14fbd63, type: 2}
-  - {fileID: 11400000, guid: 1fe4d59d5801d1b49a69edbf07015838, type: 2}
-  - {fileID: 11400000, guid: bc7ae3d79e4e5aa4da2e34334dde0ca5, type: 2}
-  - {fileID: 11400000, guid: 6dbae888c07d1ab45811ddbdfae623f2, type: 2}
-  - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
-  - {fileID: 11400000, guid: 833a63ad9074f314db06823b91f7b693, type: 2}
-  Monsters:
-  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
-  - {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+  scriptableObjectReference: {fileID: 11400000, guid: dd8ee5ae7de361040aab069be17583aa, type: 2}
 --- !u!1 &994381226
 GameObject:
   m_ObjectHideFlags: 0
