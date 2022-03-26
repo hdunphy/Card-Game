@@ -45,6 +45,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6dbae888c07d1ab45811ddbdfae623f2, type: 2}
   - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
   - {fileID: 11400000, guid: 833a63ad9074f314db06823b91f7b693, type: 2}
-  Monsters:
+  Mingmings:
   - {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
   - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
