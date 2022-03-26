@@ -120,7 +120,7 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
         SetEnergy();
     }
 
-    private int GetDeathExp() => Data.GetDeathExp();
+    public int GetDeathExp() => Data.GetDeathExp();
 
     public void ApplyStatus(BaseStatus status, int _count)
     {
@@ -218,7 +218,6 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
 
             if (CurrentHealth <= 0)
             {
-                source?.UpdateExperienceUI(GetDeathExp()); //TODO null propagation for Status deaths
                 SetDead();
                 break;
             }
@@ -227,7 +226,7 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
         UpdateHealthText();
     }
 
-    private void UpdateExperienceUI(int expGained)
+    public void AddExperience(int expGained)
     {
         int levelUps = Data.AddExperience(expGained);
 

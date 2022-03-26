@@ -60,6 +60,16 @@ public class MingmingController : MonoBehaviour
                 EventManager.Instance.OnBattleOverTrigger(this);
             }
         }
+        else
+        {
+            int totalXP = _mingming.GetDeathExp();
+            int xpPerMingming = Mathf.CeilToInt((float)totalXP / Mingmings.Count( m => m.IsInPlay ));
+            
+            foreach(var mingming in Mingmings)
+            {
+                mingming.AddExperience(xpPerMingming);
+            }
+        }
     }
 
     private void Instance_BattleOver(MingmingController obj)
