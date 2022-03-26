@@ -26,7 +26,7 @@ namespace Assets.Scripts.Entities.Scriptable
                 UnityAction action = delegate { monster.GetStatusEffect(this); };
                 _monsterActions.Add(monster, action);
 
-                FindObjectsOfType<MonsterController>().First(m => m.HasMonster(monster))
+                FindObjectsOfType<MingmingController>().First(m => m.HasMingming(monster))
                     .AddListenerToTurnStateMachine(TurnStateEnum.PreTurn, action);
             }
         }
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Entities.Scriptable
         {
             base.RemoveStatus(monster);
 
-            FindObjectsOfType<MonsterController>().First(m => m.HasMonster(monster))
+            FindObjectsOfType<MingmingController>().First(m => m.HasMingming(monster))
                 .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, _monsterActions[monster]);
 
             _monsterActions.Remove(monster);

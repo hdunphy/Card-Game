@@ -7,8 +7,8 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float SecondsBetweenAttack;
 
-    [SerializeField] private MonsterController SelfController;
-    [SerializeField] private MonsterController OtherController;
+    [SerializeField] private MingmingController SelfController;
+    [SerializeField] private MingmingController OtherController;
     private List<Card> Hand;
 
     [SerializeField] private EnemyAttackBehaviorEnum EnemyAttackBehaviorEnum;
@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
     {
         Hand = hand;
 
-        attackBehavior.SetTurnStategy(Hand, SelfController.Monsters, OtherController.Monsters);
+        attackBehavior.SetTurnStategy(Hand, SelfController.Mingmings, OtherController.Mingmings);
 
         StartCoroutine(AttackPhase());
     }
@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
 
         UserMessage.Instance.CanSendMessage = true;
 
-        if (OtherController.Monsters.Any(m => m.IsInPlay))
+        if (OtherController.Mingmings.Any(m => m.IsInPlay))
         {
             EventManager.Instance.OnGetNextTurnStateTrigger();
         }

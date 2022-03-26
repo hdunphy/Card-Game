@@ -53,7 +53,7 @@ public abstract class DeckHandler : MonoBehaviour
         //Begin Turn
     }
 
-    private void Instance_BattleOver(MonsterController obj) => DiscardHand();
+    private void Instance_BattleOver(MingmingController obj) => DiscardHand();
 
     protected abstract Card AddCardToHand(Card _card, Transform transform);
     protected abstract void UpdateHandUI(List<Card> CardsInHand);

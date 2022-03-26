@@ -18,28 +18,28 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public event Action<Mingming> SelectMonster;
+    public event Action<Mingming> SelectMingming;
     public event Action<Mingming, Card> SelectTarget;
     public event Action<Mingming> UpdateSelectedMonster;
-    public event Action<Mingming> MonsterDied;
+    public event Action<Mingming> MingmingDied;
     public event Action<Card> DiscardCard;
     public event Action GetNextTurnState;
     public event Action ResetSelected;
-    public event Action<MonsterController> BattleOver;
+    public event Action<MingmingController> BattleOver;
 
     public void OnSelectMingmingTrigger(Mingming _monster)
     {
-        SelectMonster?.Invoke(_monster);
+        SelectMingming?.Invoke(_monster);
     }
 
-    public void OnUpdateSelectedMonsterTrigger(Mingming _monster)
+    public void OnUpdateSelectedMingmingTrigger(Mingming _monster)
     {
         UpdateSelectedMonster?.Invoke(_monster);
     }
 
     public void OnMonsterDiedTrigger(Mingming _monster)
     {
-        MonsterDied?.Invoke(_monster);
+        MingmingDied?.Invoke(_monster);
     }
 
     public void OnDiscardCardTrigger(Card _card)
@@ -62,7 +62,7 @@ public class EventManager : MonoBehaviour
         SelectTarget?.Invoke(target, card);
     }
 
-    public void OnBattleOverTrigger(MonsterController monsterController)
+    public void OnBattleOverTrigger(MingmingController monsterController)
     {
         BattleOver?.Invoke(monsterController);
     }

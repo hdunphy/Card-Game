@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private SharedController sharedController;
+    [SerializeField] private DevController devController;
 
     IMovement Movement;
     private IPlayerInteractable Interactable;
 
-    public SharedController SharedController => sharedController;
+    public DevController DevController => devController;
 
     // Start is called before the first frame update
     void Start()
@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
     public void SavePlayerData()
     {
         SaveData.Current.PlayerPosition = transform.position;
-        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)SharedController.DeckHolder);
-        SaveData.Current.PlayerMonsters = SharedController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
+        SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DevController.DeckHolder);
+        SaveData.Current.PlayerMonsters = DevController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviour
     {
         EnterRoom(loadPosition);
 
-        SharedController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
-        SharedController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MingmingInstance(m)).ToList());
+        DevController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
+        DevController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MingmingInstance(m)).ToList());
     }
 
     public void SetInteraction(IPlayerInteractable interactable)

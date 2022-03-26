@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e48379d4f5270448cbfd87573d60da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedController: {fileID: 6100250102517698589}
+  devController: {fileID: 6100250102517698589}
 --- !u!114 &6100250102517698589
 MonoBehaviour:
   m_ObjectHideFlags: 0

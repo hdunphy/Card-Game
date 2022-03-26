@@ -47,7 +47,7 @@ namespace Assets.Scripts.UI.Controller
         public void OnContinueClicked()
         {
             var SelectedCards = CardRewards.Where(c => c.IsSelected).Select(c => c.CardData);
-            FindObjectOfType<PlayerController>().SharedController.DeckHolder.AllCards.AddRange(SelectedCards);
+            FindObjectOfType<PlayerController>().DevController.DeckHolder.AllCards.AddRange(SelectedCards);
 
             RewardCanvas.SetActive(false);
         }

@@ -24,7 +24,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
             MonsterActions.Add(target, _unityAction);
 
-            FindObjectsOfType<MonsterController>().First(m => m.HasMonster(target))
+            FindObjectsOfType<MingmingController>().First(m => m.HasMingming(target))
                 .AddListenerToTurnStateMachine(TurnState, _unityAction);
         }
 
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             }
             else
             {
-                FindObjectsOfType<MonsterController>().First(m => m.HasMonster(target))
+                FindObjectsOfType<MingmingController>().First(m => m.HasMingming(target))
                     .RemoveListenerToTurnStateMachine(TurnState, MonsterActions[target]);
 
                 MonsterActions.Remove(target);

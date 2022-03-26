@@ -10,8 +10,8 @@ public enum PlayerTurn { PlayerOne, PlayerTwo }
 public class BattleManager : MonoBehaviour
 {
 
-    [SerializeField] private MonsterController PlayerLoader;
-    [SerializeField] private MonsterController EnemyLoader;
+    [SerializeField] private MingmingController PlayerLoader;
+    [SerializeField] private MingmingController EnemyLoader;
     [SerializeField] private Button EndButton;
 
     [Header("Events")]
@@ -21,8 +21,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private UnityEvent OnEndTurn;
 
     //private variables
-    private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
-    private Mingming SelectedMonster;
+    private MingmingController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
+    private Mingming SelectedMingming;
     private PlayerTurn playerTurn;
 
     public static BattleManager Singleton { get; private set; }
@@ -43,7 +43,7 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SelectMonster += SetSelectedMonster;
+        EventManager.Instance.SelectMingming += SetSelectedMingming;
         EventManager.Instance.SelectTarget += TargetSelected;
         EventManager.Instance.GetNextTurnState += GetNextTurnState;
         EventManager.Instance.ResetSelected += ResetSelected;
@@ -52,7 +52,7 @@ public class BattleManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.Instance.SelectMonster -= SetSelectedMonster;
+        EventManager.Instance.SelectMingming -= SetSelectedMingming;
         EventManager.Instance.GetNextTurnState -= GetNextTurnState;
         EventManager.Instance.ResetSelected -= ResetSelected;
         EventManager.Instance.BattleOver -= BattleOver;
@@ -85,7 +85,7 @@ public class BattleManager : MonoBehaviour
     /// Triggered when battle has been lost
     /// </summary>
     /// <param name="_controller">The controller of the losing side</param>
-    private void BattleOver(MonsterController _controller)
+    private void BattleOver(MingmingController _controller)
     {
         bool didPlayerOneWin = _controller == EnemyLoader;
         
@@ -125,23 +125,23 @@ public class BattleManager : MonoBehaviour
         GetNextTurnState();
     }
 
-    public void SetSelectedMonster(Mingming _monster)
+    public void SetSelectedMingming(Mingming _mingming)
     {
-        if (ActiveController.HasMonster(_monster))
+        if (ActiveController.HasMingming(_mingming))
         {
-            SelectedMonster = (Mingming)SetSelectable(SelectedMonster, _monster);
-            EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
+            SelectedMingming = (Mingming)SetSelectable(SelectedMingming, _mingming);
+            EventManager.Instance.OnUpdateSelectedMingmingTrigger(SelectedMingming);
         }
     }
 
     private void TargetSelected(Mingming target, Card card)
     {
-        if(card.IsValidAction(SelectedMonster, target))
+        if(card.IsValidAction(SelectedMingming, target))
         {
-            string source = SelectedMonster?.name ?? target.name;
+            string source = SelectedMingming?.name ?? target.name;
             UserMessage.Instance.SendMessageToUser($"{source} used {card.name} on {target.name}");
             
-            StartCoroutine(card.InvokeAction(SelectedMonster, target));
+            StartCoroutine(card.InvokeAction(SelectedMingming, target));
         }
         else
         {
@@ -152,7 +152,7 @@ public class BattleManager : MonoBehaviour
 
     public void ResetSelected()
     {
-        if (SelectedMonster != null) SetSelectedMonster(SelectedMonster);
+        if (SelectedMingming != null) SetSelectedMingming(SelectedMingming);
     }
 
     private SelectableElement SetSelectable(SelectableElement _current, SelectableElement _selected)

@@ -38,8 +38,8 @@ namespace Assets.Scripts.GameScene.Entities
         public void GetEncounter()
         {
             OnStartEncounter?.Invoke();
-            GameSceneController.Singleton.LoadBattleScene(player.SharedController.PlayableMonsters, TrainerController.SharedController.PlayableMonsters,
-                player.SharedController.DeckHolder.CurrentDeck, TrainerController.SharedController.DeckHolder.CurrentDeck, this);
+            GameSceneController.Singleton.LoadBattleScene(player.DevController.PlayableMonsters, TrainerController.DevController.PlayableMonsters,
+                player.DevController.DeckHolder.CurrentDeck, TrainerController.DevController.DeckHolder.CurrentDeck, this);
         }
 
         public List<CardData> GetRewards()

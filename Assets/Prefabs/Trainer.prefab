@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Johnny Boy
-  sharedController: {fileID: 1914818937679071382}
+  devController: {fileID: 1914818937679071382}
 --- !u!114 &1914818937679071382
 MonoBehaviour:
   m_ObjectHideFlags: 0

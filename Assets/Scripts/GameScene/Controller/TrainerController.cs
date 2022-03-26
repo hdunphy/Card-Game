@@ -8,16 +8,16 @@ namespace Assets.Scripts.GameScene.Controller
     public class TrainerController : MonoBehaviour
     {
         public new string name;
-        [SerializeField] private SharedController sharedController;
+        [SerializeField] private DevController devController;
 
         public bool CanBattle { get; private set; }
 
-        public SharedController SharedController => sharedController;
+        public DevController DevController => devController;
 
         private void Start()
         {
-            sharedController.SetDeckHolder(null);
-            sharedController.SetMonsters(null);
+            devController.SetDeckHolder(null);
+            devController.SetMonsters(null);
             CanBattle = false;
 
             StartCoroutine(GetCanBattle());

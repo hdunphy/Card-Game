@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Controller
 {
-    public class SharedController : MonoBehaviour
+    public class DevController : MonoBehaviour
     {
         public IEnumerable<MingmingInstance> PlayableMonsters { get => Monsters.Where(m => m.CurrentHealth > 0); }
         //Replace

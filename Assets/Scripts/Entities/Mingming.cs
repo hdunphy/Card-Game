@@ -257,7 +257,7 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
     {
         EnergyHolder.SetEnergy(EnergyAvailable, TotalEnergy);
         if (IsSelected)
-            EventManager.Instance.OnUpdateSelectedMonsterTrigger(this);
+            EventManager.Instance.OnUpdateSelectedMingmingTrigger(this);
     }
 
     private void UpdateHealthText()

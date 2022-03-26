@@ -5,12 +5,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MonsterController : MonoBehaviour
+public class MingmingController : MonoBehaviour
 {
     [SerializeField] private Mingming monsterPrefab;
     [SerializeField] private DeckHandler deckController;
 
-    public List<Mingming> Monsters { get; private set; }
+    public List<Mingming> Mingmings { get; private set; }
     private int CardDraw;
 
     //Turn
@@ -21,7 +21,7 @@ public class MonsterController : MonoBehaviour
 
     private void Awake()
     {
-        Monsters = new List<Mingming>();
+        Mingmings = new List<Mingming>();
         CurrentTurnState = TurnStateEnum.PostTurn;
         TurnStateMachine = new Dictionary<TurnStateEnum, ITurnStateMachine>
         {
@@ -41,28 +41,28 @@ public class MonsterController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.MonsterDied += Instance_MonsterDied;
+        EventManager.Instance.MingmingDied += Instance_MingmingDied;
         EventManager.Instance.BattleOver += Instance_BattleOver;
     }
 
     private void OnDestroy()
     {
-        EventManager.Instance.MonsterDied -= Instance_MonsterDied;
+        EventManager.Instance.MingmingDied -= Instance_MingmingDied;
         EventManager.Instance.BattleOver -= Instance_BattleOver;
     }
 
-    private void Instance_MonsterDied(Mingming _monster)
+    private void Instance_MingmingDied(Mingming _mingming)
     {
-        if (HasMonster(_monster))
+        if (HasMingming(_mingming))
         {
-            if(!Monsters.Any(m => m.IsInPlay))
-            { //if all monsters are not in play
+            if(!Mingmings.Any(m => m.IsInPlay))
+            { //if all mingmings are not in play
                 EventManager.Instance.OnBattleOverTrigger(this);
             }
         }
     }
 
-    private void Instance_BattleOver(MonsterController obj)
+    private void Instance_BattleOver(MingmingController obj)
     {
         CurrentTurnState = TurnStateEnum.End;
     }
@@ -71,23 +71,23 @@ public class MonsterController : MonoBehaviour
     {
         CardDraw = 0;
 
-        foreach (Mingming _monster in Monsters)
+        foreach (Mingming _mingming in Mingmings)
         {
-            Destroy(_monster);
+            Destroy(_mingming);
         }
 
-        Monsters.Clear();
+        Mingmings.Clear();
 
         int index = 0; //for loop doesn't work with IEnumerable ?
         foreach (MingmingInstance _data in datas)
         {
-            Mingming _monster = Instantiate(monsterPrefab, transform);
-            _monster.SetUp(_data);
-            Monsters.Add(_monster);
+            Mingming _mingming = Instantiate(monsterPrefab, transform);
+            _mingming.SetUp(_data);
+            Mingmings.Add(_mingming);
 
             //Refactor adding listeners
-            TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_monster.StartTurn);
-            TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _monster.SetIsTurn(false); });
+            TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
+            TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
 
             CardDraw += _data.CardDraw - index;
             if (isWildDeck)
@@ -122,14 +122,13 @@ public class MonsterController : MonoBehaviour
 
     public void StartTurn()
     {
-        //deckController.StartTurn(CardDraw);
         CurrentTurnState = TurnStateEnum.PreTurn;
         TurnStateMachine[CurrentTurnState].NewStateAlert.Invoke();
     }
 
-    public bool HasMonster(Mingming _monster)
+    public bool HasMingming(Mingming mingming)
     {
-        return Monsters.Contains(_monster);
+        return Mingmings.Contains(mingming);
     }
 
     public void DrawCards(int numberOfCards) => deckController.DrawCards(numberOfCards);
