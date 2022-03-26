@@ -34,14 +34,15 @@ namespace Assets.Scripts.Entities
         public MonsterInstance(MonsterData monsterData, int _level)
         {
             BaseData = monsterData;
-            Level = _level;
-            CurrentHealth = Health;
 
             Experience = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);
             HealthModifier = Rules.GetRandomInt(0, 31);
             
+            Level = _level;
+            CurrentHealth = Health;
+
             SetFieldsFromData();
         }
 
