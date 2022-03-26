@@ -8,16 +8,16 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public virtual Sprite GetSprite(int count) => sprite;
 
-        public virtual void ApplyStatus(Monster monster, int count)
+        public virtual void ApplyStatus(Mingming monster, int count)
         {
             monster.ApplyStatus(this, count);
         }
 
-        public virtual void RemoveStatus(Monster monster)
+        public virtual void RemoveStatus(Mingming monster)
         {
         }
 
-        public abstract void DoEffect(Monster monster, int count);
+        public abstract void DoEffect(Mingming monster, int count);
 
         public abstract string GetTooltip(int count);
 

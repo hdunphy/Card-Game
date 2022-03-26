@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public abstract string TooltipText { get; }
 
-        public virtual bool IsValidAction(Monster source, Monster target, Card card)
+        public virtual bool IsValidAction(Mingming source, Mingming target, Card card)
         {
             bool notNullSource = source != null;
             bool notNullTarget = target != null;
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Entities.Scriptable
             return notNullSource && notNullTarget && source.IsTurn && card.CheckConstraints(source);
         }
 
-        public abstract void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card);
+        public abstract void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card);
     }
 }
 

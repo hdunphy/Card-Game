@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     {
         [SerializeField] private BaseStatus Status;
         [SerializeField] private int Count;
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             Status.ApplyStatus(source, Count);
             base.InvokeAction(source, target, card);

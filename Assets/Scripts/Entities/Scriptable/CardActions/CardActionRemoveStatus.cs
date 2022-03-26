@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     public class CardActionRemoveStatus : CardAction
     {
         [SerializeField] private BaseStatus Status;
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             Status.RemoveStatus(target);
 

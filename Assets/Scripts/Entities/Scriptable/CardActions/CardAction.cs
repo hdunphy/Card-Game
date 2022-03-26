@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] private UnityEvent OnInvoked;
         
-        public virtual void InvokeAction(Monster source, Monster target, Card card)
+        public virtual void InvokeAction(Mingming source, Mingming target, Card card)
         {
             OnInvoked?.Invoke();
         }

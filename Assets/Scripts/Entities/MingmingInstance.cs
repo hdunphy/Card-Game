@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
-    public class MonsterInstance
+    public class MingmingInstance
     {
         public readonly int AttackModifier;
         public readonly int DefenseModifier;
         public readonly int HealthModifier;
 
-        public MonsterData BaseData { get; }
+        public MingmingData BaseData { get; }
         public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
         public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
         public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
@@ -28,10 +28,10 @@ namespace Assets.Scripts.Entities
         public string DataName => BaseData.name;
 
         public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
-        public MonsterAlignment MonsterAlignment { get => BaseData.MonsterAlignments; }
+        public MingmingAlignment MonsterAlignment { get => BaseData.MingmingAlignment; }
         public List<CardData> WildDeck { get; private set; }
 
-        public MonsterInstance(MonsterData monsterData, int _level)
+        public MingmingInstance(MingmingData monsterData, int _level)
         {
             BaseData = monsterData;
             Level = _level;
@@ -46,9 +46,9 @@ namespace Assets.Scripts.Entities
             SetFieldsFromData();
         }
 
-        public MonsterInstance(MonsterSaveModel monsterSaveModel)
+        public MingmingInstance(MonsterSaveModel monsterSaveModel)
         {
-            BaseData = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MonsterData>(monsterSaveModel.MonsterDataName);
+            BaseData = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MingmingData>(monsterSaveModel.MonsterDataName);
             Level = monsterSaveModel.Level;
             Experience = monsterSaveModel.Experience;
             AttackModifier = monsterSaveModel.AttackModifier;

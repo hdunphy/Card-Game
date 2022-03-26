@@ -8,9 +8,9 @@ namespace Assets.Scripts.Entities.Scriptable
     [CreateAssetMenu(fileName = "Burn Status", menuName = "Data/Status/Create Burn Status")]
     public class BurnStatus : BaseStatus
     {
-        private Dictionary<Monster, UnityAction> MonsterActions = new Dictionary<Monster, UnityAction>();
+        private Dictionary<Mingming, UnityAction> MonsterActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Monster monster, int count)
+        public override void ApplyStatus(Mingming monster, int count)
         {
             base.ApplyStatus(monster, count);
 
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void RemoveStatus(Monster monster)
+        public override void RemoveStatus(Mingming monster)
         {
             base.RemoveStatus(monster);
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Entities.Scriptable
             MonsterActions.Remove(monster);
         }
 
-        public override void DoEffect(Monster monster, int count)
+        public override void DoEffect(Mingming monster, int count)
         {
             int dmg = GetDamage(monster.TotalHealth, count);
             monster.TakeDamage(dmg, null); //TODO: pass source some how

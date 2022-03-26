@@ -100,7 +100,7 @@ namespace Assets.Scripts.References
 
         public System.Random GetRandom() => Random;
 
-        public int GetAttackDamage(Monster source, Monster target, Card _card)
+        public int GetAttackDamage(Mingming source, Mingming target, Card _card)
         {
             float _modifier = GetModifier(source.GetMonsterAlignment(), target.GetMonsterAlignment(), _card.CardAlignment);
 
@@ -115,7 +115,7 @@ namespace Assets.Scripts.References
         }
 
         public int GetAttackDamage(int level, int attack, int defense, float cardPower,
-            MonsterAlignment attackerType, MonsterAlignment defenderTypes, CardAlignment cardType)
+            MingmingAlignment attackerType, MingmingAlignment defenderTypes, CardAlignment cardType)
         {
             float _modifier = GetModifier(attackerType, defenderTypes, cardType);
             //float damage = ((((((2 * level) / 5) + 2) * power * attack / defense) / 50) + 2) * _modifier;
@@ -127,14 +127,14 @@ namespace Assets.Scripts.References
             return Mathf.FloorToInt(damage);
         }
 
-        private float GetModifier(MonsterAlignment attackerType, MonsterAlignment defenderTypes, CardAlignment cardType)
+        private float GetModifier(MingmingAlignment attackerType, MingmingAlignment defenderTypes, CardAlignment cardType)
         {
             float modifier = attackerType.Contains(cardType) ? SAME_TYPE_ADVANTAGE : 1f; //Bonus for using same type
             modifier *= GetTypeAdvantage(defenderTypes, cardType);
             return modifier;
         }
 
-        private float GetTypeAdvantage(MonsterAlignment defenderTypes, CardAlignment cardType)
+        private float GetTypeAdvantage(MingmingAlignment defenderTypes, CardAlignment cardType)
         {
             float modifier = 1f;
 
@@ -147,12 +147,12 @@ namespace Assets.Scripts.References
             return modifier;
         }
 
-        public int GetExp(MonsterInstance monsterInstance)
+        public int GetExp(MingmingInstance monsterInstance)
         {
             return GetExpForLevel(monsterInstance.Level);
         }
 
-        public int GetExpNextLevel(MonsterInstance monsterInstance)
+        public int GetExpNextLevel(MingmingInstance monsterInstance)
         {
             return GetExpForLevel(monsterInstance.Level + 1);
         }

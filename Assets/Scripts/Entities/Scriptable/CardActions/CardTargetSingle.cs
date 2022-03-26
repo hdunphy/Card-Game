@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override string TooltipText => "Can target any single monster. Friend or Foe";
 
-        public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
+        public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)
         {
             cardAction.InvokeAction(source, target, card);
         }

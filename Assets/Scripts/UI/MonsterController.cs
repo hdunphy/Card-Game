@@ -7,10 +7,10 @@ using UnityEngine.Events;
 
 public class MonsterController : MonoBehaviour
 {
-    [SerializeField] private Monster monsterPrefab;
+    [SerializeField] private Mingming monsterPrefab;
     [SerializeField] private DeckHandler deckController;
 
-    public List<Monster> Monsters { get; private set; }
+    public List<Mingming> Monsters { get; private set; }
     private int CardDraw;
 
     //Turn
@@ -21,7 +21,7 @@ public class MonsterController : MonoBehaviour
 
     private void Awake()
     {
-        Monsters = new List<Monster>();
+        Monsters = new List<Mingming>();
         CurrentTurnState = TurnStateEnum.PostTurn;
         TurnStateMachine = new Dictionary<TurnStateEnum, ITurnStateMachine>
         {
@@ -51,7 +51,7 @@ public class MonsterController : MonoBehaviour
         EventManager.Instance.BattleOver -= Instance_BattleOver;
     }
 
-    private void Instance_MonsterDied(Monster _monster)
+    private void Instance_MonsterDied(Mingming _monster)
     {
         if (HasMonster(_monster))
         {
@@ -67,11 +67,11 @@ public class MonsterController : MonoBehaviour
         CurrentTurnState = TurnStateEnum.End;
     }
 
-    public void BattleSetUp(IEnumerable<MonsterInstance> datas, List<CardData> deck, bool isWildDeck = false)
+    public void BattleSetUp(IEnumerable<MingmingInstance> datas, List<CardData> deck, bool isWildDeck = false)
     {
         CardDraw = 0;
 
-        foreach (Monster _monster in Monsters)
+        foreach (Mingming _monster in Monsters)
         {
             Destroy(_monster);
         }
@@ -79,9 +79,9 @@ public class MonsterController : MonoBehaviour
         Monsters.Clear();
 
         int index = 0; //for loop doesn't work with IEnumerable ?
-        foreach (MonsterInstance _data in datas)
+        foreach (MingmingInstance _data in datas)
         {
-            Monster _monster = Instantiate(monsterPrefab, transform);
+            Mingming _monster = Instantiate(monsterPrefab, transform);
             _monster.SetUp(_data);
             Monsters.Add(_monster);
 
@@ -127,7 +127,7 @@ public class MonsterController : MonoBehaviour
         TurnStateMachine[CurrentTurnState].NewStateAlert.Invoke();
     }
 
-    public bool HasMonster(Monster _monster)
+    public bool HasMonster(Mingming _monster)
     {
         return Monsters.Contains(_monster);
     }

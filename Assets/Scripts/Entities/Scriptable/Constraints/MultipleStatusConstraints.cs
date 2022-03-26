@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class MultipleStatusConstraints : BaseConstraint
     {
         [SerializeField] private List<StatusConstraint> StatusConstraints;
-        public override bool CheckConstraint(Monster source, Card card)
+        public override bool CheckConstraint(Mingming source, Card card)
         {
             bool isValid = base.CheckConstraint(source, card);
 

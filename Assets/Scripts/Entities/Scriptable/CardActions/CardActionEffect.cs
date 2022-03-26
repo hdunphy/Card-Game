@@ -13,9 +13,9 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private BaseConstraint Constraint;
         [SerializeField] private TurnStateEnum TurnState;
 
-        private readonly Dictionary<Monster, UnityAction> MonsterActions = new Dictionary<Monster, UnityAction>();
+        private readonly Dictionary<Mingming, UnityAction> MonsterActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             UnityAction _unityAction = delegate
             {
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
                 .AddListenerToTurnStateMachine(TurnState, _unityAction);
         }
 
-        private void DoEffect(Monster source, Monster target, Card card)
+        private void DoEffect(Mingming source, Mingming target, Card card)
         {
             if (Constraint.CheckConstraint(source, card))
             {

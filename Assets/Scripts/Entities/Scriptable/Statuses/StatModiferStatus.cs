@@ -24,7 +24,7 @@ namespace Assets.Scripts.Entities.Scriptable
                 return;
             }
 
-            ModifierProperty = typeof(Monster).GetProperty(PropertyName);
+            ModifierProperty = typeof(Mingming).GetProperty(PropertyName);
 
             if(ModifierProperty == null || ModifierProperty.PropertyType != typeof(float))
             {
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void ApplyStatus(Monster monster, int count)
+        public override void ApplyStatus(Mingming monster, int count)
         {
             var value = (float)ModifierProperty.GetValue(monster);
             var changeValue = Modifier * Mathf.Abs(count);
@@ -48,12 +48,12 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void RemoveStatus(Monster monster)
+        public override void RemoveStatus(Mingming monster)
         {
             monster.DefenseModifier = 1;
         }
 
-        public override void DoEffect(Monster monster, int count) {}
+        public override void DoEffect(Mingming monster, int count) {}
 
         public override Sprite GetSprite(int count)
         {

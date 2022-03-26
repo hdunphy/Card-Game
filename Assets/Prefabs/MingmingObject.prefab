@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 2267737021568151890}
   - component: {fileID: 468128266629753557}
   m_Layer: 0
-  m_Name: Monster Name
+  m_Name: Mingming Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,7 +322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5456136650251647229}
   m_Layer: 5
-  m_Name: Monster Header
+  m_Name: Mingming Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 6605752314049587375}
   - component: {fileID: 6605752314049587374}
   m_Layer: 5
-  m_Name: Monster Sprite
+  m_Name: Mingming Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -865,7 +865,7 @@ GameObject:
   - component: {fileID: 6605752315742634782}
   - component: {fileID: 2753117505398052433}
   m_Layer: 5
-  m_Name: MonsterObject
+  m_Name: MingmingObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,14 +967,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Highlight: {fileID: 6605752315126879384}
-  MonsterSprite: {fileID: 6605752314049587374}
+  MingmingSprite: {fileID: 6605752314049587374}
   DisableCover: {fileID: 3001454348413572022}
   HealthBar: {fileID: 6605752315363717066}
   PrimaryAlignment: {fileID: 449246534161898270}
   SecondaryAlignment: {fileID: 7489041496784599777}
   ExperienceTransform: {fileID: 3351443729183704103}
   HealthText: {fileID: 1083603965951603643}
-  MonsterName: {fileID: 468128266629753557}
+  NameText: {fileID: 468128266629753557}
   EnergyHolder: {fileID: 1185067413652674352}
   HealthGradient:
     serializedVersion: 2

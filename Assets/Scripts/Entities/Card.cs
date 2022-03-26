@@ -76,7 +76,7 @@ public class Card : MonoBehaviour
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
-    public IEnumerator InvokeAction(Monster source, Monster target)
+    public IEnumerator InvokeAction(Mingming source, Mingming target)
     {
         HoverEffect.enabled = false;
         playedThisTurn = true;
@@ -84,11 +84,11 @@ public class Card : MonoBehaviour
         yield return Data.InvokeAction(source, target, this);
     }
 
-    public bool CheckConstraints(Monster source) => Data.CardConstraint.CheckConstraint(source, this);
+    public bool CheckConstraints(Mingming source) => Data.CardConstraint.CheckConstraint(source, this);
 
-    public bool IsValidAction(Monster source, Monster target) => Data.TargetType.IsValidAction(source, target, this);
+    public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
-    private void Instance_UpdateSelectedMonster(Monster _monster)
+    private void Instance_UpdateSelectedMonster(Mingming _monster)
     {
         DisableCover.gameObject.SetActive(false);
         if (_monster != null)

@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.Constraints
     {
         [SerializeField] private StatusConstraint StatusConstraint;
         [SerializeField] private bool StatusCountIsPositive;
-        public override bool CheckConstraint(Monster source, Card card)
+        public override bool CheckConstraint(Mingming source, Card card)
         {
             bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
             bool _isCountPositive = Mathf.Sign(source.GetStatusCount(StatusConstraint.Status)) > 0 ;

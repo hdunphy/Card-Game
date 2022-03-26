@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MonsterData", menuName = "Data/Create Monster Data")]
-public class MonsterData : IDropScriptableObject
+[CreateAssetMenu(menuName = "Data/Create Mingming Data")]
+public class MingmingData : IDropScriptableObject
 {
     [SerializeField] private Sprite sprite;
     [SerializeField] private int health;
@@ -12,7 +12,7 @@ public class MonsterData : IDropScriptableObject
     [SerializeField] private int defense;
     [SerializeField] private int energy;
     [SerializeField] private int cardDraw;
-    [SerializeField] private MonsterAlignment monsterAlignments;
+    [SerializeField] private MingmingAlignment mingmingAlignments;
     [SerializeField] private List<CardData> wildCards;
     [SerializeField] private CardData level30Card;
     [SerializeField] private CardData level50Card;
@@ -23,14 +23,14 @@ public class MonsterData : IDropScriptableObject
     public int Defense { get => defense; }
     public int Energy { get => energy; }
     public int CardDraw { get => cardDraw; }
-    public MonsterAlignment MonsterAlignments { get => monsterAlignments; }
+    public MingmingAlignment MingmingAlignment { get => mingmingAlignments; }
     public List<CardData> WildCards { get => wildCards; }
     public CardData Level30Card => level30Card;
     public CardData Level50Card => level50Card;
 }
 
 [Serializable]
-public class MonsterAlignment
+public class MingmingAlignment
 {
     public CardAlignment Primary;
     public CardAlignment Secondary = CardAlignment.None;

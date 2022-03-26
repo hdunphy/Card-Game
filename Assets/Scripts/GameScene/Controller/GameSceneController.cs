@@ -46,7 +46,7 @@ public class GameSceneController : MonoBehaviour
         }
     }
 
-    public void LoadBattleScene(IEnumerable<MonsterInstance> playerMonsters, IEnumerable<MonsterInstance> enemyMonsters, 
+    public void LoadBattleScene(IEnumerable<MingmingInstance> playerMonsters, IEnumerable<MingmingInstance> enemyMonsters, 
         List<CardData> playerCards, List<CardData> enemyCards, IEncounter _encounterCaller)
     {
         EncounterCaller = _encounterCaller;

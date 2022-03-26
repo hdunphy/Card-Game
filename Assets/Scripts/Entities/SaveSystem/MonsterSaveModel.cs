@@ -17,7 +17,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         public int DefenseModifier { get; set; }
         public int HealthModifier { get; set; }
 
-        public MonsterSaveModel(MonsterInstance monsterInstance)
+        public MonsterSaveModel(MingmingInstance monsterInstance)
         {
             MonsterDataName = monsterInstance.DataName;
             Level = monsterInstance.Level;

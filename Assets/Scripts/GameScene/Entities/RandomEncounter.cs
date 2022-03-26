@@ -21,11 +21,11 @@ public class RandomEncounter : MonoBehaviour, IEncounter
     [Header("Events")]
     [SerializeField] private UnityEvent OnStartEncounter;
 
-    List<MonsterInstance> monsters;
+    List<MingmingInstance> monsters;
 
     private void Start()
     {
-        monsters = new List<MonsterInstance>();
+        monsters = new List<MingmingInstance>();
     }
 
     public void GetEncounter()
@@ -41,7 +41,7 @@ public class RandomEncounter : MonoBehaviour, IEncounter
             if (_drop != null)
             {
                 int monsterLevel = Rules.GetRandomInt(MinMonsterLevel, MaxMonsterLevel + 1);
-                var _monster = new MonsterInstance((MonsterData)_drop, monsterLevel);
+                var _monster = new MingmingInstance((MingmingData)_drop, monsterLevel);
                 _monster.Name = "Wild " + _monster.Name;
                 monsters.Add(_monster);
             }

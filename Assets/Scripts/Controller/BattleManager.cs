@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
 
     //private variables
     private MonsterController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
-    private Monster SelectedMonster;
+    private Mingming SelectedMonster;
     private PlayerTurn playerTurn;
 
     public static BattleManager Singleton { get; private set; }
@@ -58,7 +58,7 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.BattleOver -= BattleOver;
     }
 
-    public void StartBattle(IEnumerable<MonsterInstance> playerData, IEnumerable<MonsterInstance> enemyData, 
+    public void StartBattle(IEnumerable<MingmingInstance> playerData, IEnumerable<MingmingInstance> enemyData, 
         List<CardData> playerCards, List<CardData> enemyCards)
     {
         /* -- Set up Battle -- */
@@ -125,16 +125,16 @@ public class BattleManager : MonoBehaviour
         GetNextTurnState();
     }
 
-    public void SetSelectedMonster(Monster _monster)
+    public void SetSelectedMonster(Mingming _monster)
     {
         if (ActiveController.HasMonster(_monster))
         {
-            SelectedMonster = (Monster)SetSelectable(SelectedMonster, _monster);
+            SelectedMonster = (Mingming)SetSelectable(SelectedMonster, _monster);
             EventManager.Instance.OnUpdateSelectedMonsterTrigger(SelectedMonster);
         }
     }
 
-    private void TargetSelected(Monster target, Card card)
+    private void TargetSelected(Mingming target, Card card)
     {
         if(card.IsValidAction(SelectedMonster, target))
         {

@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         EnterRoom(loadPosition);
 
         SharedController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
-        SharedController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MonsterInstance(m)).ToList());
+        SharedController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MingmingInstance(m)).ToList());
     }
 
     public void SetInteraction(IPlayerInteractable interactable)

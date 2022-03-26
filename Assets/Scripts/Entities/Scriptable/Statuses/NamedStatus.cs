@@ -12,9 +12,9 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] private string description;
         [SerializeField] private int maxCount;
 
-        private readonly Dictionary<Monster, UnityAction> _monsterActions = new Dictionary<Monster, UnityAction>();
+        private readonly Dictionary<Mingming, UnityAction> _monsterActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Monster monster, int count)
+        public override void ApplyStatus(Mingming monster, int count)
         {
             int currentCount = monster.GetStatusCount(this);
             int _count = Mathf.Clamp(count, count, maxCount - currentCount);
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void RemoveStatus(Monster monster)
+        public override void RemoveStatus(Mingming monster)
         {
             base.RemoveStatus(monster);
 
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Entities.Scriptable
             _monsterActions.Remove(monster);
         }
 
-        public override void DoEffect(Monster monster, int count)
+        public override void DoEffect(Mingming monster, int count)
         {
             if(count > 1)
             {

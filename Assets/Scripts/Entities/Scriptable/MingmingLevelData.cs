@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Assets.Scripts.Entities.Scriptable
 {
     [Serializable]
-    public class MonsterLevelData
+    public class MingmingLevelData
     {
-        public MonsterData MonsterData;
+        public MingmingData MingMingData;
 
         [Range(1, 99)]
         public int Level;

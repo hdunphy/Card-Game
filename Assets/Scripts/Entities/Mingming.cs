@@ -9,16 +9,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
+public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
 {
-    [SerializeField] private Image MonsterSprite;
+    [SerializeField] private Image MingmingSprite;
     [SerializeField] private Image DisableCover;
     [SerializeField] private Image HealthBar;
     [SerializeField] private Image PrimaryAlignment;
     [SerializeField] private Image SecondaryAlignment;
     [SerializeField] private RectTransform ExperienceTransform;
     [SerializeField] private TMP_Text HealthText;
-    [SerializeField] private TMP_Text MonsterName;
+    [SerializeField] private TMP_Text NameText;
     [SerializeField] private EnergyHolder EnergyHolder;
     [SerializeField] private Gradient HealthGradient;
     [SerializeField] private Transform StatusParent;
@@ -26,7 +26,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
     [SerializeField] private GameObject DescriptionToolTipTrigger;
 
     private TooltipTrigger TooltipTrigger;
-    private MonsterInstance Data;
+    private MingmingInstance Data;
 
     private int TotalEnergy => Data.Energy;
     public bool IsInPlay => CurrentHealth > 0;
@@ -65,7 +65,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                EventManager.Instance.OnSelectMonsterTrigger(this);
+                EventManager.Instance.OnSelectMingmingTrigger(this);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
@@ -74,15 +74,15 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         }
     }
 
-    public void SetUp(MonsterInstance _data)
+    public void SetUp(MingmingInstance _data)
     {
         Data = _data;
         EnergyAvailable = Data.Energy;
-        MonsterName.text = Data.Name;
+        NameText.text = Data.Name;
         name = Data.Name;
 
-        MonsterSprite.sprite = Data.Sprite;
-        //MonsterSprite.rectTransform.localScale = new Vector3(-1, 1, 1); //flipping the sprite but also flips other alignments
+        MingmingSprite.sprite = Data.Sprite;
+
         PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Primary);
         if (Data.MonsterAlignment.Secondary != CardAlignment.None)
         {
@@ -188,7 +188,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         SetEnergy();
     }
 
-    public void TakeDamage(int damage, Monster source)
+    public void TakeDamage(int damage, Mingming source)
     {
         if (damage != 0)
         {
@@ -204,7 +204,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         }
     }
 
-    private IEnumerator UpdateHealthUI(float startPercent, float finalPercent, Monster source)
+    private IEnumerator UpdateHealthUI(float startPercent, float finalPercent, Mingming source)
     {
         float currentPercent = startPercent;
 
@@ -271,7 +271,7 @@ public class Monster : SelectableElement, IPointerDownHandler, IDropHandler
         TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experience}", "Stats");
     }
 
-    public MonsterAlignment GetMonsterAlignment()
+    public MingmingAlignment GetMonsterAlignment()
     {
         return Data.MonsterAlignment;
     }

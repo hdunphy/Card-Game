@@ -26,7 +26,7 @@ public class CardData : IDropScriptableObject
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
     public BaseConstraint CardConstraint { get => cardConstraint; }
 
-    public IEnumerator InvokeAction(Monster source, Monster target, Card card)
+    public IEnumerator InvokeAction(Mingming source, Mingming target, Card card)
     {
         foreach(var cardAction in cardActions)
         {

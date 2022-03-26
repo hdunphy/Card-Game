@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
 
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             base.InvokeAction(source, target, card);
 

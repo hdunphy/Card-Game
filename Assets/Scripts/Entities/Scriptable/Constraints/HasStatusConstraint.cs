@@ -6,7 +6,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class HasStatusConstraint : BaseConstraint
     {
         [SerializeField] private StatusConstraint StatusConstraint;
-        public override bool CheckConstraint(Monster source, Card card)
+        public override bool CheckConstraint(Mingming source, Card card)
         {
             bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 

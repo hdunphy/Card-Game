@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     {
         [SerializeField] private int EnergyAdded;
 
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             target.AddEnergy(EnergyAdded);
             base.InvokeAction(source, target, card);

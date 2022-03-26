@@ -4,8 +4,8 @@ using Random = UnityEngine.Random;
 
 public class RandomAttacking : IEnemyAttackBehavior
 {
-    private List<Monster> SelfMonsters;
-    private List<Monster> OtherMonsters;
+    private List<Mingming> SelfMonsters;
+    private List<Mingming> OtherMonsters;
     private List<Card> Hand;
 
     public bool GetNextAttack()
@@ -14,11 +14,11 @@ public class RandomAttacking : IEnemyAttackBehavior
 
         if (hasAttack)
         {
-            Monster source = GetSource(SelfMonsters, minCardEnergy);
+            Mingming source = GetSource(SelfMonsters, minCardEnergy);
             Card _card = GetCard(source);
-            Monster target = GetTarget(OtherMonsters);
+            Mingming target = GetTarget(OtherMonsters);
 
-            List<Monster> availableMonsters = new List<Monster>(OtherMonsters);
+            List<Mingming> availableMonsters = new List<Mingming>(OtherMonsters);
             while(!CheckIsCardValid(_card, source, target))
             {
                 availableMonsters.Remove(target);
@@ -35,11 +35,11 @@ public class RandomAttacking : IEnemyAttackBehavior
             {
                 UserMessage.Instance.CanSendMessage = true;
 
-                EventManager.Instance.OnSelectMonsterTrigger(source);
+                EventManager.Instance.OnSelectMingmingTrigger(source);
                 EventManager.Instance.OnSelectTargetTrigger(target, _card);
-                EventManager.Instance.OnSelectMonsterTrigger(target);
+                EventManager.Instance.OnSelectMingmingTrigger(target);
 
-                EventManager.Instance.OnSelectMonsterTrigger(source); //to deselect
+                EventManager.Instance.OnSelectMingmingTrigger(source); //to deselect
 
                 //disable user message so not to get bombarded by failed attempts
                 UserMessage.Instance.CanSendMessage = false;
@@ -55,7 +55,7 @@ public class RandomAttacking : IEnemyAttackBehavior
         return hasAttack;
     }
 
-    private bool CheckIsCardValid(Card card, Monster source, Monster target) =>
+    private bool CheckIsCardValid(Card card, Mingming source, Mingming target) =>
         card.IsValidAction(source, target) && source.EnergyAvailable >= card.EnergyCost;
 
     private bool CanAttack(out int minCardEnergy)
@@ -68,21 +68,21 @@ public class RandomAttacking : IEnemyAttackBehavior
         return SelfMonsters.Count() > 0 && OtherMonsters.Count() > 0 && maxMonsterEnergy >= minCardEnergy;
     }
 
-    private Monster GetTarget(List<Monster> availableOponents)
+    private Mingming GetTarget(List<Mingming> availableOponents)
     {
         return availableOponents[Random.Range(0, availableOponents.Count())];
     }
 
-    private Card GetCard(Monster attacker)
+    private Card GetCard(Mingming attacker)
     {
         var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.EnergyAvailable).ToList();
         return possiblecards[Random.Range(0, possiblecards.Count())];
     }
 
-    private Monster GetSource(List<Monster> availableSources, int minCardEnergy)
+    private Mingming GetSource(List<Mingming> availableSources, int minCardEnergy)
     {
         int RandIndex = Random.Range(0, availableSources.Count());
-        Monster source = availableSources[RandIndex];
+        Mingming source = availableSources[RandIndex];
 
         if(source.EnergyAvailable < minCardEnergy)
         {
@@ -93,7 +93,7 @@ public class RandomAttacking : IEnemyAttackBehavior
         return source;
     }
 
-    public void SetTurnStategy(List<Card> hand, IEnumerable<Monster> selfMonsters, IEnumerable<Monster> otherMonsters)
+    public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> selfMonsters, IEnumerable<Mingming> otherMonsters)
     {
         Hand = hand;
         SelfMonsters = selfMonsters.ToList();

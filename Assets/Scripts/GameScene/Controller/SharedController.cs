@@ -8,12 +8,12 @@ namespace Assets.Scripts.GameScene.Controller
 {
     public class SharedController : MonoBehaviour
     {
-        public IEnumerable<MonsterInstance> PlayableMonsters { get => Monsters.Where(m => m.CurrentHealth > 0); }
+        public IEnumerable<MingmingInstance> PlayableMonsters { get => Monsters.Where(m => m.CurrentHealth > 0); }
         //Replace
-        public List<MonsterLevelData> MonsterData;
+        public List<MingmingLevelData> MonsterData;
         [SerializeField] private List<CardData> StartingDeck;
 
-        public List<MonsterInstance> Monsters { get; private set; }
+        public List<MingmingInstance> Monsters { get; private set; }
 
         public IDeckHolder DeckHolder { get; private set; }
 
@@ -25,9 +25,9 @@ namespace Assets.Scripts.GameScene.Controller
                 new PlayerDeckHolder(StartingDeck, new List<Deck> { new Deck { Cards = new List<CardData>(StartingDeck) } });
         }
 
-        public void SetMonsters(List<MonsterInstance> monsterInstances)
+        public void SetMonsters(List<MingmingInstance> monsterInstances)
         {
-            Monsters = monsterInstances ?? MonsterData.Select(d => new MonsterInstance(d.MonsterData, d.Level)).ToList();
+            Monsters = monsterInstances ?? MonsterData.Select(d => new MingmingInstance(d.MingMingData, d.Level)).ToList();
         }
     }
 }

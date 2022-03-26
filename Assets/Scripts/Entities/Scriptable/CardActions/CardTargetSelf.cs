@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override string TooltipText => "Can target itself (the selected Monster)";
 
-        public override bool IsValidAction(Monster source, Monster target, Card card)
+        public override bool IsValidAction(Mingming source, Mingming target, Card card)
         {
             bool notNullTarget = target != null;
             bool rightSource = (source == null || source == target);
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Entities.Scriptable
             return notNullTarget && target.IsTurn && card.CheckConstraints(target) && rightSource;
         }
 
-        public override void InvokeAction(CardAction cardAction, Monster source, Monster target, Card card)
+        public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)
         {
             cardAction.InvokeAction(target, target, card);
         }

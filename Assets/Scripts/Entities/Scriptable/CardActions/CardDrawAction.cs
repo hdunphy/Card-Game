@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] private int numberOfCards;
 
-        public override void InvokeAction(Monster source, Monster target, Card card)
+        public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             FindObjectsOfType<MonsterController>().First(m => m.HasMonster(source)).DrawCards(numberOfCards);
         }
