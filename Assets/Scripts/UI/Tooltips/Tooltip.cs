@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [ExecuteInEditMode()]
@@ -41,8 +42,7 @@ public class Tooltip : MonoBehaviour
         if (Application.isEditor)
             UpdateTooltipSize();
 
-
-        Vector2 position = Input.mousePosition;
+        Vector2 position = Mouse.current.position.ReadValue();
 
         if (position.x + RectTransform.rect.width > Screen.width)
             position.x = Screen.width - RectTransform.rect.width;
