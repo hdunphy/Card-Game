@@ -12,42 +12,42 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] private string description;
         [SerializeField] private int maxCount;
 
-        private readonly Dictionary<Mingming, UnityAction> _monsterActions = new Dictionary<Mingming, UnityAction>();
+        private readonly Dictionary<Mingming, UnityAction> _mingmingActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Mingming monster, int count)
+        public override void ApplyStatus(Mingming mingming, int count)
         {
-            int currentCount = monster.GetStatusCount(this);
+            int currentCount = mingming.GetStatusCount(this);
             int _count = Mathf.Clamp(count, count, maxCount - currentCount);
             
-            base.ApplyStatus(monster, _count);
+            base.ApplyStatus(mingming, _count);
 
-            if (!_monsterActions.ContainsKey(monster))
+            if (!_mingmingActions.ContainsKey(mingming))
             {
-                UnityAction action = delegate { monster.GetStatusEffect(this); };
-                _monsterActions.Add(monster, action);
+                UnityAction action = delegate { mingming.GetStatusEffect(this); };
+                _mingmingActions.Add(mingming, action);
 
-                FindObjectsOfType<MingmingController>().First(m => m.HasMingming(monster))
-                    .AddListenerToTurnStateMachine(TurnStateEnum.PreTurn, action);
+                FindObjectsOfType<MingmingController>().First(m => m.HasMingming(mingming))
+                    .AddListenerToTurnStateMachine(TurnStateEnum.PostTurn, action);
             }
         }
 
-        public override void RemoveStatus(Mingming monster)
+        public override void RemoveStatus(Mingming mingming)
         {
-            base.RemoveStatus(monster);
+            base.RemoveStatus(mingming);
 
-            FindObjectsOfType<MingmingController>().First(m => m.HasMingming(monster))
-                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, _monsterActions[monster]);
+            FindObjectsOfType<MingmingController>().First(m => m.HasMingming(mingming))
+                .RemoveListenerToTurnStateMachine(TurnStateEnum.PostTurn, _mingmingActions[mingming]);
 
-            _monsterActions.Remove(monster);
+            _mingmingActions.Remove(mingming);
         }
 
-        public override void DoEffect(Mingming monster, int count)
+        public override void DoEffect(Mingming mingming, int count)
         {
             if(count > 1)
             {
-                UserMessage.Instance.SendMessageToUser($"{monster.name} is {name} for {count} more turn(s)");
+                UserMessage.Instance.SendMessageToUser($"{mingming.name} is {name} for {count} more turn(s)");
             }
-            monster.ApplyStatus(this, -1);
+            mingming.ApplyStatus(this, -1);
         }
 
         public override string GetTooltip(int count) => $"{description}. Lasts for {count} turns;";
