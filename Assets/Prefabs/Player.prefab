@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 2505605168106303827}
   - component: {fileID: 6100250102517698589}
   - component: {fileID: 2505605168106303826}
-  - component: {fileID: 6324532430134558955}
+  - component: {fileID: -4800230835523734646}
+  - component: {fileID: 6165599312679873335}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rb: {fileID: 2505605168106303829}
   MoveSpeed: 200
---- !u!114 &6324532430134558955
+--- !u!114 &-4800230835523734646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,10 +137,131 @@ MonoBehaviour:
   m_GameObject: {fileID: 2505605168106303825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb73add2a13c5db4bac33b481bbe3dbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 888aa1b2a67410a4c98edee73ccb689c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2505605168106303827}
+--- !u!114 &6165599312679873335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505605168106303825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 87603c5375e318c48b49ccc82515ee6a, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4800230835523734646}
+        m_TargetAssemblyTypeName: Assets.Scripts.GameScene.Controller.PlayerInputController,
+          Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c719428b-915c-4c9f-a1b7-85333a0b2b24
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4800230835523734646}
+        m_TargetAssemblyTypeName: Assets.Scripts.GameScene.Controller.PlayerInputController,
+          Assembly-CSharp
+        m_MethodName: OnInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7494aa07-8abe-4eeb-9583-4feb1ed7afbc
+    m_ActionName: Player/Interact[/Keyboard/e,/Touchscreen/primaryTouch/tap]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4800230835523734646}
+        m_TargetAssemblyTypeName: Assets.Scripts.GameScene.Controller.PlayerInputController,
+          Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0ce5cc43-380b-4835-98f8-0cdbea4f1171
+    m_ActionName: Player/Settings[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b393c738-3050-413e-b60d-73d2278d3505
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1ff13f47-f3c1-41a2-88e2-ced103fc95b4
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f3a9b77-96aa-43e5-84c1-5446e50d09c3
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3fc767f4-1225-4c85-8d28-27701a4bce85
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position,/Touchscreen/touch0/position,/Touchscreen/touch1/position,/Touchscreen/touch2/position,/Touchscreen/touch3/position,/Touchscreen/touch4/position,/Touchscreen/touch5/position,/Touchscreen/touch6/position,/Touchscreen/touch7/position,/Touchscreen/touch8/position,/Touchscreen/touch9/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2f70d93f-d07e-4af6-acc5-45842b3283d2
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f09450fa-f3de-4041-8d35-e13a364957f9
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a7cbc2c3-6261-4c25-ae67-0c04b4fb8e8c
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 817c87a6-7173-437f-a568-8d1d1cb11096
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a5d7cd8-b96e-49c6-b371-3d6086057852
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7de40726-2d68-4ec7-be3e-09adc979ba4b
+    m_ActionName: UI/TrackedDeviceOrientation
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2505605168626438317
 GameObject:
   m_ObjectHideFlags: 0

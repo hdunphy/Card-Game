@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 namespace Assets.Scripts.GameScene.Controller
 {
-    public class PlayerInput : MonoBehaviour
+    public class PlayerInputController : MonoBehaviour
     {
         [SerializeField] private PlayerController Player;
-
-        Vector2 movementVector;
 
         private void Awake()
         {
@@ -18,19 +18,22 @@ namespace Assets.Scripts.GameScene.Controller
             GameSceneController.Singleton.OnPaused -= OnPaused;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void OnMove(CallbackContext callback)
         {
-            movementVector.x = Input.GetAxisRaw("Horizontal");
-            movementVector.y = Input.GetAxisRaw("Vertical");
-            Player.SetMoveDirection(movementVector);
+            Player.SetMoveDirection(callback.ReadValue<Vector2>());
+        }
 
-            if (Input.GetKeyDown(KeyCode.E))
+        public void OnInteraction(CallbackContext callback)
+        {
+            if (callback.started)
             {
                 Player.Interact();
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+        public void OnPause(CallbackContext callback)
+        {
+            if (callback.started)
             {
                 GameSceneController.Singleton.PauseGame(true);
             }
