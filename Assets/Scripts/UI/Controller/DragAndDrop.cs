@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -29,9 +30,10 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        var position = Camera.main.WorldToScreenPoint(m_transform.position);
-        position += (Vector3)eventData.delta;
-        m_transform.position = Camera.main.ScreenToWorldPoint(position);
+        var position = Camera.main.ScreenToWorldPoint(eventData.position);
+
+        position.z = m_transform.position.z;
+        m_transform.position = position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
