@@ -1,5 +1,7 @@
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.GameScene.Controller;
+using Assets.Scripts.GameScene.Controller.SceneManagement;
 using Assets.Scripts.References;
 using Assets.Scripts.UI.Controller;
 using System.Collections.Generic;
@@ -51,8 +53,12 @@ public class RandomEncounter : MonoBehaviour, IEncounter
         {
             OnStartEncounter?.Invoke();
             var player = FindObjectOfType<PlayerController>();
-            GameSceneController.Singleton.LoadBattleScene(player.DevController.PlayableMonsters, monsters, 
-                player.DevController.DeckHolder.CurrentDeck, new List<CardData>(), this);
+            
+            var thisScene = new LevelSceneData(gameObject.scene.name, this, FindObjectOfType<RewardsController>(), player);
+            var battleScene = new BattleSceneData(GameSceneController.BattleScene, player.DevController.DeckHolder.CurrentDeck, new List<CardData>(),
+                thisScene, player.DevController.PlayableMonsters, monsters);
+
+            GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
         }
     }
 

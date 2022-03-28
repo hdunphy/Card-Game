@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.GameScene.Controller;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Menu
 {

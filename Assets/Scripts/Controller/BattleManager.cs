@@ -1,9 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Assets.Scripts.Entities;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Assets.Scripts.GameScene.Controller;
+using Assets.Scripts.GameScene.Controller.SceneManagement;
+using System.Linq;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -21,9 +22,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private UnityEvent OnEndTurn;
 
     //private variables
-    private MingmingController ActiveController { get { return playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
-    private Mingming SelectedMingming;
-    private PlayerTurn playerTurn;
+    private MingmingController _activeController { get { return _playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
+    private Mingming _selectedMingming;
+    private PlayerTurn _playerTurn;
+    private LevelSceneData _previousLevel;
 
     public static BattleManager Singleton { get; private set; }
 
@@ -58,14 +60,14 @@ public class BattleManager : MonoBehaviour
         EventManager.Instance.BattleOver -= BattleOver;
     }
 
-    public void StartBattle(IEnumerable<MingmingInstance> playerData, IEnumerable<MingmingInstance> enemyData, 
-        List<CardData> playerCards, List<CardData> enemyCards)
+    public void StartBattle(BattleSceneData battleSceneData)
     {
+        _previousLevel = battleSceneData.PreviousLevel;
         /* -- Set up Battle -- */
-        PlayerLoader.BattleSetUp(playerData, playerCards);
-        EnemyLoader.BattleSetUp(enemyData, enemyCards, true);
+        PlayerLoader.BattleSetUp(battleSceneData.PlayerMingmings, battleSceneData.PlayerCards.ToList());
+        EnemyLoader.BattleSetUp(battleSceneData.EnemyMingmings, battleSceneData.EnemyCards.ToList(), true);
 
-        playerTurn = PlayerTurn.PlayerOne;
+        _playerTurn = PlayerTurn.PlayerOne;
 
         StartCoroutine(StartTurnAfterSeconds(1));
     }
@@ -76,7 +78,7 @@ public class BattleManager : MonoBehaviour
 
         /* -- Initiate Battle -- */
         //Start players turn
-        ActiveController.StartTurn();
+        _activeController.StartTurn();
 
         EndButton.enabled = true;
     }
@@ -96,14 +98,23 @@ public class BattleManager : MonoBehaviour
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
 
+        _previousLevel.DidPlayerOneWin = didPlayerOneWin;
+
         FindObjectOfType<EnemyController>().StopAllCoroutines();
-        
-        GameSceneController.Singleton.LoadLevelScene(2, didPlayerOneWin);
+
+        StartCoroutine(BattleOverCoroutine());
+    }
+
+    private IEnumerator BattleOverCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+
+        GameSceneController.Singleton.SwapScenes(new BaseSceneData() { SceneName = gameObject.scene.name }, _previousLevel);
     }
 
     private void GetNextTurnState()
     {
-        ActiveController.GetNextTurnState();
+        _activeController.GetNextTurnState();
     }
 
     //Called from button
@@ -111,13 +122,13 @@ public class BattleManager : MonoBehaviour
     {
         OnEndTurn?.Invoke();
 
-        if (playerTurn == PlayerTurn.PlayerTwo)
+        if (_playerTurn == PlayerTurn.PlayerTwo)
         {
-            playerTurn = PlayerTurn.PlayerOne;
+            _playerTurn = PlayerTurn.PlayerOne;
         }
-        else if (playerTurn == PlayerTurn.PlayerOne)
+        else if (_playerTurn == PlayerTurn.PlayerOne)
         {
-            playerTurn = PlayerTurn.PlayerTwo;
+            _playerTurn = PlayerTurn.PlayerTwo;
         }
 
         ResetSelected();
@@ -127,21 +138,21 @@ public class BattleManager : MonoBehaviour
 
     public void SetSelectedMingming(Mingming _mingming)
     {
-        if (ActiveController.HasMingming(_mingming))
+        if (_activeController.HasMingming(_mingming))
         {
-            SelectedMingming = (Mingming)SetSelectable(SelectedMingming, _mingming);
-            EventManager.Instance.OnUpdateSelectedMingmingTrigger(SelectedMingming);
+            _selectedMingming = (Mingming)SetSelectable(_selectedMingming, _mingming);
+            EventManager.Instance.OnUpdateSelectedMingmingTrigger(_selectedMingming);
         }
     }
 
     private void TargetSelected(Mingming target, Card card)
     {
-        if(card.IsValidAction(SelectedMingming, target))
+        if(card.IsValidAction(_selectedMingming, target))
         {
-            string source = SelectedMingming?.name ?? target.name;
+            string source = _selectedMingming?.name ?? target.name;
             UserMessage.Instance.SendMessageToUser($"{source} used {card.name} on {target.name}");
             
-            StartCoroutine(card.InvokeAction(SelectedMingming, target));
+            StartCoroutine(card.InvokeAction(_selectedMingming, target));
         }
         else
         {
@@ -152,7 +163,7 @@ public class BattleManager : MonoBehaviour
 
     public void ResetSelected()
     {
-        if (SelectedMingming != null) SetSelectedMingming(SelectedMingming);
+        if (_selectedMingming != null) SetSelectedMingming(_selectedMingming);
     }
 
     private SelectableElement SetSelectable(SelectableElement _current, SelectableElement _selected)

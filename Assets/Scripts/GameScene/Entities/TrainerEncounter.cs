@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.GameScene.Controller;
+using Assets.Scripts.GameScene.Controller.SceneManagement;
+using Assets.Scripts.UI.Controller;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -38,8 +40,17 @@ namespace Assets.Scripts.GameScene.Entities
         public void GetEncounter()
         {
             OnStartEncounter?.Invoke();
-            GameSceneController.Singleton.LoadBattleScene(player.DevController.PlayableMonsters, TrainerController.DevController.PlayableMonsters,
-                player.DevController.DeckHolder.CurrentDeck, TrainerController.DevController.DeckHolder.CurrentDeck, this);
+            var thisScene = new LevelSceneData(gameObject.scene.name, this, FindObjectOfType<RewardsController>(), player);
+            var battleScene = new BattleSceneData(
+                GameSceneController.BattleScene, 
+                player.DevController.DeckHolder.CurrentDeck,
+                TrainerController.DevController.DeckHolder.CurrentDeck, 
+                thisScene, 
+                player.DevController.PlayableMonsters, 
+                TrainerController.DevController.PlayableMonsters
+            );
+
+            GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
         }
 
         public List<CardData> GetRewards()
