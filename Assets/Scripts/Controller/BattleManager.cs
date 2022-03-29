@@ -5,10 +5,11 @@ using UnityEngine.Events;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using System.Linq;
+using Assets.Scripts.Helpers;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
 
     [SerializeField] private MingmingController PlayerLoader;
@@ -27,20 +28,9 @@ public class BattleManager : MonoBehaviour
     private PlayerTurn _playerTurn;
     private LevelSceneData _previousLevel;
 
-    public static BattleManager Singleton { get; private set; }
-
     private void Awake()
     {
-        //Singleton pattern On Awake set the singleton to this.
-        //There should only be one GameLayer that can be accessed statically
-        if (Singleton == null)
-        {
-            Singleton = this;
-        }
-        else
-        { //if BattleManager already exists then destory this. We don't want duplicates
-            Destroy(this);
-        }
+        OnAwake(this);
     }
 
     private void Start()

@@ -17,9 +17,6 @@ public class RandomEncounter : MonoBehaviour, IEncounter
     [SerializeField, Range(1, 98)] private int MinMonsterLevel;
     [SerializeField, Range(2, 99)] private int MaxMonsterLevel;
 
-    [Header("Components")]
-    [SerializeField] private RewardsController RewardsController;
-
     [Header("Events")]
     [SerializeField] private UnityEvent OnStartEncounter;
 
@@ -54,7 +51,7 @@ public class RandomEncounter : MonoBehaviour, IEncounter
             OnStartEncounter?.Invoke();
             var player = FindObjectOfType<PlayerController>();
             
-            var thisScene = new LevelSceneData(gameObject.scene.name, this, FindObjectOfType<RewardsController>(), player);
+            var thisScene = new LevelSceneData(gameObject.scene.name, this, player);
             var battleScene = new BattleSceneData(GameSceneController.BattleScene, player.DevController.DeckHolder.CurrentDeck, new List<CardData>(),
                 thisScene, player.DevController.PlayableMonsters, monsters);
 
@@ -66,11 +63,4 @@ public class RandomEncounter : MonoBehaviour, IEncounter
     {
         return monsters.Select(x => x.GetCardDrop()).ToList();
     }
-}
-
-public interface IEncounter
-{
-    public void GetEncounter();
-
-    public List<CardData> GetRewards();
 }

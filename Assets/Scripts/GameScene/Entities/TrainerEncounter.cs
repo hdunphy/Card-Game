@@ -9,20 +9,20 @@ namespace Assets.Scripts.GameScene.Entities
 {
     public class TrainerEncounter : MonoBehaviour, IEncounter
     {
-        [SerializeField] private TrainerController TrainerController;
+        [SerializeField] private TrainerController trainerController;
         [SerializeField] private List<CardData> CardRewards;
         [Header("Events")]
         [SerializeField] private UnityEvent OnStartEncounter;
 
-        PlayerController player;
+        private PlayerController _player;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.TryGetComponent(out PlayerController _player))
+            if(collision.TryGetComponent(out PlayerController player))
             {
-                player = _player;
+                _player = player;
 
-                if (TrainerController.CanBattle)
+                if (trainerController.CanBattle)
                 {
                     GetEncounter();
                 }
@@ -31,23 +31,23 @@ namespace Assets.Scripts.GameScene.Entities
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out PlayerController _player))
+            if (collision.TryGetComponent(out PlayerController _))
             {
-                player = null;
+                _player = null;
             }
         }
 
         public void GetEncounter()
         {
             OnStartEncounter?.Invoke();
-            var thisScene = new LevelSceneData(gameObject.scene.name, this, FindObjectOfType<RewardsController>(), player);
+            var thisScene = new LevelSceneData(gameObject.scene.name, this, _player);
             var battleScene = new BattleSceneData(
                 GameSceneController.BattleScene, 
-                player.DevController.DeckHolder.CurrentDeck,
-                TrainerController.DevController.DeckHolder.CurrentDeck, 
+                _player.DevController.DeckHolder.CurrentDeck,
+                trainerController.DevController.DeckHolder.CurrentDeck, 
                 thisScene, 
-                player.DevController.PlayableMonsters, 
-                TrainerController.DevController.PlayableMonsters
+                _player.DevController.PlayableMonsters, 
+                trainerController.DevController.PlayableMonsters
             );
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
@@ -55,7 +55,7 @@ namespace Assets.Scripts.GameScene.Entities
 
         public List<CardData> GetRewards()
         {
-            TrainerController.LostBattle();
+            trainerController.LostBattle();
             return CardRewards;
         }
     }

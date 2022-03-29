@@ -25,6 +25,8 @@ namespace Assets.Scripts.GameScene.Controller.SceneManagement
 
         public void OnLoad()
         {
+            GameSceneController.Singleton.ToggleLevelSceneObjects(false);
+
             BattleManager.Singleton.StartBattle(this);
         }
 

@@ -18,6 +18,16 @@ namespace Assets.Scripts.GameScene.Controller
             GameSceneController.Singleton.OnPaused -= OnPaused;
         }
 
+        private void OnEnable()
+        {
+            Player.SetCanMove(true);
+        }
+
+        private void OnDisable()
+        {
+            Player.SetCanMove(false);
+        }
+
         public void OnMove(CallbackContext callback)
         {
             Player.SetMoveDirection(callback.ReadValue<Vector2>());

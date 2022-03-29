@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.UI.Controller;
 using System;
 using System.Collections;
@@ -9,9 +10,8 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameScene.Controller
 {
-    public class GameSceneController : MonoBehaviour
+    public class GameSceneController : SingletonMonoBehavior<GameSceneController>
     {
-        public static GameSceneController Singleton { get; private set; }
 
         [SerializeField] private PlayerController PlayerPrefab;
         [SerializeField] private CameraController CameraPrefab;
@@ -33,26 +33,30 @@ namespace Assets.Scripts.GameScene.Controller
 
         private void Awake()
         {
-            //Singleton pattern On Awake set the singleton to this.
-            //There should only be one GameSceneController that can be accessed statically
-            if (Singleton == null)
-            {
-                Singleton = this;
-                CurrentGameState = GameState.Menu; //initialize to Menu since first loads when at main menu
-            }
-            else
-            { //if GameSceneController already exists then destory this. We don't want duplicates
-                Destroy(this);
-            }
+            CurrentGameState = GameState.Menu; //initialize to Menu since first loads when at main menu
+            OnAwake(this);
         }
 
         public void SwapScenes(ISceneData currentScene, ISceneData nextScene)
         {
-            currentScene.UnLoad();
+            StartCoroutine(SwapScenesCoroutine(currentScene, nextScene));
+        }
+
+        private IEnumerator SwapScenesCoroutine(ISceneData currentScene, ISceneData nextScene)
+        {
+            UnloadScene(currentScene);
+
+            yield return new WaitForSeconds(SceneTransitionController.ANIMATION_TIME);
 
             SceneManager.UnloadSceneAsync(currentScene.SceneName);
 
-            StartCoroutine(LoadSceneAndThen(nextScene.SceneName, LoadSceneMode.Additive, () => nextScene.OnLoad()));
+            yield return LoadSceneAndThen(nextScene.SceneName, LoadSceneMode.Additive, () => nextScene.OnLoad());
+        }
+
+        private void UnloadScene(ISceneData currentScene)
+        {
+            sceneTransitionController.FadeOut();
+            currentScene.UnLoad();
         }
 
         /// <summary>
@@ -122,11 +126,25 @@ namespace Assets.Scripts.GameScene.Controller
         {
             player.gameObject.SetActive(_isActive);
             cam.gameObject.SetActive(_isActive);
+
+            //if (_isActive)
+            //{
+            //    cam.gameObject.SetActive(_isActive);
+            //}
         }
 
         private IEnumerator LoadSceneAndThen(string sceneName, LoadSceneMode mode, Action action)
         {
-            yield return SceneManager.LoadSceneAsync(sceneName, mode);
+            float duration = 0f;
+            var sceneLoading = SceneManager.LoadSceneAsync(sceneName, mode);
+            
+            while (!sceneLoading.isDone)
+            {
+                duration += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return sceneTransitionController.FadeIn(duration);
 
             //wait for two frames
             yield return null;

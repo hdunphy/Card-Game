@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.Controller
@@ -7,24 +6,29 @@ namespace Assets.Scripts.UI.Controller
     public class SceneTransitionController : MonoBehaviour
     {
         private const string FADE_OUT_TRIGGER = "Fade Out Trigger";
+        private const string FADE_IN_TRIGGER = "Fade In Trigger";
+        public const float ANIMATION_TIME = 1f;
 
         [SerializeField] private Animator Animator;
-        
-        // Use this for initialization
-        void Start()
+
+        private void Start()
         {
             Animator.enabled = false;
         }
 
-        public IEnumerator StartSceneTransition(Func<IEnumerator> func)
+        public void FadeOut()
         {
             Animator.enabled = true;
+        }
 
-            yield return new WaitForSeconds(1);
-
-            yield return func.Invoke();
+        public IEnumerator FadeIn(float secondsPassed)
+        {
+            float waitDurationSeconds = Mathf.Clamp(ANIMATION_TIME - secondsPassed, 0.1f, ANIMATION_TIME);
+            yield return new WaitForSeconds(waitDurationSeconds);
 
             Animator.SetTrigger(FADE_OUT_TRIGGER);
         }
+
+        public void DisableAnimator() => Animator.enabled = false;
     }
 }
