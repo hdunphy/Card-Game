@@ -37,6 +37,11 @@ namespace Assets.Scripts.GameScene.Controller
             OnAwake(this);
         }
 
+        private void OnDestroy()
+        {
+            DestroySingleton();
+        }
+
         public void SwapScenes(ISceneData currentScene, ISceneData nextScene)
         {
             StartCoroutine(SwapScenesCoroutine(currentScene, nextScene));
@@ -46,7 +51,7 @@ namespace Assets.Scripts.GameScene.Controller
         {
             UnloadScene(currentScene);
 
-            yield return new WaitForSeconds(SceneTransitionController.ANIMATION_TIME);
+            yield return null;
 
             SceneManager.UnloadSceneAsync(currentScene.SceneName);
 
@@ -55,7 +60,7 @@ namespace Assets.Scripts.GameScene.Controller
 
         private void UnloadScene(ISceneData currentScene)
         {
-            sceneTransitionController.FadeOut();
+            sceneTransitionController.FadeToBlack();
             currentScene.UnLoad();
         }
 
@@ -91,7 +96,6 @@ namespace Assets.Scripts.GameScene.Controller
             OnPaused?.Invoke(isPaused);
         }
 
-
         /// <summary>
         /// Which scene to load initially and all essential objects
         /// </summary>
@@ -122,15 +126,15 @@ namespace Assets.Scripts.GameScene.Controller
 
         public void LoadMainMenu() => SceneManager.LoadScene(MainMenuScene);
 
-        public void ToggleLevelSceneObjects(bool _isActive)
+        public void ToggleLevelSceneObjects(bool isActive)
         {
-            player.gameObject.SetActive(_isActive);
-            cam.gameObject.SetActive(_isActive);
+            player.gameObject.SetActive(isActive);
+            cam.gameObject.SetActive(isActive);
+        }
 
-            //if (_isActive)
-            //{
-            //    cam.gameObject.SetActive(_isActive);
-            //}
+        public void SetCameraVisible(bool isVisible)
+        {
+            cam.gameObject.SetActive(isVisible);
         }
 
         private IEnumerator LoadSceneAndThen(string sceneName, LoadSceneMode mode, Action action)
@@ -144,7 +148,7 @@ namespace Assets.Scripts.GameScene.Controller
                 yield return null;
             }
 
-            yield return sceneTransitionController.FadeIn(duration);
+            yield return sceneTransitionController.FadeToScene(duration);
 
             //wait for two frames
             yield return null;

@@ -24,5 +24,7 @@ namespace Assets.Scripts.Helpers
                 Destroy(this);
             }
         }
+
+        protected void DestroySingleton() => Singleton = default;
     }
 }

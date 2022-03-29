@@ -13,22 +13,20 @@ namespace Assets.Scripts.UI.Controller
 
         private void Start()
         {
-            Animator.enabled = false;
-        }
-
-        public void FadeOut()
-        {
             Animator.enabled = true;
         }
 
-        public IEnumerator FadeIn(float secondsPassed)
+        public void FadeToBlack()
+        {
+            Animator.SetTrigger(FADE_IN_TRIGGER);
+        }
+
+        public IEnumerator FadeToScene(float secondsPassed)
         {
             float waitDurationSeconds = Mathf.Clamp(ANIMATION_TIME - secondsPassed, 0.1f, ANIMATION_TIME);
             yield return new WaitForSeconds(waitDurationSeconds);
 
             Animator.SetTrigger(FADE_OUT_TRIGGER);
         }
-
-        public void DisableAnimator() => Animator.enabled = false;
     }
 }

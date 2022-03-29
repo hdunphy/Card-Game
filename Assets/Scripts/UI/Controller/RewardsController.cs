@@ -69,6 +69,8 @@ namespace Assets.Scripts.UI.Controller
             {
                 reward.OnSelected -= SelectCard;
             }
+
+            DestroySingleton();
         }
     }
 }

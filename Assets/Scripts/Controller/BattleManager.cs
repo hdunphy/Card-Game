@@ -6,6 +6,7 @@ using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using System.Linq;
 using Assets.Scripts.Helpers;
+using System;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -48,6 +49,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         EventManager.Instance.GetNextTurnState -= GetNextTurnState;
         EventManager.Instance.ResetSelected -= ResetSelected;
         EventManager.Instance.BattleOver -= BattleOver;
+
+        DestroySingleton();
     }
 
     public void StartBattle(BattleSceneData battleSceneData)
@@ -99,7 +102,9 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         yield return new WaitForSeconds(2);
 
-        GameSceneController.Singleton.SwapScenes(new BaseSceneData() { SceneName = gameObject.scene.name }, _previousLevel);
+        void unLoadAction() => GameSceneController.Singleton.SetCameraVisible(true);
+        BaseSceneData currentScene = new BaseSceneData(gameObject.scene.name);
+        GameSceneController.Singleton.SwapScenes(currentScene, _previousLevel);
     }
 
     private void GetNextTurnState()
