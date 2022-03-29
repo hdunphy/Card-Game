@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
+using Assets.Scripts.UI.Controller;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -14,11 +15,11 @@ namespace Assets.Scripts.GameScene.Controller
 
         [SerializeField] private PlayerController PlayerPrefab;
         [SerializeField] private CameraController CameraPrefab;
+        [SerializeField] private SceneTransitionController sceneTransitionController;
         [SerializeField] private Transform EssentialObjectTransform; //Object to parent instantiated objects
         [SerializeField] private string InitialSceneToLoad; //Name of scene to load on start
         [SerializeField] private Vector3 StartPosition; //Start position of the player
         [SerializeField] private string BattleSceneName;
-        [SerializeField] private string LevelSceneName; //TODO will need anotherway to get/set this with more levels
 
         public GameState CurrentGameState { get; private set; }
         public static string MainMenuScene { get => "MainMenu"; }
@@ -26,7 +27,6 @@ namespace Assets.Scripts.GameScene.Controller
 
         public enum GameState { InGame, Paused, Menu, Battle }
 
-        private IEncounter EncounterCaller;
         private PlayerController player;
         private CameraController cam;
         public event Action<bool> OnPaused;
