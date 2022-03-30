@@ -14,7 +14,8 @@ namespace Assets.Scripts.UI.Menu
 
         private void OnDestroy()
         {
-            GameSceneController.Singleton.OnPaused -= OnPaused;
+            if(GameSceneController.Singleton != null)
+                GameSceneController.Singleton.OnPaused -= OnPaused;
         }
 
         private void OnPaused(bool isPaused)
