@@ -82,9 +82,11 @@ public class Card : MonoBehaviour
         playedThisTurn = true;
 
         yield return Data.InvokeAction(source, target, this);
+
+        DragAndDrop.enabled = false;
     }
 
-    public bool CheckConstraints(Mingming source) => Data.CardConstraint.CheckConstraint(source, this);
+    public bool CanUseCard(Mingming source) => !playedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
     public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
@@ -95,8 +97,9 @@ public class Card : MonoBehaviour
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = !CheckConstraints(_monster);
+            bool isCardPlayable = !CanUseCard(_monster);
             DisableCover.gameObject.SetActive(isCardPlayable);
+            DragAndDrop.enabled = isCardPlayable;
 
             UserMessage.Instance.CanSendMessage = true;
         }
@@ -111,7 +114,8 @@ public class Card : MonoBehaviour
 
     public void DiscardCard(Vector3 position, Vector3 scale, float CardMovementTiming, Action onComplete)
     {
-        HoverEffect.enabled = false;
+        ToggleInteractions(false);
+
         LeanTween.cancel(gameObject);
         transform.SetAsLastSibling();
         LeanTween.move(gameObject, position, CardMovementTiming).setDelay(0.5f);
@@ -128,6 +132,7 @@ public class Card : MonoBehaviour
     {
         transform.SetParent(parentLocation);
         gameObject.SetActive(true);
+        DragAndDrop.enabled = true;
 
         return this;
     }

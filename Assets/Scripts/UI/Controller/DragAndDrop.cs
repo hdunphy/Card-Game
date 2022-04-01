@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [SerializeField] private Transform m_transform;
     [SerializeField] private UnityEvent OnBeginDragEvent;
     [SerializeField] private UnityEvent OnEndDragEvent;
 
+    private Transform m_transform;
     private CanvasGroup canvasGroup;
 
     private void Awake()

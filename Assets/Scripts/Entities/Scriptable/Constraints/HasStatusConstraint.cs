@@ -6,7 +6,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class HasStatusConstraint : BaseConstraint
     {
         [SerializeField] private StatusConstraint StatusConstraint;
-        public override bool CheckConstraint(Mingming source, Card card)
+        public override bool CanUseCard(Mingming source, Card card)
         {
             bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Entities.Scriptable
                 string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
                 UserMessage.Instance.SendMessageToUser($"{source.name} {canHave} have the status: {StatusConstraint.Status.name}");
             }
-            return base.CheckConstraint(source, card) && MeetsStatusConstraint;
+            return base.CanUseCard(source, card) && MeetsStatusConstraint;
         }
     }
 }

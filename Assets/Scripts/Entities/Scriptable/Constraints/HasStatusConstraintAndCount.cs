@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.Constraints
     {
         [SerializeField] private StatusConstraint StatusConstraint;
         [SerializeField] private bool StatusCountIsPositive;
-        public override bool CheckConstraint(Mingming source, Card card)
+        public override bool CanUseCard(Mingming source, Card card)
         {
             bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
             bool _isCountPositive = Mathf.Sign(source.GetStatusCount(StatusConstraint.Status)) > 0 ;
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Entities.Scriptable.Constraints
             {
                 UserMessage.Instance.SendMessageToUser($"{source.name} does not have the correct status.");
             }
-            return base.CheckConstraint(source, card) && MeetsStatusConstraint && _isCountPositive == StatusCountIsPositive;
+            return base.CanUseCard(source, card) && MeetsStatusConstraint && _isCountPositive == StatusCountIsPositive;
         }
     }
 }

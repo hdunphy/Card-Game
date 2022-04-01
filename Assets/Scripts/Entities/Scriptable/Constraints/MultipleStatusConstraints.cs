@@ -7,9 +7,9 @@ namespace Assets.Scripts.Entities.Scriptable
     public class MultipleStatusConstraints : BaseConstraint
     {
         [SerializeField] private List<StatusConstraint> StatusConstraints;
-        public override bool CheckConstraint(Mingming source, Card card)
+        public override bool CanUseCard(Mingming source, Card card)
         {
-            bool isValid = base.CheckConstraint(source, card);
+            bool isValid = base.CanUseCard(source, card);
 
             foreach(var StatusConstraint in StatusConstraints)
             {

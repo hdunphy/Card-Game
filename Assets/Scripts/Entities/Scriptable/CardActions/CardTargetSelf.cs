@@ -24,7 +24,7 @@ namespace Assets.Scripts.Entities.Scriptable
             {
                 UserMessage.Instance.SendMessageToUser($"Card must target itself");
             }
-            return notNullTarget && target.IsTurn && card.CheckConstraints(target) && rightSource;
+            return notNullTarget && target.IsTurn && card.CanUseCard(target) && rightSource;
         }
 
         public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)

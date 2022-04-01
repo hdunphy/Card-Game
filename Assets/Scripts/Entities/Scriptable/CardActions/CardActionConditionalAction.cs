@@ -12,7 +12,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             base.InvokeAction(source, target, card);
 
-            if (Constraint.CheckConstraint(source, card))
+            if (Constraint.CanUseCard(source, card))
             {
                 Action.InvokeAction(source, target, card);
             }
