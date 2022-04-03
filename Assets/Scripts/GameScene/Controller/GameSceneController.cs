@@ -51,7 +51,7 @@ namespace Assets.Scripts.GameScene.Controller
         {
             UnloadScene(currentScene);
 
-            yield return null;
+            yield return new WaitForSeconds(SceneTransitionController.ANIMATION_TIME);
 
             SceneManager.UnloadSceneAsync(currentScene.SceneName);
 
