@@ -97,8 +97,8 @@ public class Card : MonoBehaviour
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = !CanUseCard(_monster);
-            DisableCover.gameObject.SetActive(isCardPlayable);
+            bool isCardPlayable = CanUseCard(_monster);
+            DisableCover.gameObject.SetActive(!isCardPlayable);
             DragAndDrop.enabled = isCardPlayable;
 
             UserMessage.Instance.CanSendMessage = true;
