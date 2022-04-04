@@ -28,4 +28,4 @@ MonoBehaviour:
           m_StringArgument: Take Damage
           m_BoolArgument: 0
         m_CallState: 2
-  animationDistance: 1
+  durationSeconds: 0.75

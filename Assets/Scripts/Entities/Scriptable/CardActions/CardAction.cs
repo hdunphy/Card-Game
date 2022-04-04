@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] protected UnityEvent OnInvoked;
 
         [Header("Animation Parameters")]
-        [SerializeField] private float durationSeconds;
+        [SerializeField] protected float durationSeconds = 0.75f;
 
         public virtual void InvokeAction(Mingming source, Mingming target, Card card)
         {

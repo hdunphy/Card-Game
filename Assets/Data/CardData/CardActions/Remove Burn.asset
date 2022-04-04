@@ -15,4 +15,5 @@ MonoBehaviour:
   OnInvoked:
     m_PersistentCalls:
       m_Calls: []
+  durationSeconds: 0.75
   Status: {fileID: 11400000, guid: c1c20fa5dbcdf9341a62ddece83a6b3c, type: 2}

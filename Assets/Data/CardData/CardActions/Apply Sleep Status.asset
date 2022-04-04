@@ -28,5 +28,6 @@ MonoBehaviour:
           m_StringArgument: Debuff
           m_BoolArgument: 0
         m_CallState: 2
+  durationSeconds: 0.75
   Status: {fileID: 11400000, guid: e80e6da798e637b4b89a5aafe94e622b, type: 2}
   Count: 3

@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b066b7c13e1f6a844b614e39735a9eec, type: 3}
   m_Name: Heal Every Turn
   m_EditorClassIdentifier: 
+  OnInvoked:
+    m_PersistentCalls:
+      m_Calls: []
+  durationSeconds: 0.75
   Action: {fileID: 11400000, guid: a2b0c084b357f3a448c8892f9f177960, type: 2}
   Constraint: {fileID: 11400000, guid: a261236417e7def459f5da26aacc64ee, type: 2}
   TurnState: 0

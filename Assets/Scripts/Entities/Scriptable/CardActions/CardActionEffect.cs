@@ -9,6 +9,9 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     [CreateAssetMenu(fileName = "CardEffect", menuName = "Data/Card Action/Create Card Effect")]
     public class CardActionEffect : CardAction
     {
+        //class to add a reoccuring effect to a mingming
+
+        [Header("Card Effect Parameters")]
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
         [SerializeField] private TurnStateEnum TurnState;

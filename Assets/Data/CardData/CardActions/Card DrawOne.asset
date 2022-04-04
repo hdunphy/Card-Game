@@ -28,4 +28,5 @@ MonoBehaviour:
           m_StringArgument: Get Card
           m_BoolArgument: 0
         m_CallState: 2
+  durationSeconds: 0.75
   numberOfCards: 1

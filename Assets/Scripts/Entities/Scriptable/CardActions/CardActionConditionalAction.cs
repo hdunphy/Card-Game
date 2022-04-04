@@ -6,10 +6,9 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     [CreateAssetMenu(menuName = "Data/Card Action/Create Conditional Action")]
     public class CardActionConditionalAction : CardAction
     {
+        [Header("Conditional Parameters")]
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
-
-        protected new UnityEvent OnInvoked;
 
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
