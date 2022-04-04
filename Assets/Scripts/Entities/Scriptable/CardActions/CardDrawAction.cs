@@ -12,6 +12,8 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             FindObjectsOfType<MingmingController>().First(m => m.HasMingming(source)).DrawCards(numberOfCards);
+
+            base.InvokeAction(source, target, card);
         }
     }
 }

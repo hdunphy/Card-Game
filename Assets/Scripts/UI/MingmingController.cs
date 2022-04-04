@@ -9,6 +9,7 @@ public class MingmingController : MonoBehaviour
 {
     [SerializeField] private Mingming monsterPrefab;
     [SerializeField] private DeckHandler deckController;
+    [SerializeField] private bool isFacingRight;
 
     public List<Mingming> Mingmings { get; private set; }
     private int CardDraw;
@@ -92,7 +93,7 @@ public class MingmingController : MonoBehaviour
         foreach (MingmingInstance _data in datas)
         {
             Mingming _mingming = Instantiate(monsterPrefab, transform);
-            _mingming.SetUp(_data);
+            _mingming.SetUp(_data, isFacingRight);
             Mingmings.Add(_mingming);
 
             //Refactor adding listeners
@@ -134,6 +135,11 @@ public class MingmingController : MonoBehaviour
     {
         CurrentTurnState = TurnStateEnum.PreTurn;
         TurnStateMachine[CurrentTurnState].NewStateAlert.Invoke();
+    }
+
+    public void SetAsLastSibling()
+    {
+        transform.SetAsLastSibling();
     }
 
     public bool HasMingming(Mingming mingming)

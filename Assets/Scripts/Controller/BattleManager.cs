@@ -102,7 +102,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         yield return new WaitForSeconds(2);
 
-        void unLoadAction() => GameSceneController.Singleton.SetCameraVisible(true);
+        void unLoadAction() => GameSceneController.Singleton.SetCameraVisible(true); //TODO: is this necessary
         BaseSceneData currentScene = new BaseSceneData(gameObject.scene.name);
         GameSceneController.Singleton.SwapScenes(currentScene, _previousLevel);
     }

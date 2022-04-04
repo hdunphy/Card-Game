@@ -43,6 +43,8 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
     public int Level => Data.Level;
     public float Attack => Data.Attack * AttackModifier;
     public float Defense => Data.Defense * DefenseModifier;
+    public int Direction { get; private set; } //1 or -1
+
     private Dictionary<BaseStatus, StatusIcon> Statuses;
 
     private void Start()
@@ -74,12 +76,13 @@ public class Mingming : SelectableElement, IPointerDownHandler, IDropHandler
         }
     }
 
-    public void SetUp(MingmingInstance _data)
+    public void SetUp(MingmingInstance _data, bool isFacingRight)
     {
         Data = _data;
         EnergyAvailable = Data.Energy;
         NameText.text = Data.Name;
         name = Data.Name;
+        Direction = isFacingRight ? 1 : -1;
 
         MingmingSprite.sprite = Data.Sprite;
 

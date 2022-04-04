@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -976,11 +976,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 602442006}
+  isFacingRight: 0
   stateEvents:
   - StateEnum: 0
     Event:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 364613473}
+          m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_MethodName: SetAsLastSibling
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 602442006}
           m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
           m_MethodName: StartTurn
@@ -3813,7 +3826,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3875,6 +3888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 507422522}
+  isFacingRight: 1
   stateEvents:
   - StateEnum: 0
     Event:
@@ -3883,6 +3897,18 @@ MonoBehaviour:
         - m_Target: {fileID: 507422522}
           m_TargetAssemblyTypeName: DeckHandler, Assembly-CSharp
           m_MethodName: StartTurn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1768742042}
+          m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_MethodName: SetAsLastSibling
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4158,8 +4184,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.17777771
+  m_Value: 1.0000001
+  m_Size: 0.17777772
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

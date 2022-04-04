@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
@@ -8,6 +9,8 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
 
+        protected new UnityEvent OnInvoked;
+
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             base.InvokeAction(source, target, card);
@@ -16,6 +19,11 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             {
                 Action.InvokeAction(source, target, card);
             }
+        }
+
+        public override void PerformAnimation(Mingming source, Mingming target)
+        {
+            // no animation
         }
     }
 }
