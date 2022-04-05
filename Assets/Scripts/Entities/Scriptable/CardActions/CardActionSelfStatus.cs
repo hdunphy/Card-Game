@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
@@ -12,6 +11,14 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             Status.ApplyStatus(source, Count);
             base.InvokeAction(source, target, card);
+        }
+
+        public override void PerformAnimation(Mingming source, Mingming target)
+        {
+            //no animation move animations to statuses
+
+            //var destination = new Vector3(1, 2, 1);
+            //LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
         }
     }
 }

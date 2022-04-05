@@ -19,7 +19,6 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public virtual void PerformAnimation(Mingming source, Mingming target)
         {
-
             Vector3 currentPosition = source.transform.position;
             Vector3 destination = target.transform.position;
 

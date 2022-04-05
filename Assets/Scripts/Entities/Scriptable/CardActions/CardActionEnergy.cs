@@ -17,7 +17,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         public override void PerformAnimation(Mingming source, Mingming target)
         {
             var destination = new Vector3(2, 1, 1);
-            LeanTween.moveLocal(source.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
+            LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
         }
     }
 }

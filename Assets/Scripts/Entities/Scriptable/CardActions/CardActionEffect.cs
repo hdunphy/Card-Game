@@ -45,5 +45,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
                 MonsterActions.Remove(target);
             }
         }
+
+        public override void PerformAnimation(Mingming source, Mingming target)
+        {
+            //no animation
+        }
     }
 }
