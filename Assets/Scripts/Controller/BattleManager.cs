@@ -6,13 +6,13 @@ using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using System.Linq;
 using Assets.Scripts.Helpers;
-using System;
+using Assets.Scripts.Controller;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
 public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
-
+    [SerializeField] private BattleCameraController BattleCamera;
     [SerializeField] private MingmingController PlayerLoader;
     [SerializeField] private MingmingController EnemyLoader;
     [SerializeField] private Button EndButton;
@@ -102,8 +102,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         yield return new WaitForSeconds(2);
 
-        void unLoadAction() => GameSceneController.Singleton.SetCameraVisible(true); //TODO: is this necessary
-        BaseSceneData currentScene = new BaseSceneData(gameObject.scene.name);
+        void unloadAction()
+        {
+            GameSceneController.Singleton.SetCameraVisible(true);
+            BattleCamera.gameObject.SetActive(false);
+        }
+        BaseSceneData currentScene = new BaseSceneData(gameObject.scene.name, unLoadAction: unloadAction);
         GameSceneController.Singleton.SwapScenes(currentScene, _previousLevel);
     }
 

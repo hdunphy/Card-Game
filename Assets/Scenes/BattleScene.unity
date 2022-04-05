@@ -1493,7 +1493,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Battle Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3064,6 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6611d1b3723055042862766056b3b8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BattleCamera: {fileID: 519420030}
   PlayerLoader: {fileID: 1768742047}
   EnemyLoader: {fileID: 364613478}
   EndButton: {fileID: 1569033877}
@@ -4184,8 +4185,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.17777772
+  m_Value: 1
+  m_Size: 0.17777771
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
