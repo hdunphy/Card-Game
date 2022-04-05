@@ -32,10 +32,10 @@ public class CardData : IDropScriptableObject
         {
             TargetType.InvokeAction(cardAction, source, target, card);
 
-            yield return new WaitForSeconds(1); //parameterize this somewhere
+            yield return new WaitForSeconds(cardAction.DurationSeconds); //parameterize this somewhere
         }
 
-        //TODO: improve this below
+        //TODO: improve this below. Move into TargetType
         (source ?? target).PlayCard(card); //use null check for self targeting. 
     }
 

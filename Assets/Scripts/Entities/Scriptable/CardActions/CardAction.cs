@@ -10,6 +10,8 @@ namespace Assets.Scripts.Entities.Scriptable
         [Header("Animation Parameters")]
         [SerializeField] protected float durationSeconds = 0.75f;
 
+        public float DurationSeconds => durationSeconds;
+
         public virtual void InvokeAction(Mingming source, Mingming target, Card card)
         {
             OnInvoked?.Invoke();

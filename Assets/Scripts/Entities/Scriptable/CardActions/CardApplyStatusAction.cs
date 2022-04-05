@@ -1,3 +1,4 @@
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [Header("Status Parameters")]
         [SerializeField] private BaseStatus Status;
         [SerializeField] private int Count;
+
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
             Status.ApplyStatus(target, Count);
@@ -18,10 +20,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void PerformAnimation(Mingming source, Mingming target)
         {
-            LeanTween.rotateZ(source.gameObject, rotationAmountDegrees, durationSeconds / 4).setLoopPingPong(3);
-
-            LeanTween.delayedCall(durationSeconds / 2,
-                () => LeanTween.rotateZ(target.gameObject, -rotationAmountDegrees, durationSeconds / 4).setLoopPingPong(3));
+            LeanTweenAnimations.RotateBackAndForth(target.gameObject, rotationAmountDegrees, durationSeconds / 4);
         }
     }
 }

@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Helpers;
+using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
     [CreateAssetMenu(fileName = "CardApplySelf", menuName = "Data/Card Action/Create Self Status Action")]
     public class CardActionSelfStatus : CardAction
     {
+        [SerializeField] private float rotationAmountDegrees = 25f;
+
+        [Header("Status Parameters")]
         [SerializeField] private BaseStatus Status;
         [SerializeField] private int Count;
         public override void InvokeAction(Mingming source, Mingming target, Card card)
@@ -15,10 +20,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
         public override void PerformAnimation(Mingming source, Mingming target)
         {
-            //no animation move animations to statuses
-
-            //var destination = new Vector3(1, 2, 1);
-            //LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
+            LeanTweenAnimations.RotateBackAndForth(source.gameObject, rotationAmountDegrees, durationSeconds / 4);
         }
     }
 }
