@@ -29,5 +29,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   durationSeconds: 0.75
+  rotationAmountDegrees: 50
   Status: {fileID: 11400000, guid: abfac4054515acd41b0a4f5a157484aa, type: 2}
   Count: 1
