@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class SelectableElement : MonoBehaviour
+public abstract class Highlightable : MonoBehaviour
 {
     [SerializeField] private Image Highlight;
     public bool IsSelected { get; private set; }

@@ -974,7 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ec2c3dbeb5dd47a1adee9b2c5b54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
+  monsterPrefab: {fileID: 5835941552213260061, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 602442006}
   isFacingRight: 0
   stateEvents:
@@ -3887,7 +3887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ec2c3dbeb5dd47a1adee9b2c5b54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 2753117505398052433, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
+  monsterPrefab: {fileID: 5835941552213260061, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
   deckController: {fileID: 507422522}
   isFacingRight: 1
   stateEvents:
@@ -4185,8 +4185,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.17777771
+  m_Value: 0.9999999
+  m_Size: 0.3111111
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

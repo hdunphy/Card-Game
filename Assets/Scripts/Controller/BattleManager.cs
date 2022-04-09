@@ -7,6 +7,7 @@ using Assets.Scripts.GameScene.Controller.SceneManagement;
 using System.Linq;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Controller;
+using Assets.Scripts.Entities;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 
@@ -165,26 +166,26 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         if (_selectedMingming != null) SetSelectedMingming(_selectedMingming);
     }
 
-    private SelectableElement SetSelectable(SelectableElement _current, SelectableElement _selected)
+    private ISelectable SetSelectable(ISelectable _current, ISelectable _selected)
     {
-        SelectableElement result = _selected;
+        ISelectable result = _selected;
 
         if (_current != null)
         {
             if (_current == _selected)
             {
                 result = null;
-                _selected.SetSelected(false);
+                _selected.IsSelected = false;
             }
             else
             {
-                _current.SetSelected(false);
-                _selected.SetSelected(true);
+                _current.IsSelected = false;
+                _selected.IsSelected = true;
             }
         }
         else
         {
-            _selected.SetSelected(true);
+            _selected.IsSelected = true;
         }
 
         return result;

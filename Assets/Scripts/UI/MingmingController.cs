@@ -93,7 +93,7 @@ public class MingmingController : MonoBehaviour
         foreach (MingmingInstance _data in datas)
         {
             Mingming _mingming = Instantiate(monsterPrefab, transform);
-            _mingming.SetUp(_data, isFacingRight);
+            _mingming.SetData(_data, isFacingRight);
             Mingmings.Add(_mingming);
 
             //Refactor adding listeners
