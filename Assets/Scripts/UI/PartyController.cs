@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MingmingController : MonoBehaviour
+public class PartyController : MonoBehaviour
 {
     [SerializeField] private Mingming monsterPrefab;
     [SerializeField] private DeckHandler deckController;
@@ -73,7 +73,7 @@ public class MingmingController : MonoBehaviour
         }
     }
 
-    private void Instance_BattleOver(MingmingController obj)
+    private void Instance_BattleOver(PartyController obj)
     {
         CurrentTurnState = TurnStateEnum.End;
     }

@@ -26,7 +26,7 @@ public class EventManager : MonoBehaviour
     public event Action<Card> DiscardCard;
     public event Action GetNextTurnState;
     public event Action ResetSelected;
-    public event Action<MingmingController> BattleOver;
+    public event Action<PartyController> BattleOver;
 
     public void OnSelectMingmingTrigger(Mingming _monster)
     {
@@ -63,7 +63,7 @@ public class EventManager : MonoBehaviour
         SelectTarget?.Invoke(target, card);
     }
 
-    public void OnBattleOverTrigger(MingmingController monsterController)
+    public void OnBattleOverTrigger(PartyController monsterController)
     {
         BattleOver?.Invoke(monsterController);
     }

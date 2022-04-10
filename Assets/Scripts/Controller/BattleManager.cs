@@ -14,8 +14,8 @@ public enum PlayerTurn { PlayerOne, PlayerTwo }
 public class BattleManager : SingletonMonoBehavior<BattleManager>
 {
     [SerializeField] private BattleCameraController BattleCamera;
-    [SerializeField] private MingmingController PlayerLoader;
-    [SerializeField] private MingmingController EnemyLoader;
+    [SerializeField] private PartyController PlayerLoader;
+    [SerializeField] private PartyController EnemyLoader;
     [SerializeField] private Button EndButton;
 
     [Header("Events")]
@@ -25,7 +25,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     [SerializeField] private UnityEvent OnEndTurn;
 
     //private variables
-    private MingmingController _activeController { get { return _playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
+    private PartyController _activeController { get { return _playerTurn == PlayerTurn.PlayerTwo ? EnemyLoader : PlayerLoader; } }
     private Mingming _selectedMingming;
     private PlayerTurn _playerTurn;
     private LevelSceneData _previousLevel;
@@ -81,7 +81,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     /// Triggered when battle has been lost
     /// </summary>
     /// <param name="_controller">The controller of the losing side</param>
-    private void BattleOver(MingmingController _controller)
+    private void BattleOver(PartyController _controller)
     {
         bool didPlayerOneWin = _controller == EnemyLoader;
         

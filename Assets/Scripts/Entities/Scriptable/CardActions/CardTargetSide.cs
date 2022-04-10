@@ -10,7 +10,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)
         {
-            var controller = FindObjectsOfType<MingmingController>().First(m => m.HasMingming(target)); //should never be null
+            var controller = FindObjectsOfType<PartyController>().First(m => m.HasMingming(target)); //should never be null
             foreach (var monster in controller.Mingmings.Where(m => m.IsInPlay))
             {
                 cardAction.InvokeAction(source, monster, card);

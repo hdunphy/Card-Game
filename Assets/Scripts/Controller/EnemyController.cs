@@ -7,8 +7,8 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float SecondsBetweenAttack;
 
-    [SerializeField] private MingmingController SelfController;
-    [SerializeField] private MingmingController OtherController;
+    [SerializeField] private PartyController SelfController;
+    [SerializeField] private PartyController OtherController;
     private List<Card> Hand;
 
     [SerializeField] private EnemyAttackBehaviorEnum EnemyAttackBehaviorEnum;

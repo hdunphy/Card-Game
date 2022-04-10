@@ -26,7 +26,7 @@ namespace Assets.Scripts.Entities.Scriptable
                 UnityAction action = delegate { mingming.GetStatusEffect(this); };
                 _mingmingActions.Add(mingming, action);
 
-                FindObjectsOfType<MingmingController>().First(m => m.HasMingming(mingming))
+                FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
                     .AddListenerToTurnStateMachine(TurnStateEnum.PostTurn, action);
             }
         }
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Entities.Scriptable
         {
             base.RemoveStatus(mingming);
 
-            FindObjectsOfType<MingmingController>().First(m => m.HasMingming(mingming))
+            FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
                 .RemoveListenerToTurnStateMachine(TurnStateEnum.PostTurn, _mingmingActions[mingming]);
 
             _mingmingActions.Remove(mingming);
