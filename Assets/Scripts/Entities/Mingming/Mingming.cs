@@ -38,7 +38,7 @@ namespace Assets.Scripts.Entities
             set
             {
                 _isSelected = value;
-                UIController.SetSelected(value);
+                UIController.SetHighlighted(value);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Entities
         private void SetEnergy()
         {
             EnergyHolder.SetEnergy(EnergyAvailable, TotalEnergy);
-            if (UIController.IsSelected)
+            if (IsSelected)
                 EventManager.Instance.OnUpdateSelectedMingmingTrigger(this);
         }
 
@@ -86,19 +86,7 @@ namespace Assets.Scripts.Entities
         }
         #endregion
 
-        public void AddExperience(int expGained)
-        {
-            int levelsGained = Data.AddExperience(expGained);
-
-            string levelUpText = levelsGained < 1 ? "" : $" and gained {levelsGained} levels";
-            UserMessage.Instance.SendMessageToUser($"{name} gained {expGained} xp{levelUpText}");
-
-            UIController.AddExperience(levelsGained);
-        }
-
         #region Statuses
-
-
         public void ApplyStatus(BaseStatus status, int _count)
         {
             bool applied = true;
@@ -143,10 +131,12 @@ namespace Assets.Scripts.Entities
         }
         #endregion
 
-        #region Getters
+        #region Getters and Setters
         public MingmingAlignment GetMonsterAlignment() => Data.MonsterAlignment;
 
         public int GetDeathExp() => Data.GetDeathExp();
+
+        public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
         #endregion
 
         #region Game Logic
@@ -203,13 +193,21 @@ namespace Assets.Scripts.Entities
             gameObject.SetActive(false);
         }
 
-        public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
-
         public void PlayCard(Card selectedCard)
         {
             EventManager.Instance.OnDiscardCardTrigger(selectedCard);
             EnergyAvailable -= selectedCard.EnergyCost;
             SetEnergy();
+        }
+
+        public void AddExperience(int expGained)
+        {
+            int levelsGained = Data.AddExperience(expGained);
+
+            string levelUpText = levelsGained < 1 ? "" : $" and gained {levelsGained} levels";
+            UserMessage.Instance.SendMessageToUser($"{name} gained {expGained} xp{levelUpText}");
+
+            UIController.AddExperience(levelsGained);
         }
         #endregion
     }

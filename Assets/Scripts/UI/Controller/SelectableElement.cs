@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class Highlightable : MonoBehaviour
 {
     [SerializeField] private Image Highlight;
-    public bool IsSelected { get; private set; }
 
     private void Awake()
     {
         Highlight.enabled = false;
     }
 
-    public void SetSelected(bool _isSelected)
+    public void SetHighlighted(bool _isHighlighted)
     {
-        IsSelected = _isSelected;
-        Highlight.enabled = IsSelected;
+        Highlight.enabled = _isHighlighted;
     }
 }
