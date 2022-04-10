@@ -132,7 +132,7 @@ namespace Assets.Scripts.Entities
         #endregion
 
         #region Getters and Setters
-        public MingmingAlignment GetMonsterAlignment() => Data.MonsterAlignment;
+        public MingmingAlignment GetMingmingAlignment() => Data.MingmingAlignment;
 
         public int GetDeathExp() => Data.GetDeathExp();
 
@@ -189,7 +189,7 @@ namespace Assets.Scripts.Entities
             }
 
             TooltipSystem.Hide();
-            EventManager.Instance.OnMonsterDiedTrigger(this);
+            EventManager.Instance.OnMingmingDiedTrigger(this);
             gameObject.SetActive(false);
         }
 

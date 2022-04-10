@@ -102,7 +102,7 @@ namespace Assets.Scripts.References
 
         public int GetAttackDamage(Mingming source, Mingming target, Card _card)
         {
-            float _modifier = GetModifier(source.GetMonsterAlignment(), target.GetMonsterAlignment(), _card.CardAlignment);
+            float _modifier = GetModifier(source.GetMingmingAlignment(), target.GetMingmingAlignment(), _card.CardAlignment);
 
             float damage = (float)((2 * source.Level) / 5) + 2;
             damage *= (float)_card.Power * source.Attack / target.Defense;
@@ -147,14 +147,14 @@ namespace Assets.Scripts.References
             return modifier;
         }
 
-        public int GetExp(MingmingInstance monsterInstance)
+        public int GetExp(MingmingInstance mingmingInstance)
         {
-            return GetExpForLevel(monsterInstance.Level);
+            return GetExpForLevel(mingmingInstance.Level);
         }
 
-        public int GetExpNextLevel(MingmingInstance monsterInstance)
+        public int GetExpNextLevel(MingmingInstance mingmingInstance)
         {
-            return GetExpForLevel(monsterInstance.Level + 1);
+            return GetExpForLevel(mingmingInstance.Level + 1);
         }
 
         private int GetExpForLevel(int level)

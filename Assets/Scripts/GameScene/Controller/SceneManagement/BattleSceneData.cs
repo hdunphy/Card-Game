@@ -13,13 +13,13 @@ namespace Assets.Scripts.GameScene.Controller.SceneManagement
         public LevelSceneData PreviousLevel { get; private set; }
 
         public BattleSceneData(string sceneName, IEnumerable<CardData> playerCards, IEnumerable<CardData> enemyCards, LevelSceneData previousLevel,
-            IEnumerable<MingmingInstance> playerMonsters, IEnumerable<MingmingInstance> enemyMonsters)
+            IEnumerable<MingmingInstance> playerMingmings, IEnumerable<MingmingInstance> enemyMingmings)
         {
             SceneName = sceneName;
             EnemyCards = enemyCards;
             PlayerCards = playerCards;
-            EnemyMingmings = enemyMonsters;
-            PlayerMingmings = playerMonsters;
+            EnemyMingmings = enemyMingmings;
+            PlayerMingmings = playerMingmings;
             PreviousLevel = previousLevel;
         }
 

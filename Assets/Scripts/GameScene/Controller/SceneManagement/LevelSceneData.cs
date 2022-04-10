@@ -28,7 +28,7 @@ namespace Assets.Scripts.GameScene.Controller.SceneManagement
             else
             {
                 player.EnterRoom(SaveData.Current.PlayerPosition);
-                player.DevController.HealMonsters();
+                player.DevController.HealParty();
                 player.GetComponent<PlayerInputController>().enabled = true;
             }
         }

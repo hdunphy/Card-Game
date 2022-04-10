@@ -5,7 +5,7 @@ namespace Assets.Scripts.Entities.Scriptable
     [CreateAssetMenu(fileName = "Target Self", menuName = "Data/Card Target/Create Target Self")]
     public class CardTargetSelf : CardTarget
     {
-        public override string TooltipText => "Can target itself (the selected Monster)";
+        public override string TooltipText => "Can target itself (the selected Mingming)";
 
         public override bool IsValidAction(Mingming source, Mingming target, Card card)
         {
@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
             if (!notNullTarget)
             {
-                UserMessage.Instance.SendMessageToUser("Target Monster is null");
+                UserMessage.Instance.SendMessageToUser("Target Mingming is null");
             }
             else if (!target.IsTurn)
             {

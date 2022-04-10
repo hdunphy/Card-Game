@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         SaveData.Current.PlayerPosition = transform.position;
         SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DevController.DeckHolder);
-        SaveData.Current.PlayerMonsters = DevController.Monsters.Select(m => new MonsterSaveModel(m)).ToList();
+        SaveData.Current.PlayerMingmings = DevController.Monsters.Select(m => new MingmingSaveModel(m)).ToList();
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         EnterRoom(loadPosition);
 
         DevController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
-        DevController.SetMonsters(SaveData.Current.PlayerMonsters?.Select(m => new MingmingInstance(m)).ToList());
+        DevController.SetMingmings(SaveData.Current.PlayerMingmings?.Select(m => new MingmingInstance(m)).ToList());
     }
 
     public void SetInteraction(IPlayerInteractable interactable)

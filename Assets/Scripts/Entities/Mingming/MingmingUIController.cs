@@ -32,11 +32,11 @@ namespace Assets.Scripts.Entities
 
             MingmingSprite.sprite = Data.Sprite;
 
-            PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Primary);
-            if (Data.MonsterAlignment.Secondary != CardAlignment.None)
+            PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MingmingAlignment.Primary);
+            if (Data.MingmingAlignment.Secondary != CardAlignment.None)
             {
                 SecondaryAlignment.enabled = true;
-                SecondaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MonsterAlignment.Secondary);
+                SecondaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MingmingAlignment.Secondary);
             }
             else
                 SecondaryAlignment.enabled = false;

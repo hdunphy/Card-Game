@@ -20,16 +20,16 @@ public class RandomEncounter : MonoBehaviour, IEncounter
     [Header("Events")]
     [SerializeField] private UnityEvent OnStartEncounter;
 
-    List<MingmingInstance> monsters;
+    List<MingmingInstance> mingmings;
 
     private void Start()
     {
-        monsters = new List<MingmingInstance>();
+        mingmings = new List<MingmingInstance>();
     }
 
     public void GetEncounter()
     {
-        monsters.Clear();
+        mingmings.Clear();
 
         int monsterSpawns = Rules.GetRandomInt(0, MaxMonsters + 1);
 
@@ -42,18 +42,18 @@ public class RandomEncounter : MonoBehaviour, IEncounter
                 int monsterLevel = Rules.GetRandomInt(MinMonsterLevel, MaxMonsterLevel + 1);
                 var _monster = new MingmingInstance((MingmingData)_drop, monsterLevel);
                 _monster.Name = "Wild " + _monster.Name;
-                monsters.Add(_monster);
+                mingmings.Add(_monster);
             }
         }
 
-        if (monsters.Any())
+        if (mingmings.Any())
         {
             OnStartEncounter?.Invoke();
             var player = FindObjectOfType<PlayerController>();
             
             var thisScene = new LevelSceneData(gameObject.scene.name, this, player);
             var battleScene = new BattleSceneData(GameSceneController.BattleScene, player.DevController.DeckHolder.CurrentDeck, new List<CardData>(),
-                thisScene, player.DevController.PlayableMonsters, monsters);
+                thisScene, player.DevController.PlayableMonsters, mingmings);
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
         }
@@ -61,6 +61,6 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
     public List<CardData> GetRewards()
     {
-        return monsters.Select(x => x.GetCardDrop()).ToList();
+        return mingmings.Select(x => x.GetCardDrop()).ToList();
     }
 }

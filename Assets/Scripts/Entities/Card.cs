@@ -27,12 +27,12 @@ public class Card : MonoBehaviour
     private void Start()
     {
         DragAndDrop.SetRectTransform(Dragger.Instance.GetComponent<RectTransform>());
-        EventManager.Instance.UpdateSelectedMonster += Instance_UpdateSelectedMonster;
+        EventManager.Instance.UpdateSelectedMingming += Instance_UpdateSelectedMingming;
     }
 
     private void OnDestroy()
     {
-        EventManager.Instance.UpdateSelectedMonster -= Instance_UpdateSelectedMonster;
+        EventManager.Instance.UpdateSelectedMingming -= Instance_UpdateSelectedMingming;
     }
 
     public void OnBeginDrag()
@@ -91,14 +91,14 @@ public class Card : MonoBehaviour
 
     public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
-    private void Instance_UpdateSelectedMonster(Mingming _monster)
+    private void Instance_UpdateSelectedMingming(Mingming _mingming)
     {
         DisableCover.gameObject.SetActive(false);
-        if (_monster != null)
+        if (_mingming != null)
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = CanUseCard(_monster);
+            bool isCardPlayable = CanUseCard(_mingming);
             DisableCover.gameObject.SetActive(!isCardPlayable);
             DragAndDrop.enabled = isCardPlayable;
 

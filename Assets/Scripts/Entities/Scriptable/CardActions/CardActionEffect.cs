@@ -16,7 +16,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private BaseConstraint Constraint;
         [SerializeField] private TurnStateEnum TurnState;
 
-        private readonly Dictionary<Mingming, UnityAction> MonsterActions = new Dictionary<Mingming, UnityAction>();
+        private readonly Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
 
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
                 DoEffect(source, target, card);
             };
 
-            MonsterActions.Add(target, _unityAction);
+            MingmingActions.Add(target, _unityAction);
 
             FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
                 .AddListenerToTurnStateMachine(TurnState, _unityAction);
@@ -40,9 +40,9 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             else
             {
                 FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
-                    .RemoveListenerToTurnStateMachine(TurnState, MonsterActions[target]);
+                    .RemoveListenerToTurnStateMachine(TurnState, MingmingActions[target]);
 
-                MonsterActions.Remove(target);
+                MingmingActions.Remove(target);
             }
         }
 

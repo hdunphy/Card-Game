@@ -8,37 +8,37 @@ namespace Assets.Scripts.Entities.Scriptable
     [CreateAssetMenu(fileName = "Burn Status", menuName = "Data/Status/Create Burn Status")]
     public class BurnStatus : BaseStatus
     {
-        private Dictionary<Mingming, UnityAction> MonsterActions = new Dictionary<Mingming, UnityAction>();
+        private Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Mingming monster, int count)
+        public override void ApplyStatus(Mingming mingming, int count)
         {
-            base.ApplyStatus(monster, count);
+            base.ApplyStatus(mingming, count);
 
-            if (!MonsterActions.ContainsKey(monster))
+            if (!MingmingActions.ContainsKey(mingming))
             {
-                UnityAction action = delegate { monster.GetStatusEffect(this); };
-                MonsterActions.Add(monster, action);
+                UnityAction action = delegate { mingming.GetStatusEffect(this); };
+                MingmingActions.Add(mingming, action);
 
-                FindObjectsOfType<PartyController>().First(m => m.HasMingming(monster))
+                FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
                     .AddListenerToTurnStateMachine(TurnStateEnum.PreTurn, action);
             }
         }
 
-        public override void RemoveStatus(Mingming monster)
+        public override void RemoveStatus(Mingming mingming)
         {
-            base.RemoveStatus(monster);
+            base.RemoveStatus(mingming);
 
-            FindObjectsOfType<PartyController>().First(m => m.HasMingming(monster))
-                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, MonsterActions[monster]);
+            FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
+                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, MingmingActions[mingming]);
             
-            MonsterActions.Remove(monster);
+            MingmingActions.Remove(mingming);
         }
 
-        public override void DoEffect(Mingming monster, int count)
+        public override void DoEffect(Mingming mingming, int count)
         {
-            int dmg = GetDamage(monster.TotalHealth, count);
-            monster.TakeDamage(dmg, null); //TODO: pass source some how
-            UserMessage.Instance.SendMessageToUser($"{monster.name} took {dmg} {GetTooltipHeader(count)} damage");
+            int dmg = GetDamage(mingming.TotalHealth, count);
+            mingming.TakeDamage(dmg, null); //TODO: pass source some how
+            UserMessage.Instance.SendMessageToUser($"{mingming.name} took {dmg} {GetTooltipHeader(count)} damage");
         }
 
         protected virtual int GetDamage(int health, int count)
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Entities.Scriptable
         };
 
         public override string GetTooltip(int count)
-            => $"Does {GetModifier(count) * 100}% of Monster's health at start of each turn";
+            => $"Does {GetModifier(count) * 100}% of Mingming's health at start of each turn";
 
         public override string GetTooltipHeader(int count) => "Burn";
     }

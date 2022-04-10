@@ -14,10 +14,10 @@ namespace Assets.Scripts.Entities.Scriptable
             bool notNullSource = source != null;
             bool notNullTarget = target != null;
             if (!notNullSource) {
-                UserMessage.Instance.SendMessageToUser("Source Monster is null");
+                UserMessage.Instance.SendMessageToUser("Source Mingming is null");
             }
             else if(!notNullTarget){
-                UserMessage.Instance.SendMessageToUser("Target Monster is null");
+                UserMessage.Instance.SendMessageToUser("Target Mingming is null");
             }
             else if (!source.IsTurn)
             {

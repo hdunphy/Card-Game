@@ -17,7 +17,7 @@ namespace Assets.Scripts.GameScene.Controller
         private void Start()
         {
             devController.SetDeckHolder(null);
-            devController.SetMonsters(null);
+            devController.SetMingmings(null);
             CanBattle = false;
 
             StartCoroutine(GetCanBattle());

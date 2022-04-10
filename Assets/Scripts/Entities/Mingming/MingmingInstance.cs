@@ -28,13 +28,13 @@ namespace Assets.Scripts.Entities
         public string DataName => BaseData.name;
 
         public UnityEngine.Sprite Sprite { get => BaseData.Sprite; }
-        public MingmingAlignment MonsterAlignment { get => BaseData.MingmingAlignment; }
+        public MingmingAlignment MingmingAlignment { get => BaseData.MingmingAlignment; }
         public List<CardData> WildDeck { get; private set; }
 
-        public MingmingInstance(MingmingData monsterData, int _level)
+        public MingmingInstance(MingmingData mingmingData, int level)
         {
-            BaseData = monsterData;
-            Level = _level;
+            BaseData = mingmingData;
+            Level = level;
 
             Experience = Rules.Instance.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
@@ -46,14 +46,14 @@ namespace Assets.Scripts.Entities
             SetFieldsFromData();
         }
 
-        public MingmingInstance(MonsterSaveModel monsterSaveModel)
+        public MingmingInstance(MingmingSaveModel mingmingSaveModel)
         {
-            BaseData = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MingmingData>(monsterSaveModel.MonsterDataName);
-            Level = monsterSaveModel.Level;
-            Experience = monsterSaveModel.Experience;
-            AttackModifier = monsterSaveModel.AttackModifier;
-            CurrentHealth = monsterSaveModel.CurrentHealth;
-            DefenseModifier = monsterSaveModel.DefenseModifier;
+            BaseData = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MingmingData>(mingmingSaveModel.MingmingDataName);
+            Level = mingmingSaveModel.Level;
+            Experience = mingmingSaveModel.Experience;
+            AttackModifier = mingmingSaveModel.AttackModifier;
+            CurrentHealth = mingmingSaveModel.CurrentHealth;
+            DefenseModifier = mingmingSaveModel.DefenseModifier;
 
             SetFieldsFromData();
         }

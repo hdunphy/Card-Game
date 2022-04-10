@@ -5,8 +5,8 @@ using Random = UnityEngine.Random;
 
 public class RandomAttacking : IEnemyAttackBehavior
 {
-    private List<Mingming> SelfMonsters;
-    private List<Mingming> OtherMonsters;
+    private List<Mingming> OwnedParty;
+    private List<Mingming> OtherParty;
     private List<Card> Hand;
 
     public bool GetNextAttack()
@@ -15,21 +15,21 @@ public class RandomAttacking : IEnemyAttackBehavior
 
         if (hasAttack)
         {
-            Mingming source = GetSource(SelfMonsters, minCardEnergy);
+            Mingming source = GetSource(OwnedParty, minCardEnergy);
             Card _card = GetCard(source);
-            Mingming target = GetTarget(OtherMonsters);
+            Mingming target = GetTarget(OtherParty);
 
-            List<Mingming> availableMonsters = new List<Mingming>(OtherMonsters);
+            List<Mingming> availableMingmings = new List<Mingming>(OtherParty);
             while(!CheckIsCardValid(_card, source, target))
             {
-                availableMonsters.Remove(target);
-                if(availableMonsters.Count == 0)
+                availableMingmings.Remove(target);
+                if(availableMingmings.Count == 0)
                 {
                     target = source;
                     break;
                 }
 
-                target = GetTarget(availableMonsters);
+                target = GetTarget(availableMingmings);
             }
 
             if (CheckIsCardValid(_card, source, target))
@@ -61,12 +61,12 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     private bool CanAttack(out int minCardEnergy)
     {
-        SelfMonsters = SelfMonsters.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
-        OtherMonsters = OtherMonsters.Where(x => x.IsInPlay).ToList();
-        int maxMonsterEnergy = SelfMonsters.Any() ? SelfMonsters.Max(x => x.EnergyAvailable) : 0;
+        OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
+        OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
+        int maxEnergy = OwnedParty.Any() ? OwnedParty.Max(x => x.EnergyAvailable) : 0;
         minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
 
-        return SelfMonsters.Count() > 0 && OtherMonsters.Count() > 0 && maxMonsterEnergy >= minCardEnergy;
+        return OwnedParty.Count() > 0 && OtherParty.Count() > 0 && maxEnergy >= minCardEnergy;
     }
 
     private Mingming GetTarget(List<Mingming> availableOponents)
@@ -94,10 +94,10 @@ public class RandomAttacking : IEnemyAttackBehavior
         return source;
     }
 
-    public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> selfMonsters, IEnumerable<Mingming> otherMonsters)
+    public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
     {
         Hand = hand;
-        SelfMonsters = selfMonsters.ToList();
-        OtherMonsters = otherMonsters.ToList();
+        OwnedParty = ownedParty.ToList();
+        OtherParty = otherParty.ToList();
     }
 }

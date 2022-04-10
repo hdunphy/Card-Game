@@ -31,28 +31,28 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void ApplyStatus(Mingming monster, int count)
+        public override void ApplyStatus(Mingming mingming, int count)
         {
-            var value = (float)ModifierProperty.GetValue(monster);
+            var value = (float)ModifierProperty.GetValue(mingming);
             var changeValue = Modifier * Mathf.Abs(count);
 
-            base.ApplyStatus(monster, count);
+            base.ApplyStatus(mingming, count);
             if (count > 0)
             {
-                ModifierProperty.SetValue(monster, value * changeValue);
+                ModifierProperty.SetValue(mingming, value * changeValue);
             }
             else
             {
-                ModifierProperty.SetValue(monster, value / changeValue);
+                ModifierProperty.SetValue(mingming, value / changeValue);
             }
         }
 
-        public override void RemoveStatus(Mingming monster)
+        public override void RemoveStatus(Mingming mingming)
         {
-            monster.DefenseModifier = 1;
+            mingming.DefenseModifier = 1;
         }
 
-        public override void DoEffect(Mingming monster, int count) {}
+        public override void DoEffect(Mingming mingming, int count) {}
 
         public override Sprite GetSprite(int count)
         {
