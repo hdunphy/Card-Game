@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Entities
 {
-    public class MingmingInput : MonoBehaviour, IPointerDownHandler, IDropHandler
+    public class MingmingInput : MonoBehaviour, IPointerDownHandler
     {
         private Mingming _mingming;
 
@@ -21,14 +21,6 @@ namespace Assets.Scripts.Entities
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 EventManager.Instance.OnResetSelectedTrigger();
-            }
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            if (eventData.pointerPress.TryGetComponent(out Card card))
-            {
-                EventManager.Instance.OnSelectTargetTrigger(_mingming, card);
             }
         }
     }

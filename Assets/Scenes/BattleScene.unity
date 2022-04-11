@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ec2c3dbeb5dd47a1adee9b2c5b54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mingmingPrefab: {fileID: 5835941552213260061, guid: 5caa1b8568500134b968a3006be7949a, type: 3}
+  mingmingPrefab: {fileID: 6653647950167096207, guid: e217f751ac40eab468c442f3690d52a4, type: 3}
   deckController: {fileID: 602442006}
   isFacingRight: 0
   stateEvents:
@@ -4219,8 +4219,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.17777772
+  m_Value: 1
+  m_Size: 0.17777771
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4671,7 +4671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -44.722218}
+  m_AnchoredPosition: {x: 15, y: -44.722214}
   m_SizeDelta: {x: 30, y: 89.444435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2118584151

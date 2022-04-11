@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Entities
 {
-    public class Mingming : MonoBehaviour, ISelectable
+    public class Mingming : MonoBehaviour, ISelectable, IDropHandler
     {
         [SerializeField] private MingmingUIController UIController;
         [SerializeField] private EnergyHolder EnergyHolder;
@@ -210,5 +211,13 @@ namespace Assets.Scripts.Entities
             UIController.AddExperience(levelsGained);
         }
         #endregion
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (eventData.pointerPress.TryGetComponent(out Card card))
+            {
+                EventManager.Instance.OnSelectTargetTrigger(this, card);
+            }
+        }
     }
 }
