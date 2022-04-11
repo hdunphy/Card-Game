@@ -965,7 +965,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6605752315742634768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9070777e96088f04586a30bb2f17f67c, type: 3}
+  m_Script: {fileID: 11500000, guid: 48d8ab398b2a3af49946133a60e3fbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Highlight: {fileID: 6605752315126879384}
@@ -979,32 +979,32 @@ MonoBehaviour:
   NameText: {fileID: 468128266629753557}
   HealthGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0.052272934, b: 0, a: 1}
-    key1: {r: 0.85490197, g: 0.638312, b: 0, a: 1}
-    key2: {r: 0.06666667, g: 1, b: 0, a: 1}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0, g: 1, b: 0.054901965, a: 1}
+    key1: {r: 1, g: 0.8666667, b: 0.16470589, a: 1}
+    key2: {r: 0.84313726, g: 0.45459655, b: 0.07450982, a: 0}
+    key3: {r: 1, g: 0.08018869, b: 0.08018869, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 9830
-    ctime2: 65535
-    ctime3: 0
+    ctime1: 49151
+    ctime2: 58982
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
     ctime7: 0
     atime0: 0
     atime1: 65535
-    atime2: 65535
+    atime2: 0
     atime3: 0
     atime4: 0
     atime5: 0
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   DescriptionToolTipTrigger: {fileID: 8723642655872402840}
 --- !u!114 &5835941552213260061
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6605752315742634768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad71f00b842e0fd4ab08a748f6dc7ec8, type: 3}
+  m_Script: {fileID: 11500000, guid: 283eee0a04392f7459cc50d694334f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UIController: {fileID: 2753117505398052433}
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6605752315742634768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d070c3b865ffd46ba12d2ed4720db5, type: 3}
+  m_Script: {fileID: 11500000, guid: b6837b4620ace8d4ab39c82412297a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7110346664160998511

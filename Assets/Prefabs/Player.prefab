@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447c3fe5122ec304b82f5fbd6ec29cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterData:
+  MingmingData:
   - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
     Level: 12
   - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}

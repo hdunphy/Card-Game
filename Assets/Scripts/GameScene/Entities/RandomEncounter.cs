@@ -3,7 +3,6 @@ using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using Assets.Scripts.References;
-using Assets.Scripts.UI.Controller;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +12,10 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 {
     [Header("Drop Table")]
     [SerializeField] private DropTableInstance DropTable;
-    [SerializeField, Range(0, 3)] private int MaxMonsters;
-    [SerializeField, Range(1, 98)] private int MinMonsterLevel;
-    [SerializeField, Range(2, 99)] private int MaxMonsterLevel;
+    [SerializeField, Range(0, 1)] private float EncounterChance;
+    [SerializeField, Range(0, 3)] private int MaxMingmings;
+    [SerializeField, Range(1, 98)] private int MinMingmingLevel;
+    [SerializeField, Range(2, 99)] private int MaxMingmingLevel;
 
     [Header("Events")]
     [SerializeField] private UnityEvent OnStartEncounter;
@@ -29,20 +29,23 @@ public class RandomEncounter : MonoBehaviour, IEncounter
 
     public void GetEncounter()
     {
+        bool hasEncounter = Rules.GetRandomFloat() <= EncounterChance;
+        if (!hasEncounter) return;
+
         mingmings.Clear();
 
-        int monsterSpawns = Rules.GetRandomInt(0, MaxMonsters + 1);
+        int mingmingSpawns = Rules.GetRandomInt(1, MaxMingmings + 1);
 
-        for (int i = 0; i < monsterSpawns; i++)
+        for (int i = 0; i < mingmingSpawns; i++)
         {
             var _drop = DropTable.GetDrop();
 
             if (_drop != null)
             {
-                int monsterLevel = Rules.GetRandomInt(MinMonsterLevel, MaxMonsterLevel + 1);
-                var _monster = new MingmingInstance((MingmingData)_drop, monsterLevel);
-                _monster.Name = "Wild " + _monster.Name;
-                mingmings.Add(_monster);
+                int mingmingLevel = Rules.GetRandomInt(MinMingmingLevel, MaxMingmingLevel + 1);
+                var _mingming = new MingmingInstance((MingmingData)_drop, mingmingLevel);
+                _mingming.Name = "Wild " + _mingming.Name;
+                mingmings.Add(_mingming);
             }
         }
 
@@ -53,7 +56,7 @@ public class RandomEncounter : MonoBehaviour, IEncounter
             
             var thisScene = new LevelSceneData(gameObject.scene.name, this, player);
             var battleScene = new BattleSceneData(GameSceneController.BattleScene, player.DevController.DeckHolder.CurrentDeck, new List<CardData>(),
-                thisScene, player.DevController.PlayableMonsters, mingmings);
+                thisScene, player.DevController.PlayableMingmings, mingmings);
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
         }

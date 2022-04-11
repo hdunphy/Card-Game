@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class PartyController : MonoBehaviour
 {
-    [SerializeField] private Mingming monsterPrefab;
+    [SerializeField] private Mingming mingmingPrefab;
     [SerializeField] private DeckHandler deckController;
     [SerializeField] private bool isFacingRight;
 
@@ -92,7 +92,7 @@ public class PartyController : MonoBehaviour
         int index = 0; //for loop doesn't work with IEnumerable ?
         foreach (MingmingInstance _data in datas)
         {
-            Mingming _mingming = Instantiate(monsterPrefab, transform);
+            Mingming _mingming = Instantiate(mingmingPrefab, transform);
             _mingming.SetData(_data, isFacingRight);
             Mingmings.Add(_mingming);
 

@@ -46,8 +46,8 @@ namespace Assets.Scripts.GameScene.Entities
                 _player.DevController.DeckHolder.CurrentDeck,
                 trainerController.DevController.DeckHolder.CurrentDeck, 
                 thisScene, 
-                _player.DevController.PlayableMonsters, 
-                trainerController.DevController.PlayableMonsters
+                _player.DevController.PlayableMingmings, 
+                trainerController.DevController.PlayableMingmings
             );
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447c3fe5122ec304b82f5fbd6ec29cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterData:
+  MingmingData:
   - MingMingData: {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
     Level: 25
   - MingMingData: {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
@@ -312,7 +312,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c624cf60bd54a5429ad39032cba6f21, type: 2}
   - {fileID: 11400000, guid: 80e15b09ca403f840b1cf3d886aa9171, type: 2}
   - {fileID: 11400000, guid: 6dbae888c07d1ab45811ddbdfae623f2, type: 2}
-  rewardsController: {fileID: 0}
   OnStartEncounter:
     m_PersistentCalls:
       m_Calls:

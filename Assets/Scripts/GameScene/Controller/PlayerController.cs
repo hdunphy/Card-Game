@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         SaveData.Current.PlayerPosition = transform.position;
         SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DevController.DeckHolder);
-        SaveData.Current.PlayerMingmings = DevController.Monsters.Select(m => new MingmingSaveModel(m)).ToList();
+        SaveData.Current.PlayerMingmings = DevController.Mingming.Select(m => new MingmingSaveModel(m)).ToList();
     }
 
     /// <summary>

@@ -13,9 +13,9 @@ namespace Assets.Scripts.UI.Tooltips
             {
                 gameObject.AddComponent<TooltipTrigger>().SetText(cardData.CardAlignment.ToString());
             }
-            else if(data is MingmingData monsterData)
+            else if(data is MingmingData mingmingData)
             {
-                CardAlignment alignment = isPrimary ? monsterData.MingmingAlignment.Primary : monsterData.MingmingAlignment.Secondary;
+                CardAlignment alignment = isPrimary ? mingmingData.MingmingAlignment.Primary : mingmingData.MingmingAlignment.Secondary;
                 string header = isPrimary ? "Primary" : "Secondary";
                 gameObject.AddComponent<TooltipTrigger>().SetText(alignment.ToString(), $"{header} Alignment");
             }

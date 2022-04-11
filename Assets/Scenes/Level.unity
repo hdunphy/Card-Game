@@ -12973,9 +12973,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DropTable: {fileID: 1937687280}
-  MaxMonsters: 2
-  MinMonsterLevel: 1
-  MaxMonsterLevel: 15
+  EncounterChance: 0.33333
+  MaxMingmings: 2
+  MinMingmingLevel: 5
+  MaxMingmingLevel: 15
   OnStartEncounter:
     m_PersistentCalls:
       m_Calls:
