@@ -11,16 +11,17 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     public bool GetNextAttack()
     {
-        bool hasAttack = CanAttack(out int minCardEnergy);
+        bool hasAttack = CanAttack();
 
         if (hasAttack)
         {
-            Mingming source = GetSource(OwnedParty, minCardEnergy);
+            int minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
+            Mingming source = GetRandomMingming(OwnedParty);
+            Mingming target = GetRandomMingming(OtherParty);
             Card _card = GetCard(source);
-            Mingming target = GetTarget(OtherParty);
 
             List<Mingming> availableMingmings = new List<Mingming>(OtherParty);
-            while(!CheckIsCardValid(_card, source, target))
+            while(!_card.IsValidAction(source, target))
             {
                 availableMingmings.Remove(target);
                 if(availableMingmings.Count == 0)
@@ -29,69 +30,50 @@ public class RandomAttacking : IEnemyAttackBehavior
                     break;
                 }
 
-                target = GetTarget(availableMingmings);
+                target = GetRandomMingming(availableMingmings);
             }
 
-            if (CheckIsCardValid(_card, source, target))
+            if (_card.IsValidAction(source, target))
             {
                 UserMessage.Instance.CanSendMessage = true;
 
                 EventManager.Instance.OnSelectMingmingTrigger(source);
                 EventManager.Instance.OnSelectTargetTrigger(target, _card);
-                EventManager.Instance.OnSelectMingmingTrigger(target);
 
                 EventManager.Instance.OnSelectMingmingTrigger(source); //to deselect
 
                 //disable user message so not to get bombarded by failed attempts
                 UserMessage.Instance.CanSendMessage = false;
             }
-            else
-            {
-                Hand.Remove(_card);
-            }
 
-            hasAttack = CanAttack(out _);
+            hasAttack = CanAttack();
         }
 
         return hasAttack;
     }
 
-    private bool CheckIsCardValid(Card card, Mingming source, Mingming target) =>
-        card.IsValidAction(source, target) && source.EnergyAvailable >= card.EnergyCost;
-
-    private bool CanAttack(out int minCardEnergy)
+    private bool CanAttack()
     {
         OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
         OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
-        int maxEnergy = OwnedParty.Any() ? OwnedParty.Max(x => x.EnergyAvailable) : 0;
-        minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
 
-        return OwnedParty.Count() > 0 && OtherParty.Count() > 0 && maxEnergy >= minCardEnergy;
+        var targets = new List<Mingming>(OwnedParty);
+        targets.AddRange(new List<Mingming>(OtherParty));
+
+        Hand = Hand.Where(card => OwnedParty.Any(own => targets.Any( target => card.IsValidAction(own, target)))).ToList();
+
+        return OwnedParty.Any() && OtherParty.Any() && Hand.Any();
     }
 
-    private Mingming GetTarget(List<Mingming> availableOponents)
+    private Mingming GetRandomMingming(List<Mingming> mingmings)
     {
-        return availableOponents[Random.Range(0, availableOponents.Count())];
+        return mingmings[Random.Range(0, mingmings.Count())];
     }
 
     private Card GetCard(Mingming attacker)
     {
         var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.EnergyAvailable).ToList();
         return possiblecards[Random.Range(0, possiblecards.Count())];
-    }
-
-    private Mingming GetSource(List<Mingming> availableSources, int minCardEnergy)
-    {
-        int RandIndex = Random.Range(0, availableSources.Count());
-        Mingming source = availableSources[RandIndex];
-
-        if(source.EnergyAvailable < minCardEnergy)
-        {
-            availableSources.Remove(source);
-            source = GetSource(availableSources, minCardEnergy);
-        }
-
-        return source;
     }
 
     public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
