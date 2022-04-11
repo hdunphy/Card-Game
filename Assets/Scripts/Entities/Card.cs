@@ -15,7 +15,7 @@ public class Card : MonoBehaviour
     private ICardUI UIController;
     private CardData Data;
     private int siblingIndex;
-    private bool playedThisTurn;
+    public bool PlayedThisTurn { get; private set; }
     public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
@@ -46,7 +46,7 @@ public class Card : MonoBehaviour
     public void OnEndDrag()
     {
         Dragger.Instance.EndDragging();
-        if (!playedThisTurn)
+        if (!PlayedThisTurn)
         {
             HoverEffect.enabled = true;
             HoverEffect.ReturnToNormalPosition();
@@ -80,14 +80,14 @@ public class Card : MonoBehaviour
     public IEnumerator InvokeAction(Mingming source, Mingming target)
     {
         HoverEffect.enabled = false;
-        playedThisTurn = true;
+        PlayedThisTurn = true;
 
         yield return Data.InvokeAction(source, target, this);
 
         DragAndDrop.enabled = false;
     }
 
-    public bool CanUseCard(Mingming source) => !playedThisTurn && Data.CardConstraint.CanUseCard(source, this);
+    public bool CanUseCard(Mingming source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
     public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
@@ -150,6 +150,6 @@ public class Card : MonoBehaviour
     void SetCardInHand()
     {
         HoverEffect.enabled = true;
-        playedThisTurn = false;
+        PlayedThisTurn = false;
     }
 }
