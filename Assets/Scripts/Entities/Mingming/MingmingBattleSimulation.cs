@@ -9,6 +9,7 @@ namespace Assets.Scripts.Entities
         private MingmingInstance data { get; set; }
         private Dictionary<BaseStatus, StatusIcon> statuses { get; set; }
 
+        public string Name { get; private set; }
         public int EnergyAvailable { get; private set; }
         public float AttackModifier { get; set; }
         public float DefenseModifier { get; set; }
@@ -27,9 +28,20 @@ namespace Assets.Scripts.Entities
 
         public string GetTooltipInfo() => $"Level: {data.Level}\nAttack: {data.Attack}\nDefense: {data.Defense}\nExp: {data.Experience}";
 
-        public MingmingBattleSimulation(MingmingInstance data)
+        public MingmingBattleSimulation(MingmingBattleSimulation simulation)
+        {
+            data = new MingmingInstance( simulation.data);
+            AttackModifier = simulation.AttackModifier;
+            DefenseModifier = simulation.DefenseModifier;
+            EnergyAvailable = simulation.EnergyAvailable;
+            statuses = simulation.statuses;
+            Name = simulation.Name;
+        }
+
+        public MingmingBattleSimulation(MingmingInstance data, string name)
         {
             this.data = data;
+            Name = name;
             EnergyAvailable = TotalEnergy;
             AttackModifier = 1;
             DefenseModifier = 1;

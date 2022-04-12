@@ -4,13 +4,13 @@ namespace Assets.Scripts.Entities.Scriptable
 {
     public abstract class BaseConstraint : ScriptableObject
     {
-        public virtual bool CanUseCard(Mingming source, Card card)
+        public virtual bool CanUseCard(MingmingBattleSimulation source, Card card)
         {
-            bool hasEnergy = source.Simulation.EnergyAvailable >= card.EnergyCost;
+            bool hasEnergy = source.EnergyAvailable >= card.EnergyCost;
 
             if (!hasEnergy)
             {
-                UserMessage.Instance.SendMessageToUser($"{source.name} does not have the required energy. Needs {card.EnergyCost}");
+                UserMessage.Instance.SendMessageToUser($"{source.Name} does not have the required energy. Needs {card.EnergyCost}");
             }
             return hasEnergy;
         }

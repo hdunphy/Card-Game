@@ -152,7 +152,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
             string source = _selectedMingming?.name ?? target.name;
             UserMessage.Instance.SendMessageToUser($"{source} used {card.name} on {target.name}");
             
-            StartCoroutine(card.InvokeAction(_selectedMingming, target));
+            StartCoroutine(card.InvokeActionCoroutine(_selectedMingming, target));
         }
         else
         {

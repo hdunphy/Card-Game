@@ -6,14 +6,14 @@ namespace Assets.Scripts.Entities.Scriptable
     public class HasStatusConstraint : BaseConstraint
     {
         [SerializeField] private StatusConstraint StatusConstraint;
-        public override bool CanUseCard(Mingming source, Card card)
+        public override bool CanUseCard(MingmingBattleSimulation source, Card card)
         {
-            bool MeetsStatusConstraint = source.Simulation.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+            bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 
             if (!MeetsStatusConstraint)
             {
                 string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
-                UserMessage.Instance.SendMessageToUser($"{source.name} {canHave} have the status: {StatusConstraint.Status.name}");
+                UserMessage.Instance.SendMessageToUser($"{source.Name} {canHave} have the status: {StatusConstraint.Status.name}");
             }
             return base.CanUseCard(source, card) && MeetsStatusConstraint;
         }

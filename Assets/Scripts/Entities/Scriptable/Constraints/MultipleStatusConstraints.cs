@@ -7,18 +7,18 @@ namespace Assets.Scripts.Entities.Scriptable
     public class MultipleStatusConstraints : BaseConstraint
     {
         [SerializeField] private List<StatusConstraint> StatusConstraints;
-        public override bool CanUseCard(Mingming source, Card card)
+        public override bool CanUseCard(MingmingBattleSimulation source, Card card)
         {
             bool isValid = base.CanUseCard(source, card);
 
             foreach(var StatusConstraint in StatusConstraints)
             {
-                bool meetsStatusConstraint = source.Simulation.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+                bool meetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 
                 if (!meetsStatusConstraint)
                 {
                     string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
-                    UserMessage.Instance.SendMessageToUser($"{source.name} {canHave} have the status: {StatusConstraint.Status.name}");
+                    UserMessage.Instance.SendMessageToUser($"{source.Name} {canHave} have the status: {StatusConstraint.Status.name}");
                 }
                 isValid = isValid && meetsStatusConstraint;
             }

@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             base.InvokeAction(source, target, card);
 
-            if (Constraint.CanUseCard(source, card))
+            if (Constraint.CanUseCard(source.Simulation, card))
             {
                 Action.InvokeAction(source, target, card);
             }

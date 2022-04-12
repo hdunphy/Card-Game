@@ -77,17 +77,17 @@ public class Card : MonoBehaviour
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
-    public IEnumerator InvokeAction(Mingming source, Mingming target)
+    public IEnumerator InvokeActionCoroutine(Mingming source, Mingming target)
     {
         HoverEffect.enabled = false;
         PlayedThisTurn = true;
 
-        yield return Data.InvokeAction(source, target, this);
+        yield return Data.InvokeActionCoroutine(source, target, this);
 
         DragAndDrop.enabled = false;
     }
 
-    public bool CanUseCard(Mingming source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
+    public bool CanUseCard(MingmingBattleSimulation source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
     public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
@@ -98,7 +98,7 @@ public class Card : MonoBehaviour
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = CanUseCard(_mingming);
+            bool isCardPlayable = CanUseCard(_mingming.Simulation);
             DisableCover.gameObject.SetActive(!isCardPlayable);
             DragAndDrop.enabled = isCardPlayable;
 

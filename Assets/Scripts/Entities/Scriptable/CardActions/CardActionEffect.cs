@@ -33,7 +33,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
         private void DoEffect(Mingming source, Mingming target, Card card)
         {
-            if (Constraint.CanUseCard(source, card))
+            if (Constraint.CanUseCard(source.Simulation, card))
             {
                 Action.InvokeAction(source, target, card);
             }
