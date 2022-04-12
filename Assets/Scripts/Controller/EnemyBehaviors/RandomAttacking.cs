@@ -1,3 +1,4 @@
+using Assets.Scripts.Controller.EnemyBehaviors;
 using Assets.Scripts.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     public bool GetNextAttack()
     {
-        bool hasAttack = CanAttack();
+        bool hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
 
         if (hasAttack)
         {
@@ -46,23 +47,10 @@ public class RandomAttacking : IEnemyAttackBehavior
                 UserMessage.Instance.CanSendMessage = false;
             }
 
-            hasAttack = CanAttack();
+            hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
         }
 
         return hasAttack;
-    }
-
-    private bool CanAttack()
-    {
-        OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
-        OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
-
-        var targets = new List<Mingming>(OwnedParty);
-        targets.AddRange(new List<Mingming>(OtherParty));
-
-        Hand = Hand.Where(card => OwnedParty.Any(own => targets.Any( target => card.IsValidAction(own, target)))).ToList();
-
-        return OwnedParty.Any() && OtherParty.Any() && Hand.Any();
     }
 
     private Mingming GetRandomMingming(List<Mingming> mingmings)

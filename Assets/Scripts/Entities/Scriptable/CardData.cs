@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.Entities.Scriptable;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,11 @@ public class CardData : IDropScriptableObject
 
         //TODO: improve this below. Move into TargetType
         (source ?? target).PlayCard(card); //use null check for self targeting. 
+    }
+
+    public int GetValue()
+    {
+        throw new NotImplementedException();
     }
 
 #if UNITY_EDITOR

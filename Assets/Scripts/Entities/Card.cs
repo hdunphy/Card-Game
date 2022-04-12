@@ -77,6 +77,8 @@ public class Card : MonoBehaviour
 
     public CardAlignment CardAlignment => Data.CardAlignment;
 
+    public int GetValue() => Data.GetValue();
+
     public IEnumerator InvokeAction(Mingming source, Mingming target)
     {
         HoverEffect.enabled = false;
