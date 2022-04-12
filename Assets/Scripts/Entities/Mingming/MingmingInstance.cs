@@ -30,6 +30,21 @@ namespace Assets.Scripts.Entities
         public MingmingAlignment MingmingAlignment { get => BaseData.MingmingAlignment; }
         public List<CardData> WildDeck { get; private set; }
 
+        public MingmingInstance(MingmingInstance mingmingInstance)
+        {
+            BaseData = mingmingInstance.BaseData;
+            Level = mingmingInstance.Level;
+
+            Experience = mingmingInstance.Experience;
+            AttackModifier = mingmingInstance.AttackModifier;
+            DefenseModifier = mingmingInstance.DefenseModifier;
+            HealthModifier = mingmingInstance.HealthModifier;
+
+            CurrentHealth = mingmingInstance.CurrentHealth;
+
+            SetFieldsFromData();
+        }
+
         public MingmingInstance(MingmingData mingmingData, int level)
         {
             BaseData = mingmingData;

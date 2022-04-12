@@ -57,7 +57,7 @@ namespace Assets.Scripts.Entities
 
         public void SetData(MingmingInstance data, bool isFacingRight)
         {
-            Simulation = new MingmingBattleSimulation(data);
+            Simulation = new MingmingBattleSimulation(data, name);
             UIController.SetUp(data, isFacingRight);
 
             SetEnergy();
