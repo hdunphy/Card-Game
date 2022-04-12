@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 5835941552213260061}
   - component: {fileID: 3897563418891027893}
   m_Layer: 5
-  m_Name: MingmingObject
+  m_Name: Mingming Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1006,7 +1006,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  DescriptionToolTipTrigger: {fileID: 8723642655872402840}
 --- !u!114 &5835941552213260061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,6 +1022,7 @@ MonoBehaviour:
   EnergyHolder: {fileID: 1185067413652674352}
   StatusParent: {fileID: 654977707467590758}
   StatusIconPrefab: {fileID: 4493483807361445139, guid: 70c956500ad24f44eb649e145069bd70, type: 3}
+  DescriptionToolTipTrigger: {fileID: 8723642655872402840}
 --- !u!114 &3897563418891027893
 MonoBehaviour:
   m_ObjectHideFlags: 0
