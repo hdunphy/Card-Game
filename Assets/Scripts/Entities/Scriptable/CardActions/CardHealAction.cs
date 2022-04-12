@@ -20,5 +20,11 @@ namespace Assets.Scripts.Entities.Scriptable
         {
             LeanTween.moveLocalY(target.gameObject, animationHeightMovement, durationSeconds / 2).setLoopPingPong(3);
         }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            int healAmount = Rules.GetHealAmount(source, target, card);
+            target.TakeDamage(-healAmount);
+        }
     }
 }

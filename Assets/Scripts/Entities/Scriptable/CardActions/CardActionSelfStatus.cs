@@ -22,5 +22,6 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             LeanTweenAnimations.RotateBackAndForth(source.gameObject, rotationAmountDegrees, durationSeconds / 4);
         }
+
     }
 }

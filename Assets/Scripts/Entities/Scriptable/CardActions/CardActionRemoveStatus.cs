@@ -22,5 +22,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             //var destination = new Vector3(1, -2, 1);
             //LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
         }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            target.RemoveStatus(Status); //Need to call remove status from event/mingming
+        }
     }
 }

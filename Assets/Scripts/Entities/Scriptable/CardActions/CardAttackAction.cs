@@ -13,5 +13,11 @@ namespace Assets.Scripts.Entities.Scriptable
 
             base.InvokeAction(source, target, card);
         }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            float damage = Rules.Instance.GetAttackDamage(source, target, card);
+            target.TakeDamage(Mathf.FloorToInt(damage));
+        }
     }
 }

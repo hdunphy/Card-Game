@@ -17,6 +17,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private TurnStateEnum TurnState;
 
         private readonly Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
+        private readonly Dictionary<MingmingBattleSimulation, UnityAction> MingmingSimulatedActions = new Dictionary<MingmingBattleSimulation, UnityAction>();
 
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
@@ -49,6 +50,34 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         public override void PerformAnimation(Mingming source, Mingming target)
         {
             //no animation
+        }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            UnityAction _unityAction = delegate
+            {
+                SimulateEffect(source, target, card);
+            };
+
+            MingmingSimulatedActions.Add(target, _unityAction);
+
+            FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
+                .AddListenerToTurnStateMachine(TurnState, _unityAction);
+        }
+
+        private void SimulateEffect(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            if (Constraint.CanUseCard(source, card))
+            {
+                Action.SimulateAction(source, target, card);
+            }
+            else
+            {
+                FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
+                    .RemoveListenerToTurnStateMachine(TurnState, MingmingSimulatedActions[target]);
+
+                MingmingSimulatedActions.Remove(target);
+            }
         }
     }
 }

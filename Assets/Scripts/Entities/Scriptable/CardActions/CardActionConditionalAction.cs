@@ -24,5 +24,13 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             // no animation
         }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            if(Constraint.CanUseCard(source, card))
+            {
+                Action.SimulateAction(source, target, card);
+            }
+        }
     }
 }

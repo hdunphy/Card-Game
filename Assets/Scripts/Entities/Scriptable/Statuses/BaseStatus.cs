@@ -13,6 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable
             mingming.ApplyStatus(this, count);
         }
 
+        //TODO refactor this shouldn't be calling mingming.removestatus here
         public virtual void RemoveStatus(Mingming mingming)
         {
         }

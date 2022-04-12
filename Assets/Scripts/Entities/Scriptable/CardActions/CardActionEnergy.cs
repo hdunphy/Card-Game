@@ -19,5 +19,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             var destination = new Vector3(2, 1, 1);
             LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
         }
+
+        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            target.AddEnergy(EnergyAdded);
+        }
     }
 }

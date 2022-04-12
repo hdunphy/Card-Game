@@ -41,6 +41,17 @@ public class CardData : IDropScriptableObject
         (source ?? target).PlayCard(card); //use null check for self targeting. 
     }
 
+    public void SimulateActions(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+    {
+        foreach (var cardAction in cardActions)
+        {
+            TargetType.InvokeAction(cardAction, source, target, card);
+        }
+
+        //TODO: improve this below. Move into TargetType
+        (source ?? target).PlayCard(card); //use null check for self targeting. 
+    }
+
 #if UNITY_EDITOR
     private void OnValidate()
     {

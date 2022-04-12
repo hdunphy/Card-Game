@@ -19,6 +19,8 @@ namespace Assets.Scripts.Entities.Scriptable
             PerformAnimation(source, target);
         }
 
+        public abstract void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card);
+
         public virtual void PerformAnimation(Mingming source, Mingming target)
         {
             Vector3 currentPosition = source.transform.position;

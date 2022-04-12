@@ -71,8 +71,10 @@ public class Card : MonoBehaviour
 
     public void SetSiblingIndex(int i) => siblingIndex = i;
 
+    //invoked by unity event
     public void OnHoverStart() => transform.SetAsLastSibling();
 
+    //invoked by unity event
     public void OnHoverEnd() => transform.SetSiblingIndex(siblingIndex);
 
     public CardAlignment CardAlignment => Data.CardAlignment;
@@ -82,10 +84,13 @@ public class Card : MonoBehaviour
         HoverEffect.enabled = false;
         PlayedThisTurn = true;
 
-        yield return Data.InvokeActionCoroutine(source, target, this);
-
+        yield return null;
         DragAndDrop.enabled = false;
+
+        yield return Data.InvokeActionCoroutine(source, target, this);
     }
+
+    public void SimulateActions(MingmingBattleSimulation source, MingmingBattleSimulation target) => Data.SimulateActions(source, target, this);
 
     public bool CanUseCard(MingmingBattleSimulation source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
