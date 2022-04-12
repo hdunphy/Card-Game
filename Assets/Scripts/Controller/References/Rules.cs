@@ -104,7 +104,7 @@ namespace Assets.Scripts.References
         {
             float _modifier = GetModifier(source.GetMingmingAlignment, target.GetMingmingAlignment, _card.CardAlignment);
 
-            float damage = (float)((2 * source.Level) / 5) + 2;
+            float damage = GetLevelModifier(source.Level);
             damage *= (float)_card.Power * source.Attack / target.Defense;
             damage = (float)(damage / 40) + 2;
 
@@ -113,6 +113,14 @@ namespace Assets.Scripts.References
 
             return Mathf.FloorToInt(damage);
         }
+
+        public static int GetHealAmount(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        {
+            float healAmount = GetLevelModifier(source.Level) * card.Power * source.Attack / 2;
+            return Mathf.FloorToInt(Mathf.Clamp(healAmount, 0, target.TotalHealth - target.CurrentHealth));
+        }
+
+        private static float GetLevelModifier(int level) => (float)((2 * level) / 5) + 2;
 
         public int GetAttackDamage(int level, int attack, int defense, float cardPower,
             MingmingAlignment attackerType, MingmingAlignment defenderTypes, CardAlignment cardType)

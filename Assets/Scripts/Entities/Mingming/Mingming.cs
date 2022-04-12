@@ -1,128 +1,11 @@
 ﻿using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.UI.Tooltips;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Entities
 {
-    public class MingmingBattleSimulation
-    {
-        private MingmingInstance data { get; set; }
-
-        private Dictionary<BaseStatus, StatusIcon> Statuses { get; set; }
-        private string name { get; set; }
-        public int EnergyAvailable { get; private set; }
-        public float AttackModifier { get; set; }
-        public float DefenseModifier { get; set; }
-        public int TotalEnergy => data.Energy;
-        public bool IsInPlay => CurrentHealth > 0;
-        public int TotalHealth => data.Health;
-        public int CurrentHealth
-        {
-            get => data.CurrentHealth;
-            private set => data.CurrentHealth = value;
-        }
-        public int Level => data.Level;
-        public float Attack => data.Attack * AttackModifier;
-        public float Defense => data.Defense * DefenseModifier;
-
-        public MingmingAlignment GetMingmingAlignment => data.MingmingAlignment;
-
-        public string GetTooltipInfo() => $"Level: {data.Level}\nAttack: {data.Attack}\nDefense: {data.Defense}\nExp: {data.Experience}";
-
-        public MingmingBattleSimulation(MingmingInstance data, string name)
-        {
-            this.data = data;
-            this.name = name;
-            EnergyAvailable = TotalEnergy;
-            AttackModifier = 1;
-            DefenseModifier = 1;
-
-            Statuses = new Dictionary<BaseStatus, StatusIcon>();
-        }
-
-        public void StartTurn()
-        {
-            EnergyAvailable = TotalEnergy;
-        }
-
-        public void AddEnergy(int energy)
-        {
-            EnergyAvailable += energy;
-        }
-
-        public void PlayCard(Card selectedCard)
-        {
-            EnergyAvailable -= selectedCard.EnergyCost;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            CurrentHealth -= damage;
-        }
-
-        #region Exp
-        public int GetDeathExp() => data.GetDeathExp();
-
-        public float GetExperiencePercentage() => data.GetExperiencePercentage();
-
-        public int AddExperience(int expGained) => data.AddExperience(expGained);
-        #endregion
-
-        #region Statuses
-        public bool ApplyStatus(BaseStatus status, int _count, Mingming parent)
-        {
-            bool hasStatus = Statuses.ContainsKey(status);
-            bool applied = true;
-
-            if (hasStatus)
-            {
-                var count = Statuses[status].AddCount(_count);
-                if (count == 0)
-                {
-                    RemoveStatus(status);
-                    applied = false;
-                }
-            }
-            else
-            {
-                //TODO: should refactor this. Maybe move it to mingming
-                StatusIcon icon = parent.InstantiateStatus(status, _count);
-                Statuses.Add(status, icon);
-            }
-
-            if (applied)
-            {
-                UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Statuses[status].Count)} was applied to {name}");
-            }
-
-            return hasStatus;
-        }
-
-        public StatusIcon RemoveStatus(BaseStatus status)
-        {
-            if (IsInPlay)
-            {
-                UserMessage.Instance.SendMessageToUser($"{name} lost the {status.name} status");
-            }
-            Statuses.Remove(status);
-            //status.RemoveStatus(this);
-
-            return Statuses[status];
-        }
-
-        public bool HasStatus(BaseStatus status) => Statuses.ContainsKey(status);
-
-        public int GetStatusCount(BaseStatus status) => HasStatus(status) ? Statuses[status].Count : 0;
-
-
-        public List<BaseStatus> GetStatusList() => Statuses.Keys.ToList();
-        #endregion
-    }
     public class Mingming : MonoBehaviour, ISelectable, IDropHandler
     {
         [SerializeField] private MingmingUIController UIController;
@@ -136,8 +19,10 @@ namespace Assets.Scripts.Entities
         private bool _isSelected;
         public MingmingBattleSimulation Simulation { get; private set; }
 
+        #region Getters and Setters
         public bool IsTurn { get; private set; }
-        public bool IsInPlay => Simulation.IsInPlay;
+
+        public bool IsInPlay => Simulation.CurrentHealth > 0;
 
         public bool IsSelected
         {
@@ -148,6 +33,14 @@ namespace Assets.Scripts.Entities
                 UIController.SetHighlighted(value);
             }
         }
+
+        public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
+
+        private void UpdateTooltip()
+        {
+            TooltipTrigger.SetText(Simulation.GetTooltipInfo(), "Stats");
+        }
+        #endregion
 
         #region Set Up
         private void Start()
@@ -164,7 +57,7 @@ namespace Assets.Scripts.Entities
 
         public void SetData(MingmingInstance data, bool isFacingRight)
         {
-            Simulation = new MingmingBattleSimulation(data, name);
+            Simulation = new MingmingBattleSimulation(data);
             UIController.SetUp(data, isFacingRight);
 
             SetEnergy();
@@ -201,11 +94,36 @@ namespace Assets.Scripts.Entities
         #region Statuses
         public void ApplyStatus(BaseStatus status, int _count)
         {
-            Simulation.ApplyStatus(status, _count, this);
+            bool applied = true;
+
+            if (Simulation.HasStatus(status))
+            {
+                var count = Simulation.AddCount(status, _count);
+                if (count == 0)
+                {
+                    RemoveStatus(status);
+                    applied = false;
+                }
+            }
+            else
+            {
+                var icon = Instantiate(StatusIconPrefab, StatusParent);
+                icon.SetStatus(status, _count);
+                Simulation.AddStatus(status, icon);
+            }
+
+            if (applied)
+            {
+                UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Simulation.GetStatusCount(status))} was applied to {name}");
+            }
         }
 
         public void RemoveStatus(BaseStatus status)
         {
+            if (IsInPlay)
+            {
+                UserMessage.Instance.SendMessageToUser($"{name} lost the {status.name} status");
+            }
             var icon = Simulation.RemoveStatus(status);
             status.RemoveStatus(this);
 
@@ -213,10 +131,6 @@ namespace Assets.Scripts.Entities
         }
 
         public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Simulation.GetStatusCount(status));
-        #endregion
-
-        #region Getters and Setters
-        public void SetIsTurn(bool _isTurn) { IsTurn = _isTurn; }
         #endregion
 
         #region Game Logic
@@ -230,8 +144,8 @@ namespace Assets.Scripts.Entities
                     UserMessage.Instance.SendMessageToUser($"{name} {effect} from {source.name}");
                 }
 
-                Simulation.TakeDamage(damage);
                 StartCoroutine(TakeDamageCoroutine(damage));
+                Simulation.TakeDamage(damage);
             }
         }
 
@@ -251,7 +165,7 @@ namespace Assets.Scripts.Entities
                 currentHealth = Mathf.FloorToInt((float)currentPercent * totalHealth);
                 UIController.SetHealthBar(currentHealth, totalHealth);
 
-                if (currentPercent <= 0)
+                if (currentHealth <= 0)
                 {
                     SetDead();
                     break;
@@ -295,7 +209,6 @@ namespace Assets.Scripts.Entities
 
             UpdateTooltip();
         }
-        #endregion
 
         public void OnDrop(PointerEventData eventData)
         {
@@ -304,18 +217,6 @@ namespace Assets.Scripts.Entities
                 EventManager.Instance.OnSelectTargetTrigger(this, card);
             }
         }
-
-        public StatusIcon InstantiateStatus(BaseStatus status, int _count)
-        {
-            var icon = Instantiate(StatusIconPrefab, StatusParent);
-            icon.SetStatus(status, _count);
-
-            return icon;
-        }
-
-        private void UpdateTooltip()
-        {
-            TooltipTrigger.SetText(Simulation.GetTooltipInfo(), "Stats");
-        }
+        #endregion
     }
 }
