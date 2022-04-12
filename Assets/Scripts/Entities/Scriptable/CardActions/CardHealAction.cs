@@ -8,9 +8,9 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         [SerializeField] private float animationHeightMovement;
 
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            int healAmount = Rules.GetHealAmount(source.Simulation, target.Simulation, card);
+            int healAmount = Rules.GetHealAmount(source, target, card);
             target.TakeDamage(-healAmount, source);
 
             base.InvokeAction(source, target, card);
@@ -19,12 +19,6 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void PerformAnimation(Mingming source, Mingming target)
         {
             LeanTween.moveLocalY(target.gameObject, animationHeightMovement, durationSeconds / 2).setLoopPingPong(3);
-        }
-
-        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            int healAmount = Rules.GetHealAmount(source, target, card);
-            target.TakeDamage(-healAmount);
         }
     }
 }

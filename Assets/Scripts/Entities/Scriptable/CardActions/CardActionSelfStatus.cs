@@ -12,9 +12,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [Header("Status Parameters")]
         [SerializeField] private BaseStatus Status;
         [SerializeField] private int Count;
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            Status.ApplyStatus(source, Count);
+            //Status.ApplyStatus(source, Count);
+            
             base.InvokeAction(source, target, card);
         }
 

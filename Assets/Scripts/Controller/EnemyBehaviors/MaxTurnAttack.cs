@@ -79,7 +79,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             return GetBestCard(score, ref cardPlayQueue, turnState);
         }
 
-        private int GetBestCardPlay(out CardPlay cardPlay, MingmingBattleSimulation _source, Card currentCard, TurnState turnState)
+        private int GetBestCardPlay(out CardPlay cardPlay, MingmingBattleLogic _source, Card currentCard, TurnState turnState)
         {
             int maxScore = 0;
             cardPlay = new CardPlay();
@@ -119,11 +119,11 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
     public class TurnState
     {
-        public Dictionary<MingmingBattleSimulation, Mingming> OwnedMingmings { get; private set; }
+        public Dictionary<MingmingBattleLogic, Mingming> OwnedMingmings { get; private set; }
 
-        public Dictionary<MingmingBattleSimulation, Mingming> OtherMingmings { get; private set; }
+        public Dictionary<MingmingBattleLogic, Mingming> OtherMingmings { get; private set; }
 
-        public IEnumerable<MingmingBattleSimulation> AllTargets { get; private set; }
+        public IEnumerable<MingmingBattleLogic> AllTargets { get; private set; }
 
         public List<Card> RemaingHand { get; private set; }
 
@@ -131,8 +131,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public TurnState(IEnumerable<Mingming> owned, IEnumerable<Mingming> other, IEnumerable<Card> hand)
         {
-            OwnedMingmings = owned.ToDictionary(m => new MingmingBattleSimulation(m.Simulation));
-            OtherMingmings = other.ToDictionary(m => new MingmingBattleSimulation(m.Simulation));
+            OwnedMingmings = owned.ToDictionary(m => new MingmingBattleLogic(m.Logic));
+            OtherMingmings = other.ToDictionary(m => new MingmingBattleLogic(m.Logic));
             RemaingHand = new List<Card>(hand);
 
             GetAllTargets();
@@ -140,8 +140,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public TurnState(TurnState turnState)
         {
-            OwnedMingmings = OwnedMingmings.Values.ToDictionary(m => new MingmingBattleSimulation(m.Simulation));
-            OtherMingmings = OtherMingmings.Values.ToDictionary(m => new MingmingBattleSimulation(m.Simulation));
+            OwnedMingmings = OwnedMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
+            OtherMingmings = OtherMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
             RemaingHand = new List<Card>(turnState.RemaingHand);
 
             GetAllTargets();
@@ -163,7 +163,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
     {
         public static bool CanAttack(IEnumerable<Mingming> OwnedParty, IEnumerable<Mingming> OtherParty, IEnumerable<Card> Hand)
         {
-            OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.Simulation.EnergyAvailable > 0).ToList();
+            OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.Logic.EnergyAvailable > 0).ToList();
             OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
 
             var targets = new List<Mingming>(OwnedParty);

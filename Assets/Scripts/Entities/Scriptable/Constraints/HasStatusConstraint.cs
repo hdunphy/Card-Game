@@ -6,7 +6,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class HasStatusConstraint : BaseConstraint
     {
         [SerializeField] private StatusConstraint StatusConstraint;
-        public override bool CanUseCard(MingmingBattleSimulation source, Card card)
+        public override bool CanUseCard(MingmingBattleLogic source, Card card)
         {
             bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 

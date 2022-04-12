@@ -10,11 +10,11 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
 
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             base.InvokeAction(source, target, card);
 
-            if (Constraint.CanUseCard(source.Simulation, card))
+            if (Constraint.CanUseCard(source, card))
             {
                 Action.InvokeAction(source, target, card);
             }
@@ -23,14 +23,6 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         public override void PerformAnimation(Mingming source, Mingming target)
         {
             // no animation
-        }
-
-        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            if(Constraint.CanUseCard(source, card))
-            {
-                Action.SimulateAction(source, target, card);
-            }
         }
     }
 }

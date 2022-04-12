@@ -63,7 +63,7 @@ public class PartyController : MonoBehaviour
         }
         else
         {
-            int totalXP = _mingming.Simulation.GetDeathExp();
+            int totalXP = _mingming.Logic.GetDeathExp();
             int xpPerMingming = Mathf.CeilToInt((float)totalXP / Mingmings.Count( m => m.IsInPlay ));
             
             foreach(var mingming in Mingmings)
@@ -147,9 +147,9 @@ public class PartyController : MonoBehaviour
         return Mingmings.Contains(mingming);
     }
 
-    public bool HasMingming(MingmingBattleSimulation mingmingSimulation)
+    public bool HasMingming(MingmingBattleLogic mingmingSimulation)
     {
-        return Mingmings.Any(m => m.Simulation == mingmingSimulation);
+        return Mingmings.Any(m => m.Logic == mingmingSimulation);
     }
 
     public void DrawCards(int numberOfCards) => deckController.DrawCards(numberOfCards);

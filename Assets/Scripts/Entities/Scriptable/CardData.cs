@@ -28,24 +28,13 @@ public class CardData : IDropScriptableObject
     public float AttackModifier { get => attackModifier * 100; } //Float to real percent
     public BaseConstraint CardConstraint { get => cardConstraint; }
 
-    public IEnumerator InvokeActionCoroutine(Mingming source, Mingming target, Card card)
+    public IEnumerator InvokeActionCoroutine(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
     {
         foreach(var cardAction in cardActions)
         {
             TargetType.InvokeAction(cardAction, source, target, card);
 
-            yield return new WaitForSeconds(cardAction.DurationSeconds); //parameterize this somewhere
-        }
-
-        //TODO: improve this below. Move into TargetType
-        (source ?? target).PlayCard(card); //use null check for self targeting. 
-    }
-
-    public void SimulateActions(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-    {
-        foreach (var cardAction in cardActions)
-        {
-            TargetType.InvokeAction(cardAction, source, target, card);
+            yield return new WaitForSeconds(cardAction.DurationSeconds);
         }
 
         //TODO: improve this below. Move into TargetType

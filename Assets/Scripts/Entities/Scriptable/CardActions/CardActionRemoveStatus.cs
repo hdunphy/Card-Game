@@ -8,9 +8,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     {
         [Header("Status Parameters")]
         [SerializeField] private BaseStatus Status;
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            Status.RemoveStatus(target);
+            //Status.RemoveStatus(target);
+            target.RemoveStatus(Status);
 
             base.InvokeAction(source, target, card);
         }
@@ -21,11 +22,6 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
             //var destination = new Vector3(1, -2, 1);
             //LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
-        }
-
-        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            target.RemoveStatus(Status); //Need to call remove status from event/mingming
         }
     }
 }

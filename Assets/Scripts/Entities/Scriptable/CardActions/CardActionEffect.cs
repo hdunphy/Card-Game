@@ -17,67 +17,39 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private TurnStateEnum TurnState;
 
         private readonly Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
-        private readonly Dictionary<MingmingBattleSimulation, UnityAction> MingmingSimulatedActions = new Dictionary<MingmingBattleSimulation, UnityAction>();
+        private readonly Dictionary<MingmingBattleLogic, UnityAction> MingmingSimulatedActions = new Dictionary<MingmingBattleLogic, UnityAction>();
 
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             UnityAction _unityAction = delegate
             {
                 DoEffect(source, target, card);
             };
 
-            MingmingActions.Add(target, _unityAction);
+            //MingmingActions.Add(target, _unityAction);
 
-            FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
-                .AddListenerToTurnStateMachine(TurnState, _unityAction);
+            //FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
+            //    .AddListenerToTurnStateMachine(TurnState, _unityAction);
         }
 
-        private void DoEffect(Mingming source, Mingming target, Card card)
+        private void DoEffect(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            if (Constraint.CanUseCard(source.Simulation, card))
+            if (Constraint.CanUseCard(source, card))
             {
                 Action.InvokeAction(source, target, card);
             }
             else
             {
-                FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
-                    .RemoveListenerToTurnStateMachine(TurnState, MingmingActions[target]);
+                //FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
+                //    .RemoveListenerToTurnStateMachine(TurnState, MingmingActions[target]);
 
-                MingmingActions.Remove(target);
+                //MingmingActions.Remove(target);
             }
         }
 
         public override void PerformAnimation(Mingming source, Mingming target)
         {
             //no animation
-        }
-
-        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            UnityAction _unityAction = delegate
-            {
-                SimulateEffect(source, target, card);
-            };
-
-            MingmingSimulatedActions.Add(target, _unityAction);
-
-            FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
-                .AddListenerToTurnStateMachine(TurnState, _unityAction);
-        }
-
-        private void SimulateEffect(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            if (Constraint.CanUseCard(source, card))
-            {
-                Action.SimulateAction(source, target, card);
-            }
-            else
-            {
-                FindObjectsOfType<PartyController>().First(m => m.HasMingming(target))
-                    .RemoveListenerToTurnStateMachine(TurnState, MingmingSimulatedActions[target]);
-
-                MingmingSimulatedActions.Remove(target);
-            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [Header("Card Draw")]
         [SerializeField] private int numberOfCards;
 
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             FindObjectsOfType<PartyController>().First(m => m.HasMingming(source)).DrawCards(numberOfCards);
 

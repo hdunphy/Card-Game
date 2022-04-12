@@ -13,7 +13,7 @@ public class Card : MonoBehaviour
     [SerializeField] private DragAndDrop DragAndDrop;
 
     private ICardUI UIController;
-    private CardData Data;
+    private CardData Data { get; set; }
     private int siblingIndex;
     public bool PlayedThisTurn { get; private set; }
     public float Power => Data.AttackModifier;
@@ -87,12 +87,12 @@ public class Card : MonoBehaviour
         yield return null;
         DragAndDrop.enabled = false;
 
-        yield return Data.InvokeActionCoroutine(source, target, this);
+        yield return InvokeActions(source.Logic, target.Logic);
     }
 
-    public void SimulateActions(MingmingBattleSimulation source, MingmingBattleSimulation target) => Data.SimulateActions(source, target, this);
+    public IEnumerator InvokeActions(MingmingBattleLogic source, MingmingBattleLogic target) => Data.InvokeActionCoroutine(source, target, this);
 
-    public bool CanUseCard(MingmingBattleSimulation source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
+    public bool CanUseCard(MingmingBattleLogic source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
     public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
 
@@ -103,7 +103,7 @@ public class Card : MonoBehaviour
         {
             UserMessage.Instance.CanSendMessage = false;
 
-            bool isCardPlayable = CanUseCard(_mingming.Simulation);
+            bool isCardPlayable = CanUseCard(_mingming.Logic);
             DisableCover.gameObject.SetActive(!isCardPlayable);
             DragAndDrop.enabled = isCardPlayable;
 

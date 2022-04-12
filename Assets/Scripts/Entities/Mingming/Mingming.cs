@@ -17,12 +17,12 @@ namespace Assets.Scripts.Entities
         private TooltipTrigger TooltipTrigger;
 
         private bool _isSelected;
-        public MingmingBattleSimulation Simulation { get; private set; }
+        public MingmingBattleLogic Logic { get; private set; }
 
         #region Getters and Setters
         public bool IsTurn { get; private set; }
 
-        public bool IsInPlay => Simulation.CurrentHealth > 0;
+        public bool IsInPlay => Logic.CurrentHealth > 0;
 
         public bool IsSelected
         {
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Entities
 
         private void UpdateTooltip()
         {
-            TooltipTrigger.SetText(Simulation.GetTooltipInfo(), "Stats");
+            TooltipTrigger.SetText(Logic.GetTooltipInfo(), "Stats");
         }
         #endregion
 
@@ -50,14 +50,14 @@ namespace Assets.Scripts.Entities
 
         public void StartTurn()
         {
-            Simulation.StartTurn();
+            Logic.StartTurn();
             SetEnergy();
             IsTurn = true;
         }
 
         public void SetData(MingmingInstance data, bool isFacingRight)
         {
-            Simulation = new MingmingBattleSimulation(data, name);
+            Logic = new MingmingBattleLogic(data, name);
             UIController.SetUp(data, isFacingRight);
 
             SetEnergy();
@@ -79,14 +79,14 @@ namespace Assets.Scripts.Entities
         #region Energy
         private void SetEnergy()
         {
-            EnergyHolder.SetEnergy(Simulation.EnergyAvailable, Simulation.TotalEnergy);
+            EnergyHolder.SetEnergy(Logic.EnergyAvailable, Logic.TotalEnergy);
             if (IsSelected)
                 EventManager.Instance.OnUpdateSelectedMingmingTrigger(this);
         }
 
         public void AddEnergy(int _energy)
         {
-            Simulation.AddEnergy(_energy);
+            Logic.AddEnergy(_energy);
             SetEnergy();
         }
         #endregion
@@ -96,9 +96,9 @@ namespace Assets.Scripts.Entities
         {
             bool applied = true;
 
-            if (Simulation.HasStatus(status))
+            if (Logic.HasStatus(status))
             {
-                var count = Simulation.AddCount(status, _count);
+                var count = Logic.AddCount(status, _count);
                 if (count == 0)
                 {
                     RemoveStatus(status);
@@ -109,12 +109,12 @@ namespace Assets.Scripts.Entities
             {
                 var icon = Instantiate(StatusIconPrefab, StatusParent);
                 icon.SetStatus(status, _count);
-                Simulation.AddStatus(status, icon);
+                Logic.AddStatus(status, icon);
             }
 
             if (applied)
             {
-                UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Simulation.GetStatusCount(status))} was applied to {name}");
+                UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Logic.GetStatusCount(status))} was applied to {name}");
             }
         }
 
@@ -124,13 +124,13 @@ namespace Assets.Scripts.Entities
             {
                 UserMessage.Instance.SendMessageToUser($"{name} lost the {status.name} status");
             }
-            var icon = Simulation.RemoveStatus(status);
+            var icon = Logic.RemoveStatus(status);
             status.RemoveStatus(this);
 
             Destroy(icon.gameObject);
         }
 
-        public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Simulation.GetStatusCount(status));
+        public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Logic.GetStatusCount(status));
         #endregion
 
         #region Game Logic
@@ -145,14 +145,14 @@ namespace Assets.Scripts.Entities
                 }
 
                 StartCoroutine(TakeDamageCoroutine(damage));
-                Simulation.TakeDamage(damage);
+                Logic.TakeDamage(damage, source.Logic);
             }
         }
 
         private IEnumerator TakeDamageCoroutine(int damage)
         {
-            int currentHealth = Simulation.CurrentHealth;
-            int totalHealth = Simulation.TotalHealth;
+            int currentHealth = Logic.CurrentHealth;
+            int totalHealth = Logic.TotalHealth;
 
             float startPercent = (float)currentHealth / totalHealth;
             float finalPercent = (float)(currentHealth - damage) / totalHealth;
@@ -179,7 +179,7 @@ namespace Assets.Scripts.Entities
         private void SetDead()
         {
             UserMessage.Instance.SendMessageToUser($"{name} has fainted");
-            var _statuses = Simulation.GetStatusList();
+            var _statuses = Logic.GetStatusList();
             //remove events
             foreach (var _status in _statuses)
             {
@@ -194,18 +194,18 @@ namespace Assets.Scripts.Entities
         public void PlayCard(Card selectedCard)
         {
             EventManager.Instance.OnDiscardCardTrigger(selectedCard);
-            Simulation.PlayCard(selectedCard);
+            Logic.PlayCard(selectedCard);
             SetEnergy();
         }
 
         public void AddExperience(int expGained)
         {
-            int levelsGained = Simulation.AddExperience(expGained);
+            int levelsGained = Logic.AddExperience(expGained);
 
             string levelUpText = levelsGained < 1 ? "" : $" and gained {levelsGained} levels";
             UserMessage.Instance.SendMessageToUser($"{name} gained {expGained} xp{levelUpText}");
 
-            UIController.AddExperience(levelsGained, Simulation.GetExperiencePercentage());
+            UIController.AddExperience(levelsGained, Logic.GetExperiencePercentage());
 
             UpdateTooltip();
         }

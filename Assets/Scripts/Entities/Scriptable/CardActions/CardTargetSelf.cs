@@ -24,10 +24,10 @@ namespace Assets.Scripts.Entities.Scriptable
             {
                 UserMessage.Instance.SendMessageToUser($"Card must target itself");
             }
-            return notNullTarget && target.IsTurn && card.CanUseCard(target.Simulation) && rightSource;
+            return notNullTarget && target.IsTurn && card.CanUseCard(target.Logic) && rightSource;
         }
 
-        public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)
+        public override void InvokeAction(CardAction cardAction, MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             cardAction.InvokeAction(target, target, card);
         }

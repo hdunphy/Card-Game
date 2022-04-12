@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [Header("Energy")]
         [SerializeField] private int EnergyAdded;
 
-        public override void InvokeAction(Mingming source, Mingming target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             target.AddEnergy(EnergyAdded);
             base.InvokeAction(source, target, card);
@@ -18,11 +18,6 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         {
             var destination = new Vector3(2, 1, 1);
             LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
-        }
-
-        public override void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
-        {
-            target.AddEnergy(EnergyAdded);
         }
     }
 }

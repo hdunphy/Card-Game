@@ -23,10 +23,10 @@ namespace Assets.Scripts.Entities.Scriptable
             {
                 UserMessage.Instance.SendMessageToUser($"It is not {source.name}'s turn!");
             }
-            return notNullSource && notNullTarget && source.IsTurn && card.CanUseCard(source.Simulation);
+            return notNullSource && notNullTarget && source.IsTurn && card.CanUseCard(source.Logic);
         }
 
-        public abstract void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card);
+        public abstract void InvokeAction(CardAction cardAction, MingmingBattleLogic source, MingmingBattleLogic target, Card card);
     }
 }
 

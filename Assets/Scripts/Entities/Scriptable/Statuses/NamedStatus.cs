@@ -16,7 +16,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void ApplyStatus(Mingming mingming, int count)
         {
-            int currentCount = mingming.Simulation.GetStatusCount(this);
+            int currentCount = mingming.Logic.GetStatusCount(this);
             int _count = Mathf.Clamp(count, count, maxCount - currentCount);
             
             base.ApplyStatus(mingming, _count);

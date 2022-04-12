@@ -100,7 +100,7 @@ namespace Assets.Scripts.References
 
         public System.Random GetRandom() => Random;
 
-        public int GetAttackDamage(MingmingBattleSimulation source, MingmingBattleSimulation target, Card _card)
+        public int GetAttackDamage(MingmingBattleLogic source, MingmingBattleLogic target, Card _card)
         {
             float _modifier = GetModifier(source.GetMingmingAlignment, target.GetMingmingAlignment, _card.CardAlignment);
 
@@ -114,7 +114,7 @@ namespace Assets.Scripts.References
             return Mathf.FloorToInt(damage);
         }
 
-        public static int GetHealAmount(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card)
+        public static int GetHealAmount(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             float healAmount = GetLevelModifier(source.Level) * card.Power * source.Attack / 2;
             return Mathf.FloorToInt(Mathf.Clamp(healAmount, 0, target.TotalHealth - target.CurrentHealth));

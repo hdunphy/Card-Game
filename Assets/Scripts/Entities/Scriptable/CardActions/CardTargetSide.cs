@@ -8,12 +8,12 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override string TooltipText => "Can target a whole team. Select one Mingming and card effects apply to other Mingming on that team";
 
-        public override void InvokeAction(CardAction cardAction, Mingming source, Mingming target, Card card)
+        public override void InvokeAction(CardAction cardAction, MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             var controller = FindObjectsOfType<PartyController>().First(m => m.HasMingming(target)); //should never be null
             foreach (var mingming in controller.Mingmings.Where(m => m.IsInPlay))
             {
-                cardAction.InvokeAction(source, mingming, card);
+                cardAction.InvokeAction(source, mingming.Logic, card);
             }
         }
     }

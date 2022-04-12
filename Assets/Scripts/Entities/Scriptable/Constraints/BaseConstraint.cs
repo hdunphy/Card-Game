@@ -4,7 +4,7 @@ namespace Assets.Scripts.Entities.Scriptable
 {
     public abstract class BaseConstraint : ScriptableObject
     {
-        public virtual bool CanUseCard(MingmingBattleSimulation source, Card card)
+        public virtual bool CanUseCard(MingmingBattleLogic source, Card card)
         {
             bool hasEnergy = source.EnergyAvailable >= card.EnergyCost;
 

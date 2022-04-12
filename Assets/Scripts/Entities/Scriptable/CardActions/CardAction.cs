@@ -12,14 +12,12 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public float DurationSeconds => durationSeconds;
 
-        public virtual void InvokeAction(Mingming source, Mingming target, Card card)
+        public virtual void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             OnInvoked?.Invoke();
 
-            PerformAnimation(source, target);
+            //PerformAnimation(source, target);
         }
-
-        public abstract void SimulateAction(MingmingBattleSimulation source, MingmingBattleSimulation target, Card card);
 
         public virtual void PerformAnimation(Mingming source, Mingming target)
         {

@@ -60,7 +60,7 @@ public class RandomAttacking : IEnemyAttackBehavior
 
     private Card GetCard(Mingming attacker)
     {
-        var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.Simulation.EnergyAvailable).ToList();
+        var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.Logic.EnergyAvailable).ToList();
         return possiblecards[Random.Range(0, possiblecards.Count())];
     }
 

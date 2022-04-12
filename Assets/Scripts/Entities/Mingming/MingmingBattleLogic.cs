@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
-    public class MingmingBattleSimulation
+    public class MingmingBattleLogic
     {
         private MingmingInstance data { get; set; }
         private Dictionary<BaseStatus, StatusIcon> statuses { get; set; }
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Entities
 
         public string GetTooltipInfo() => $"Level: {data.Level}\nAttack: {data.Attack}\nDefense: {data.Defense}\nExp: {data.Experience}";
 
-        public MingmingBattleSimulation(MingmingBattleSimulation simulation)
+        public MingmingBattleLogic(MingmingBattleLogic simulation)
         {
             data = new MingmingInstance( simulation.data);
             AttackModifier = simulation.AttackModifier;
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Entities
             Name = simulation.Name;
         }
 
-        public MingmingBattleSimulation(MingmingInstance data, string name)
+        public MingmingBattleLogic(MingmingInstance data, string name)
         {
             this.data = data;
             Name = name;
@@ -65,7 +65,7 @@ namespace Assets.Scripts.Entities
             EnergyAvailable -= selectedCard.EnergyCost;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, MingmingBattleLogic source)
         {
             CurrentHealth -= damage;
         }

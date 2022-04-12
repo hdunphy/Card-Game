@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable
     public class MultipleStatusConstraints : BaseConstraint
     {
         [SerializeField] private List<StatusConstraint> StatusConstraints;
-        public override bool CanUseCard(MingmingBattleSimulation source, Card card)
+        public override bool CanUseCard(MingmingBattleLogic source, Card card)
         {
             bool isValid = base.CanUseCard(source, card);
 
