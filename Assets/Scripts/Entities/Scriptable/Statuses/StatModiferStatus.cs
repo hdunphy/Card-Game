@@ -23,7 +23,7 @@ namespace Assets.Scripts.Entities.Scriptable
                 return;
             }
 
-            ModifierProperty = typeof(Mingming).GetProperty(PropertyName);
+            ModifierProperty = typeof(MingmingBattleSimulation).GetProperty(PropertyName);
 
             if(ModifierProperty == null || ModifierProperty.PropertyType != typeof(float))
             {
@@ -33,23 +33,24 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void ApplyStatus(Mingming mingming, int count)
         {
-            var value = (float)ModifierProperty.GetValue(mingming);
+            MingmingBattleSimulation mingmingSimulation = mingming.Simulation;
+            var value = (float)ModifierProperty.GetValue(mingmingSimulation);
             var changeValue = Modifier * Mathf.Abs(count);
 
             base.ApplyStatus(mingming, count);
             if (count > 0)
             {
-                ModifierProperty.SetValue(mingming, value * changeValue);
+                ModifierProperty.SetValue(mingmingSimulation, value * changeValue);
             }
             else
             {
-                ModifierProperty.SetValue(mingming, value / changeValue);
+                ModifierProperty.SetValue(mingmingSimulation, value / changeValue);
             }
         }
 
         public override void RemoveStatus(Mingming mingming)
         {
-            mingming.DefenseModifier = 1;
+            ModifierProperty.SetValue(mingming.Simulation, 1);
         }
 
         public override void DoEffect(Mingming mingming, int count) {}

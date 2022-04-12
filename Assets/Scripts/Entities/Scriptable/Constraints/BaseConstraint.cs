@@ -6,7 +6,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public virtual bool CanUseCard(Mingming source, Card card)
         {
-            bool hasEnergy = source.EnergyAvailable >= card.EnergyCost;
+            bool hasEnergy = source.Simulation.EnergyAvailable >= card.EnergyCost;
 
             if (!hasEnergy)
             {

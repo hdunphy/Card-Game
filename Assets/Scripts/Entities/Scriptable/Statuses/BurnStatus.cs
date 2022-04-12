@@ -36,7 +36,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void DoEffect(Mingming mingming, int count)
         {
-            int dmg = GetDamage(mingming.TotalHealth, count);
+            int dmg = GetDamage(mingming.Simulation.TotalHealth, count);
             mingming.TakeDamage(dmg, null); //TODO: pass source some how
             UserMessage.Instance.SendMessageToUser($"{mingming.name} took {dmg} {GetTooltipHeader(count)} damage");
         }

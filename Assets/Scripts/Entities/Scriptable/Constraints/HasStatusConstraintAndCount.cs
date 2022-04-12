@@ -9,8 +9,8 @@ namespace Assets.Scripts.Entities.Scriptable.Constraints
         [SerializeField] private bool StatusCountIsPositive;
         public override bool CanUseCard(Mingming source, Card card)
         {
-            bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
-            bool _isCountPositive = Mathf.Sign(source.GetStatusCount(StatusConstraint.Status)) > 0 ;
+            bool MeetsStatusConstraint = source.Simulation.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+            bool _isCountPositive = Mathf.Sign(source.Simulation.GetStatusCount(StatusConstraint.Status)) > 0 ;
 
             if (!MeetsStatusConstraint)
             {

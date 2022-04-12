@@ -10,8 +10,9 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
-            float heal = Rules.Instance.GetAttackDamage(source, target, card);
-            heal = -0.5f * Mathf.Clamp(heal, 0, target.TotalHealth - target.CurrentHealth);
+            float heal = Rules.Instance.GetAttackDamage(source.Simulation, target.Simulation, card);
+            //TODO: move clamp out of here
+            heal = -0.5f * Mathf.Clamp(heal, 0, target.Simulation.TotalHealth - target.Simulation.CurrentHealth);
             target.TakeDamage(Mathf.FloorToInt(heal), source);
 
             base.InvokeAction(source, target, card);

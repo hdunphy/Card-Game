@@ -13,7 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
             foreach(var StatusConstraint in StatusConstraints)
             {
-                bool meetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+                bool meetsStatusConstraint = source.Simulation.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 
                 if (!meetsStatusConstraint)
                 {

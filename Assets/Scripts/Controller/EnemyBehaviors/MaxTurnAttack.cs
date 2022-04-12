@@ -86,7 +86,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 var isValid = currentCard.IsValidAction(_source, _target);
                 if (isValid)
                 {
-                    int _score = currentCard.GetValue();
+                    int _score = 0; //TODO get value;
                     if(_score > maxScore)
                     {
                         maxScore = _score;
@@ -105,7 +105,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 var isValid = currentCard.IsValidAction(_source, _target);
                 if (isValid)
                 {
-                    int _score = -currentCard.GetValue();
+                    int _score = 0; //TODO: Get value;
                     if (_score > maxScore)
                     {
                         maxScore = _score;
@@ -134,7 +134,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
     {
         public static bool CanAttack(IEnumerable<Mingming> OwnedParty, IEnumerable<Mingming> OtherParty, IEnumerable<Card> Hand)
         {
-            OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.EnergyAvailable > 0).ToList();
+            OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.Simulation.EnergyAvailable > 0).ToList();
             OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
 
             var targets = new List<Mingming>(OwnedParty);

@@ -16,56 +16,42 @@ namespace Assets.Scripts.Entities
         [SerializeField] private TMP_Text HealthText;
         [SerializeField] private TMP_Text NameText;
         [SerializeField] private Gradient HealthGradient;
-        [SerializeField] private GameObject DescriptionToolTipTrigger;
-
-        private TooltipTrigger TooltipTrigger;
-        private MingmingInstance Data;
+        //private MingmingInstance Data;
         public int Direction { get; private set; } //1 or -1
-        private int CurrentHealth => Data.CurrentHealth;
+        //private int CurrentHealth => Data.CurrentHealth;
 
-        public void SetUp(MingmingInstance _data, bool isFacingRight)
+        public void SetUp(MingmingInstance data, bool isFacingRight)
         {
-            Data = _data;
-            NameText.text = Data.Name;
-            name = Data.Name;
+            //Data = _data;
+            NameText.text = data.Name;
+            name = data.Name;
             Direction = isFacingRight ? 1 : -1;
 
-            MingmingSprite.sprite = Data.Sprite;
+            MingmingSprite.sprite = data.Sprite;
 
-            PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MingmingAlignment.Primary);
-            if (Data.MingmingAlignment.Secondary != CardAlignment.None)
+            PrimaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(data.MingmingAlignment.Primary);
+            if (data.MingmingAlignment.Secondary != CardAlignment.None)
             {
                 SecondaryAlignment.enabled = true;
-                SecondaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(Data.MingmingAlignment.Secondary);
+                SecondaryAlignment.sprite = SpriteReferenceDictionary.Instance.GetSpriteFromEnum(data.MingmingAlignment.Secondary);
             }
             else
                 SecondaryAlignment.enabled = false;
 
-            HealthBar.rectTransform.localScale = new Vector3((float)CurrentHealth / Data.Health, 1, 1);
-            ExperienceTransform.localScale = new Vector3(Data.GetExperiencePercentage(), 1, 1);
+            HealthBar.rectTransform.localScale = new Vector3((float)data.CurrentHealth / data.Health, 1, 1);
+            ExperienceTransform.localScale = new Vector3(data.GetExperiencePercentage(), 1, 1);
 
-            SetUpToolTips();
-            UpdateHealthText();
-            UpdateTooltip();
+            UpdateHealthText(data.CurrentHealth, data.Health);
         }
 
-        private void SetUpToolTips()
+        public void SetHealthBar(int currentHealth, int totalHealth)
         {
-            TooltipTrigger = DescriptionToolTipTrigger.AddComponent<TooltipTrigger>();
-            var tooltipComponents = GetComponentsInChildren<ITooltipComponent>();
-            foreach (var tooltipComponent in tooltipComponents)
-            {
-                tooltipComponent.SetData(Data.BaseData);
-            }
-        }
-
-        public void SetHealthBar(float currentPercent)
-        {
+            float currentPercent = (float)currentHealth / totalHealth;
             HealthBar.rectTransform.localScale = new Vector3(currentPercent, 1, 1);
-            UpdateHealthText();
+            UpdateHealthText(currentHealth, totalHealth);
         }
 
-        public void AddExperience(int levelsGained)
+        public void AddExperience(int levelsGained, float xpPercentage)
         {
             if (levelsGained > 0)
             {
@@ -74,32 +60,24 @@ namespace Assets.Scripts.Entities
                         .setOnComplete(() =>
                         {
                             ExperienceTransform.localScale = new Vector3(0, 1, 1);
-                            SetExpBar();
+                            SetExpBar(xpPercentage);
                         });
             }
             else
             {
-                SetExpBar();
+                SetExpBar(xpPercentage);
             }
-
-
-            UpdateTooltip();
         }
 
-        private void SetExpBar()
+        private void SetExpBar(float xpPercentage)
         {
-            LeanTween.scale(ExperienceTransform, new Vector3(Data.GetExperiencePercentage(), 1), .75f);
+            LeanTween.scale(ExperienceTransform, new Vector3(xpPercentage, 1), .75f);
         }
 
-        private void UpdateHealthText()
+        private void UpdateHealthText(int currentHealth, int totalHealth)
         {
-            HealthText.text = $"{CurrentHealth}/{Data.Health}";
-            HealthBar.color = HealthGradient.Evaluate((float)CurrentHealth / Data.Health);
-        }
-
-        private void UpdateTooltip()
-        {
-            TooltipTrigger.SetText($"Level: {Data.Level}\nAttack: {Data.Attack}\nDefense: {Data.Defense}\nExp: {Data.Experience}", "Stats");
+            HealthText.text = $"{currentHealth}/{totalHealth}";
+            HealthBar.color = HealthGradient.Evaluate((float)currentHealth / totalHealth);
         }
     }
 }

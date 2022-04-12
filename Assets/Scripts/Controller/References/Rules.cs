@@ -100,15 +100,15 @@ namespace Assets.Scripts.References
 
         public System.Random GetRandom() => Random;
 
-        public int GetAttackDamage(Mingming source, Mingming target, Card _card)
+        public int GetAttackDamage(MingmingBattleSimulation source, MingmingBattleSimulation target, Card _card)
         {
-            float _modifier = GetModifier(source.GetMingmingAlignment(), target.GetMingmingAlignment(), _card.CardAlignment);
+            float _modifier = GetModifier(source.GetMingmingAlignment, target.GetMingmingAlignment, _card.CardAlignment);
 
             float damage = (float)((2 * source.Level) / 5) + 2;
             damage *= (float)_card.Power * source.Attack / target.Defense;
             damage = (float)(damage / 40) + 2;
 
-            Debug.Log($"{source.name} {source.GetInstanceID()} attacks {target.name} {target.GetInstanceID()} for {damage} damage.\nModifier: {_modifier}");
+            //Debug.Log($"{source.name} {source.GetInstanceID()} attacks {target.name} {target.GetInstanceID()} for {damage} damage.\nModifier: {_modifier}");
             damage *= _modifier;
 
             return Mathf.FloorToInt(damage);
@@ -147,20 +147,26 @@ namespace Assets.Scripts.References
             return modifier;
         }
 
-        public int GetExp(MingmingInstance mingmingInstance)
+        public static int GetExp(MingmingInstance mingmingInstance)
         {
             return GetExpForLevel(mingmingInstance.Level);
         }
 
-        public int GetExpNextLevel(MingmingInstance mingmingInstance)
+        public static int GetExpNextLevel(MingmingInstance mingmingInstance)
         {
             return GetExpForLevel(mingmingInstance.Level + 1);
         }
 
-        private int GetExpForLevel(int level)
+        private static int GetExpForLevel(int level)
         {
             int exp = Mathf.RoundToInt(0.8f * Mathf.Pow(level, 3));
             return exp;
+        }
+
+        public static int CalculateStat(int baseStat, int modifier, int level)
+        {
+            //floor(floor((2 * B + I + E) * L / 100 + 5) * N)
+            return (int)Math.Floor((double)(((2 * baseStat) + modifier) * level / 100) + 5);
         }
 
         public static int GetRandomInt(int? min = null, int? max = null)

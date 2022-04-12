@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override void InvokeAction(Mingming source, Mingming target, Card card)
         {
-            float damage = Rules.Instance.GetAttackDamage(source, target, card);
+            float damage = Rules.Instance.GetAttackDamage(source.Simulation, target.Simulation, card);
             target.TakeDamage(Mathf.FloorToInt(damage), source);
 
             base.InvokeAction(source, target, card);

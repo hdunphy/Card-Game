@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] private StatusConstraint StatusConstraint;
         public override bool CanUseCard(Mingming source, Card card)
         {
-            bool MeetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
+            bool MeetsStatusConstraint = source.Simulation.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
 
             if (!MeetsStatusConstraint)
             {

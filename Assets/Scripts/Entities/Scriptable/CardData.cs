@@ -41,11 +41,6 @@ public class CardData : IDropScriptableObject
         (source ?? target).PlayCard(card); //use null check for self targeting. 
     }
 
-    public int GetValue()
-    {
-        throw new NotImplementedException();
-    }
-
 #if UNITY_EDITOR
     private void OnValidate()
     {

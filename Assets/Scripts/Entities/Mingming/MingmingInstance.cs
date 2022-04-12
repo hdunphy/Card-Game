@@ -2,7 +2,6 @@
 using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.References;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,9 +14,9 @@ namespace Assets.Scripts.Entities
         public readonly int HealthModifier;
 
         public MingmingData BaseData { get; }
-        public int Attack { get => CalculateStat(BaseData.Attack, AttackModifier); }
-        public int Defense { get => CalculateStat(BaseData.Defense, DefenseModifier); }
-        public int Health { get => CalculateStat(BaseData.Health, HealthModifier) + Level + 5; }
+        public int Attack { get => Rules.CalculateStat(BaseData.Attack, AttackModifier, Level); }
+        public int Defense { get => Rules.CalculateStat(BaseData.Defense, DefenseModifier, Level); }
+        public int Health { get => Rules.CalculateStat(BaseData.Health, HealthModifier, Level) + Level + 5; }
         public int CurrentHealth { get; set; }
         public int Energy { get; private set; }
         public int Level { get; private set; }
@@ -36,7 +35,7 @@ namespace Assets.Scripts.Entities
             BaseData = mingmingData;
             Level = level;
 
-            Experience = Rules.Instance.GetExp(this);
+            Experience = Rules.GetExp(this);
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);
             HealthModifier = Rules.GetRandomInt(0, 31);
@@ -72,7 +71,7 @@ namespace Assets.Scripts.Entities
 
         public int AddExperience(int _xp, int levelUps = 0)
         {
-            int xpToNextLevel = Rules.Instance.GetExpNextLevel(this) - Experience;
+            int xpToNextLevel = Rules.GetExpNextLevel(this) - Experience;
 
             if (_xp > xpToNextLevel)
             {
@@ -88,18 +87,12 @@ namespace Assets.Scripts.Entities
 
         public float GetExperiencePercentage()
         {
-            int currentExp = Experience - Rules.Instance.GetExp(this);
-            int nextLevel = Rules.Instance.GetExpNextLevel(this) - Rules.Instance.GetExp(this);
+            int currentExp = Experience - Rules.GetExp(this);
+            int nextLevel = Rules.GetExpNextLevel(this) - Rules.GetExp(this);
             return (float)currentExp / nextLevel;
         }
 
-        private int CalculateStat(int baseStat, int modifier)
-        {
-            //floor(floor((2 * B + I + E) * L / 100 + 5) * N)
-            return (int)Math.Floor((double)(((2 * baseStat) + modifier) * Level / 100) + 5);
-        }
-
-        public int GetDeathExp() => Rules.Instance.GetExpNextLevel(this) / 5;
+        public int GetDeathExp() => Rules.GetExpNextLevel(this) / 5;
 
         public CardData GetCardDrop()
         {
