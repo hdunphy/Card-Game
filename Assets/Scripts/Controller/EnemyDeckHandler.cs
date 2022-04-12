@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDeckHandler : DeckHandler
@@ -10,6 +9,7 @@ public class EnemyDeckHandler : DeckHandler
 
     private const float MOVE_DURATION = .5f;
     private const float SHOW_DURATION = 1f;
+    private readonly Vector3 SMALL_SCALE = Vector3.one * .33f;
 
     protected override Card AddCardToHand(Card _card, Transform transform)
     {
@@ -22,10 +22,11 @@ public class EnemyDeckHandler : DeckHandler
         if (_card.PlayedThisTurn)
         {
             _card.transform.position = handTransform.position;
+            _card.transform.localScale = SMALL_SCALE;
 
             _card.gameObject.SetActive(true);
             LeanTween.move(_card.gameObject, cardShowPosition.position, MOVE_DURATION);
-            LeanTween.scale(_card.gameObject, Vector3.one * .33f, MOVE_DURATION);
+            LeanTween.scale(_card.gameObject, Vector3.one, MOVE_DURATION);
 
             LeanTween.delayedCall(
                 SHOW_DURATION + MOVE_DURATION,
@@ -35,7 +36,7 @@ public class EnemyDeckHandler : DeckHandler
                                   .setOnComplete(
                                       () => _card.gameObject.SetActive(false)
                                   );
-                        LeanTween.scale(_card.gameObject, Vector3.one, MOVE_DURATION);
+                        LeanTween.scale(_card.gameObject, SMALL_SCALE, MOVE_DURATION);
                     }
             );
         }
