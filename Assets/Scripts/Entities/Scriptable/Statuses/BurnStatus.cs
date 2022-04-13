@@ -10,7 +10,7 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         private Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Mingming mingming, int count)
+        public override void ApplyStatus(MingmingBattleLogic mingming, int count)
         {
             base.ApplyStatus(mingming, count);
 
@@ -24,21 +24,26 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void RemoveStatus(Mingming mingming)
+        public UnityAction GetEffect(MingmingBattleLogic mingming)
+        {
+            return delegate { DoEffect(mingming, mingming.GetStatusCount(this)); };
+        }
+
+        public override void RemoveStatus(MingmingBattleLogic mingming)
         {
             base.RemoveStatus(mingming);
 
             FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                .RemoveListenerToTurnStateMachine(TurnStateEnum.PreTurn, MingmingActions[mingming]);
+                .RemoveListenerFromTurnStateMachine(TurnStateEnum.PreTurn, MingmingActions[mingming]);
             
             MingmingActions.Remove(mingming);
         }
 
-        public override void DoEffect(Mingming mingming, int count)
+        public override void DoEffect(MingmingBattleLogic mingming, int count)
         {
-            int dmg = GetDamage(mingming.Logic.TotalHealth, count);
+            int dmg = GetDamage(mingming.TotalHealth, count);
             mingming.TakeDamage(dmg, null); //TODO: pass source some how
-            UserMessage.Instance.SendMessageToUser($"{mingming.name} took {dmg} {GetTooltipHeader(count)} damage");
+            UserMessage.Instance.SendMessageToUser($"{mingming.Name} took {dmg} {GetTooltipHeader(count)} damage");
         }
 
         protected virtual int GetDamage(int health, int count)

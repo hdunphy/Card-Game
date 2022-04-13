@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
@@ -10,8 +9,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private BaseStatus Status;
         public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            //Status.RemoveStatus(target);
-            target.RemoveStatus(Status);
+            Status.RemoveStatus(target);
 
             base.InvokeAction(source, target, card);
         }

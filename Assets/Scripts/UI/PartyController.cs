@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.References;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -96,6 +98,7 @@ public class PartyController : MonoBehaviour
             _mingming.SetData(_data, isFacingRight);
             Mingmings.Add(_mingming);
 
+            //_mingming.Logic.OnStatusAdded += (a, b) => Logic_OnStatusAdded(_mingming, a, b);
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
             TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
@@ -115,12 +118,18 @@ public class PartyController : MonoBehaviour
         TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);
     }
 
+    //private void Logic_OnStatusAdded(Mingming mingming, BaseStatus arg1, int arg2)
+    //{
+    //    var burn = arg1 as BurnStatus;
+    //    TurnStateMachine[burn.TurnState].NewStateAlert.AddListener(burn.GetEffect(mingming.Logic));
+    //}
+
     public void AddListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
     {
         TurnStateMachine[turnState].NewStateAlert.AddListener(call);
     }
 
-    public void RemoveListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
+    public void RemoveListenerFromTurnStateMachine(TurnStateEnum turnState, UnityAction call)
     {
         TurnStateMachine[turnState].NewStateAlert.RemoveListener(call);
     }

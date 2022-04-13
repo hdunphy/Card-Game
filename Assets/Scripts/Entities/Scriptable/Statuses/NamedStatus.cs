@@ -14,9 +14,9 @@ namespace Assets.Scripts.Entities.Scriptable
 
         private readonly Dictionary<Mingming, UnityAction> _mingmingActions = new Dictionary<Mingming, UnityAction>();
 
-        public override void ApplyStatus(Mingming mingming, int count)
+        public override void ApplyStatus(MingmingBattleLogic mingming, int count)
         {
-            int currentCount = mingming.Logic.GetStatusCount(this);
+            int currentCount = mingming.GetStatusCount(this);
             int _count = Mathf.Clamp(count, count, maxCount - currentCount);
             
             base.ApplyStatus(mingming, _count);
@@ -31,21 +31,21 @@ namespace Assets.Scripts.Entities.Scriptable
             }
         }
 
-        public override void RemoveStatus(Mingming mingming)
+        public override void RemoveStatus(MingmingBattleLogic mingming)
         {
             base.RemoveStatus(mingming);
 
             FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                .RemoveListenerToTurnStateMachine(TurnStateEnum.PostTurn, _mingmingActions[mingming]);
+                .RemoveListenerFromTurnStateMachine(TurnStateEnum.PostTurn, _mingmingActions[mingming]);
 
             _mingmingActions.Remove(mingming);
         }
 
-        public override void DoEffect(Mingming mingming, int count)
+        public override void DoEffect(MingmingBattleLogic mingming, int count)
         {
             if(count > 1)
             {
-                UserMessage.Instance.SendMessageToUser($"{mingming.name} is {name} for {count} more turn(s)");
+                UserMessage.Instance.SendMessageToUser($"{mingming.Name} is {name} for {count} more turn(s)");
             }
             mingming.ApplyStatus(this, -1);
         }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities.Scriptable;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,47 +7,65 @@ namespace Assets.Scripts.Entities
 {
     public class MingmingBattleLogic
     {
-        private MingmingInstance data { get; set; }
-        private Dictionary<BaseStatus, StatusIcon> statuses { get; set; }
 
+        /* --Private Properties-- */
+        private readonly MingmingInstance _data;
+        private readonly Dictionary<BaseStatus, int> _statuses;
+        private int _energyAvailable;
+
+        /* --Public Properties-- */
         public string Name { get; private set; }
-        public int EnergyAvailable { get; private set; }
         public float AttackModifier { get; set; }
         public float DefenseModifier { get; set; }
-        public int TotalEnergy => data.Energy;
-        public int TotalHealth => data.Health;
+        public int TotalEnergy => _data.Energy;
+        public int TotalHealth => _data.Health;
+        public int Level => _data.Level;
+        public float Attack => _data.Attack * AttackModifier;
+        public float Defense => _data.Defense * DefenseModifier;
+        public int EnergyAvailable
+        {
+            get => _energyAvailable;
+            private set
+            {
+                _energyAvailable = value;
+                OnEnergyChanged?.Invoke(value);
+            }
+        }
         public int CurrentHealth
         {
-            get => data.CurrentHealth;
-            private set => data.CurrentHealth = value;
+            get => _data.CurrentHealth;
+            private set => _data.CurrentHealth = value;
         }
-        public int Level => data.Level;
-        public float Attack => data.Attack * AttackModifier;
-        public float Defense => data.Defense * DefenseModifier;
+        public MingmingAlignment GetMingmingAlignment => _data.MingmingAlignment;
+        public string GetTooltipInfo() => $"Level: {_data.Level}\nAttack: {_data.Attack}\nDefense: {_data.Defense}\nExp: {_data.Experience}";
 
-        public MingmingAlignment GetMingmingAlignment => data.MingmingAlignment;
-
-        public string GetTooltipInfo() => $"Level: {data.Level}\nAttack: {data.Attack}\nDefense: {data.Defense}\nExp: {data.Experience}";
+        /* --Events-- */
+        public event Action OnCardPlayed;
+        public event Action<int> OnEnergyChanged;
+        public event Action<int, MingmingBattleLogic> OnTakeDamage; //Damage, source
+        public event Action<BaseStatus, int> OnStatusUpdated;
+        public event Action<BaseStatus, int> OnStatusAdded;
+        public event Action<BaseStatus> OnStatusRemoved;
 
         public MingmingBattleLogic(MingmingBattleLogic simulation)
         {
-            data = new MingmingInstance( simulation.data);
+            _data = new MingmingInstance(simulation._data);
             AttackModifier = simulation.AttackModifier;
             DefenseModifier = simulation.DefenseModifier;
             EnergyAvailable = simulation.EnergyAvailable;
-            statuses = simulation.statuses;
+            _statuses = simulation._statuses;
             Name = simulation.Name;
         }
 
         public MingmingBattleLogic(MingmingInstance data, string name)
         {
-            this.data = data;
+            _data = data;
             Name = name;
             EnergyAvailable = TotalEnergy;
             AttackModifier = 1;
             DefenseModifier = 1;
 
-            statuses = new Dictionary<BaseStatus, StatusIcon>();
+            _statuses = new Dictionary<BaseStatus, int>();
         }
 
         #region Game Logic
@@ -62,41 +81,67 @@ namespace Assets.Scripts.Entities
 
         public void PlayCard(Card selectedCard)
         {
+            EventManager.Instance.OnDiscardCardTrigger(selectedCard);
             EnergyAvailable -= selectedCard.EnergyCost;
         }
 
         public void TakeDamage(int damage, MingmingBattleLogic source)
         {
             CurrentHealth -= damage;
+            OnTakeDamage?.Invoke(damage, source);
         }
         #endregion
 
         #region Exp
-        public int GetDeathExp() => data.GetDeathExp();
+        public int GetDeathExp() => _data.GetDeathExp();
 
-        public float GetExperiencePercentage() => data.GetExperiencePercentage();
+        public float GetExperiencePercentage() => _data.GetExperiencePercentage();
 
-        public int AddExperience(int expGained) => data.AddExperience(expGained);
+        public int AddExperience(int expGained) => _data.AddExperience(expGained);
         #endregion
 
         #region Statuses
-        public int AddCount(BaseStatus status, int _count) => statuses[status].AddCount(_count);
-
-        public StatusIcon RemoveStatus(BaseStatus status)
+        public void RemoveStatus(BaseStatus status)
         {
-            var icon = statuses[status];
-            statuses.Remove(status);
-
-            return icon;
+            _statuses.Remove(status);
+            OnStatusRemoved?.Invoke(status);
         }
 
-        public void AddStatus(BaseStatus status, StatusIcon icon) => statuses.Add(status, icon);
+        public void ApplyStatus(BaseStatus status, int count)
+        {
+            if (HasStatus(status))
+            {
+                int _count = _statuses[status] += count;
+                if (_count == 0)
+                {
+                    RemoveStatus(status);
+                }
+                else
+                {
+                    OnStatusUpdated?.Invoke(status, _count);
+                }
+            }
+            else
+            {
+                _statuses.Add(status, count);
+                OnStatusAdded?.Invoke(status, count);
+            }
+        }
 
-        public bool HasStatus(BaseStatus status) => statuses.ContainsKey(status);
+        public void RemoveAllStatuses()
+        {
+            var keys = _statuses.Keys;
+            foreach (var status in keys)
+            {
+                RemoveStatus(status);
+            }
+        }
 
-        public int GetStatusCount(BaseStatus status) => HasStatus(status) ? statuses[status].Count : 0;
+        public bool HasStatus(BaseStatus status) => _statuses.ContainsKey(status);
 
-        public List<BaseStatus> GetStatusList() => statuses.Keys.ToList();
+        public int GetStatusCount(BaseStatus status) => HasStatus(status) ? _statuses[status] : 0;
+
+        public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, _statuses[status]);
         #endregion
     }
 }

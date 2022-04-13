@@ -8,17 +8,18 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public virtual Sprite GetSprite(int count) => sprite;
 
-        public virtual void ApplyStatus(Mingming mingming, int count)
+        public virtual void ApplyStatus(MingmingBattleLogic mingming, int count)
         {
             mingming.ApplyStatus(this, count);
         }
 
         //TODO refactor this shouldn't be calling mingming.removestatus here
-        public virtual void RemoveStatus(Mingming mingming)
+        public virtual void RemoveStatus(MingmingBattleLogic mingming)
         {
+            mingming.RemoveStatus(this);
         }
 
-        public abstract void DoEffect(Mingming mingming, int count);
+        public abstract void DoEffect(MingmingBattleLogic mingming, int count);
 
         public abstract string GetTooltip(int count);
 

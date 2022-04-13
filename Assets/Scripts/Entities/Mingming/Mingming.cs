@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.UI.Tooltips;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,6 +20,7 @@ namespace Assets.Scripts.Entities
 
         private bool _isSelected;
         public MingmingBattleLogic Logic { get; private set; }
+        private Dictionary<BaseStatus, StatusIcon> _statuses;
 
         #region Getters and Setters
         public bool IsTurn { get; private set; }
@@ -46,6 +49,12 @@ namespace Assets.Scripts.Entities
         private void Start()
         {
             IsTurn = false;
+            _statuses = new Dictionary<BaseStatus, StatusIcon>();
+        }
+
+        private void OnDestroy()
+        {
+            RemoveEvents();
         }
 
         public void StartTurn()
@@ -60,9 +69,26 @@ namespace Assets.Scripts.Entities
             Logic = new MingmingBattleLogic(data, name);
             UIController.SetUp(data, isFacingRight);
 
+            AddEvents();
             SetEnergy();
             SetUpToolTips(data);
             UpdateTooltip();
+        }
+
+        private void AddEvents()
+        {
+            Logic.OnEnergyChanged += SetEnergy;
+            Logic.OnStatusAdded += StatusAdded;
+            Logic.OnStatusUpdated += StatusUpdated;
+            Logic.OnStatusRemoved += StatusRemoved;
+        }
+
+        private void RemoveEvents()
+        {
+            Logic.OnEnergyChanged -= SetEnergy;
+            Logic.OnStatusAdded -= StatusAdded;
+            Logic.OnStatusUpdated -= StatusUpdated;
+            Logic.OnStatusRemoved -= StatusRemoved;
         }
 
         private void SetUpToolTips(MingmingInstance data)
@@ -77,60 +103,48 @@ namespace Assets.Scripts.Entities
         #endregion
 
         #region Energy
-        private void SetEnergy()
+        private void SetEnergy(int _ = 0)
         {
             EnergyHolder.SetEnergy(Logic.EnergyAvailable, Logic.TotalEnergy);
             if (IsSelected)
                 EventManager.Instance.OnUpdateSelectedMingmingTrigger(this);
         }
-
-        public void AddEnergy(int _energy)
-        {
-            Logic.AddEnergy(_energy);
-            SetEnergy();
-        }
         #endregion
 
         #region Statuses
-        public void ApplyStatus(BaseStatus status, int _count)
+        private void StatusAdded(BaseStatus status, int count)
         {
-            bool applied = true;
+            var icon = Instantiate(StatusIconPrefab, StatusParent);
+            icon.SetStatus(status, count);
 
-            if (Logic.HasStatus(status))
-            {
-                var count = Logic.AddCount(status, _count);
-                if (count == 0)
-                {
-                    RemoveStatus(status);
-                    applied = false;
-                }
-            }
-            else
-            {
-                var icon = Instantiate(StatusIconPrefab, StatusParent);
-                icon.SetStatus(status, _count);
-                Logic.AddStatus(status, icon);
-            }
+            _statuses.Add(status, icon);
 
-            if (applied)
-            {
-                UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Logic.GetStatusCount(status))} was applied to {name}");
-            }
+            SendStatusMessage(status);
         }
 
-        public void RemoveStatus(BaseStatus status)
+        private void StatusUpdated(BaseStatus status, int count)
+        {
+            _statuses[status].SetCount(count);
+
+            SendStatusMessage(status);
+        }
+
+        private void SendStatusMessage(BaseStatus status)
+        {
+            UserMessage.Instance.SendMessageToUser($"{status.GetTooltipHeader(Logic.GetStatusCount(status))} was applied to {name}");
+        }
+
+        public void StatusRemoved(BaseStatus status)
         {
             if (IsInPlay)
             {
                 UserMessage.Instance.SendMessageToUser($"{name} lost the {status.name} status");
             }
-            var icon = Logic.RemoveStatus(status);
-            status.RemoveStatus(this);
+            var icon = _statuses[status];
+            _statuses.Remove(status);
 
             Destroy(icon.gameObject);
         }
-
-        public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, Logic.GetStatusCount(status));
         #endregion
 
         #region Game Logic
@@ -179,23 +193,11 @@ namespace Assets.Scripts.Entities
         private void SetDead()
         {
             UserMessage.Instance.SendMessageToUser($"{name} has fainted");
-            var _statuses = Logic.GetStatusList();
-            //remove events
-            foreach (var _status in _statuses)
-            {
-                RemoveStatus(_status);
-            }
+            Logic.RemoveAllStatuses();
 
             TooltipSystem.Hide();
             EventManager.Instance.OnMingmingDiedTrigger(this);
             gameObject.SetActive(false);
-        }
-
-        public void PlayCard(Card selectedCard)
-        {
-            EventManager.Instance.OnDiscardCardTrigger(selectedCard);
-            Logic.PlayCard(selectedCard);
-            SetEnergy();
         }
 
         public void AddExperience(int expGained)

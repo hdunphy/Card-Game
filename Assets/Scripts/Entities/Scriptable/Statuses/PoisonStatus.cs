@@ -7,7 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.Statuses
     {
         [SerializeField] private int damage; //damage per count
 
-        public override void DoEffect(Mingming mingming, int count)
+        public override void DoEffect(MingmingBattleLogic mingming, int count)
         {
             base.DoEffect(mingming, count);
             mingming.ApplyStatus(this, -1);
