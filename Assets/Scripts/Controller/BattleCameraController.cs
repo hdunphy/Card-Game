@@ -6,7 +6,7 @@ namespace Assets.Scripts.Controller
     {
         private void Awake()
         {
-            FindObjectOfType<CameraController>().gameObject.SetActive(false);
+            FindObjectOfType<CameraController>()?.gameObject.SetActive(false);
         }
     }
 }

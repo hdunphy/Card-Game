@@ -59,7 +59,7 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         _previousLevel = battleSceneData.PreviousLevel;
         /* -- Set up Battle -- */
         PlayerLoader.BattleSetUp(battleSceneData.PlayerMingmings, battleSceneData.PlayerCards.ToList());
-        EnemyLoader.BattleSetUp(battleSceneData.EnemyMingmings, battleSceneData.EnemyCards.ToList(), true);
+        EnemyLoader.BattleSetUp(battleSceneData.EnemyMingmings, battleSceneData.EnemyCards.ToList());
 
         _playerTurn = PlayerTurn.PlayerOne;
 
@@ -91,6 +91,12 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
         string message = didPlayerOneWin ? "Player 1" : "Player 2";
         EndButton.enabled = false;
         UserMessage.Instance.SendMessageToUser(message + " Has won");
+
+        if(_previousLevel == null)
+        {
+            Debug.LogWarning("Missing Previous Level");
+            return;
+        }
 
         _previousLevel.DidPlayerOneWin = didPlayerOneWin;
 

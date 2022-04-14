@@ -78,8 +78,9 @@ public class PartyController : MonoBehaviour
         CurrentTurnState = TurnStateEnum.End;
     }
 
-    public void BattleSetUp(IEnumerable<MingmingInstance> datas, List<CardData> deck, bool isWildDeck = false)
+    public void BattleSetUp(IEnumerable<MingmingInstance> datas, List<CardData> deck)
     {
+        bool isWildDeck = deck.Count == 0;
         CardDraw = 0;
 
         foreach (Mingming _mingming in Mingmings)
