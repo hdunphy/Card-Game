@@ -98,7 +98,7 @@ public class PartyController : MonoBehaviour
             _mingming.SetData(_data, isFacingRight);
             Mingmings.Add(_mingming);
 
-            //_mingming.Logic.OnStatusAdded += (a, b) => Logic_OnStatusAdded(_mingming, a, b);
+            _mingming.Logic.OnStatusAdded += (status, count) => Logic_OnStatusAdded(_mingming, status, count);
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
             TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
@@ -118,11 +118,14 @@ public class PartyController : MonoBehaviour
         TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);
     }
 
-    //private void Logic_OnStatusAdded(Mingming mingming, BaseStatus arg1, int arg2)
-    //{
-    //    var burn = arg1 as BurnStatus;
-    //    TurnStateMachine[burn.TurnState].NewStateAlert.AddListener(burn.GetEffect(mingming.Logic));
-    //}
+    private void Logic_OnStatusAdded(Mingming mingming, BaseStatus status, int count)
+    {
+        var effectStatus = status as EffectStatus;
+        if (effectStatus)
+        {
+            TurnStateMachine[effectStatus.TurnState].NewStateAlert.AddListener(effectStatus.GetEffect(mingming.Logic));
+        }
+    }
 
     public void AddListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
     {

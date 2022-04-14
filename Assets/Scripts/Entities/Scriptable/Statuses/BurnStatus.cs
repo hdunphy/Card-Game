@@ -1,48 +1,27 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
     [CreateAssetMenu(fileName = "Burn Status", menuName = "Data/Status/Create Burn Status")]
-    public class BurnStatus : BaseStatus
+    public class BurnStatus : EffectStatus
     {
-        private Dictionary<Mingming, UnityAction> MingmingActions = new Dictionary<Mingming, UnityAction>();
+        private const int MAX_COUNT = 3;
+
+        public override TurnStateEnum TurnState => TurnStateEnum.PreTurn;
 
         public override void ApplyStatus(MingmingBattleLogic mingming, int count)
         {
-            base.ApplyStatus(mingming, count);
+            int currentCount = mingming.GetStatusCount(this);
+            int _count = Mathf.Clamp(count, count, MAX_COUNT - currentCount);
 
-            if (!MingmingActions.ContainsKey(mingming))
-            {
-                UnityAction action = delegate { mingming.GetStatusEffect(this); };
-                MingmingActions.Add(mingming, action);
-
-                FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                    .AddListenerToTurnStateMachine(TurnStateEnum.PreTurn, action);
-            }
+            base.ApplyStatus(mingming, _count);
         }
 
-        public UnityAction GetEffect(MingmingBattleLogic mingming)
+        public override void DoEffect(MingmingBattleLogic mingming)
         {
-            return delegate { DoEffect(mingming, mingming.GetStatusCount(this)); };
-        }
-
-        public override void RemoveStatus(MingmingBattleLogic mingming)
-        {
-            base.RemoveStatus(mingming);
-
-            FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                .RemoveListenerFromTurnStateMachine(TurnStateEnum.PreTurn, MingmingActions[mingming]);
-            
-            MingmingActions.Remove(mingming);
-        }
-
-        public override void DoEffect(MingmingBattleLogic mingming, int count)
-        {
+            int count = mingming.GetStatusCount(this);
             int dmg = GetDamage(mingming.TotalHealth, count);
-            mingming.TakeDamage(dmg, null); //TODO: pass source some how
+            mingming.TakeDamage(dmg, null);
             UserMessage.Instance.SendMessageToUser($"{mingming.Name} took {dmg} {GetTooltipHeader(count)} damage");
         }
 

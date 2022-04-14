@@ -52,7 +52,7 @@ namespace Assets.Scripts.Entities.Scriptable
             ModifierProperty.SetValue(mingming, 1);
         }
 
-        public override void DoEffect(MingmingBattleLogic mingming, int count) {}
+        public override void DoEffect(MingmingBattleLogic mingming) {}
 
         public override Sprite GetSprite(int count)
         {

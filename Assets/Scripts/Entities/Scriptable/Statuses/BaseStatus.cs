@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
+
     public abstract class BaseStatus : ScriptableObject
     {
         [SerializeField] protected Sprite sprite;
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Entities.Scriptable
             mingming.RemoveStatus(this);
         }
 
-        public abstract void DoEffect(MingmingBattleLogic mingming, int count);
+        public abstract void DoEffect(MingmingBattleLogic mingming);
 
         public abstract string GetTooltip(int count);
 

@@ -141,7 +141,7 @@ namespace Assets.Scripts.Entities
 
         public int GetStatusCount(BaseStatus status) => HasStatus(status) ? _statuses[status] : 0;
 
-        public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, _statuses[status]);
+        //public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, _statuses[status]);
         #endregion
     }
 }

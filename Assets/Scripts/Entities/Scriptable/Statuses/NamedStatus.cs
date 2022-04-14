@@ -1,18 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
     [CreateAssetMenu(fileName = "Status", menuName = "Data/Status/Create Named Status")]
-    public class NamedStatus : BaseStatus
+    public class NamedStatus : EffectStatus
     {
         [SerializeField] private new string name;
         [SerializeField] private string description;
         [SerializeField] private int maxCount;
 
-        private readonly Dictionary<Mingming, UnityAction> _mingmingActions = new Dictionary<Mingming, UnityAction>();
+        public override TurnStateEnum TurnState => TurnStateEnum.PostTurn;
 
         public override void ApplyStatus(MingmingBattleLogic mingming, int count)
         {
@@ -20,29 +17,12 @@ namespace Assets.Scripts.Entities.Scriptable
             int _count = Mathf.Clamp(count, count, maxCount - currentCount);
             
             base.ApplyStatus(mingming, _count);
-
-            if (!_mingmingActions.ContainsKey(mingming))
-            {
-                UnityAction action = delegate { mingming.GetStatusEffect(this); };
-                _mingmingActions.Add(mingming, action);
-
-                FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                    .AddListenerToTurnStateMachine(TurnStateEnum.PostTurn, action);
-            }
         }
 
-        public override void RemoveStatus(MingmingBattleLogic mingming)
+        public override void DoEffect(MingmingBattleLogic mingming)
         {
-            base.RemoveStatus(mingming);
+            int count = mingming.GetStatusCount(this);
 
-            FindObjectsOfType<PartyController>().First(m => m.HasMingming(mingming))
-                .RemoveListenerFromTurnStateMachine(TurnStateEnum.PostTurn, _mingmingActions[mingming]);
-
-            _mingmingActions.Remove(mingming);
-        }
-
-        public override void DoEffect(MingmingBattleLogic mingming, int count)
-        {
             if(count > 1)
             {
                 UserMessage.Instance.SendMessageToUser($"{mingming.Name} is {name} for {count} more turn(s)");
