@@ -1,11 +1,9 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.References;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PartyController : MonoBehaviour
 {
@@ -100,6 +98,7 @@ public class PartyController : MonoBehaviour
 
             _mingming.Logic.OnStatusAdded += (status, _) => Logic_OnStatusAdded(_mingming, status);
             _mingming.Logic.OnStatusRemoved += (status) => Logic_OnStatusRemoved(_mingming, status);
+            
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
             TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
