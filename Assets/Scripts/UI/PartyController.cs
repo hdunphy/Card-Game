@@ -98,7 +98,8 @@ public class PartyController : MonoBehaviour
             _mingming.SetData(_data, isFacingRight);
             Mingmings.Add(_mingming);
 
-            _mingming.Logic.OnStatusAdded += (status, count) => Logic_OnStatusAdded(_mingming, status, count);
+            _mingming.Logic.OnStatusAdded += (status, _) => Logic_OnStatusAdded(_mingming, status);
+            _mingming.Logic.OnStatusRemoved += (status) => Logic_OnStatusRemoved(_mingming, status);
             //Refactor adding listeners
             TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
             TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
@@ -118,23 +119,22 @@ public class PartyController : MonoBehaviour
         TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);
     }
 
-    private void Logic_OnStatusAdded(Mingming mingming, BaseStatus status, int count)
+    private void Logic_OnStatusAdded(Mingming mingming, BaseStatus status)
     {
         var effectStatus = status as EffectStatus;
-        if (effectStatus)
+        if (effectStatus != null)
         {
             TurnStateMachine[effectStatus.TurnState].NewStateAlert.AddListener(effectStatus.GetEffect(mingming.Logic));
         }
     }
 
-    public void AddListenerToTurnStateMachine(TurnStateEnum turnState, UnityAction call)
+    private void Logic_OnStatusRemoved(Mingming mingming, BaseStatus status)
     {
-        TurnStateMachine[turnState].NewStateAlert.AddListener(call);
-    }
-
-    public void RemoveListenerFromTurnStateMachine(TurnStateEnum turnState, UnityAction call)
-    {
-        TurnStateMachine[turnState].NewStateAlert.RemoveListener(call);
+        var effectStatus = status as EffectStatus;
+        if (effectStatus != null)
+        {
+            TurnStateMachine[effectStatus.TurnState].NewStateAlert.RemoveListener(effectStatus.GetEffect(mingming.Logic));
+        }
     }
 
     public void GetNextTurnState()
