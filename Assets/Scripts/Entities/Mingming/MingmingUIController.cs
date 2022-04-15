@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.UI.Tooltips;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,11 +45,29 @@ namespace Assets.Scripts.Entities
             UpdateHealthText(data.CurrentHealth, data.Health);
         }
 
-        public void SetHealthBar(int currentHealth, int totalHealth)
+        public void SetHealthBar(float currentPercent, int totalHealth)
         {
-            float currentPercent = (float)currentHealth / totalHealth;
+            int currentHealth = Mathf.FloorToInt((float)currentPercent * totalHealth);
             HealthBar.rectTransform.localScale = new Vector3(currentPercent, 1, 1);
             UpdateHealthText(currentHealth, totalHealth);
+        }
+
+        public IEnumerator SetHealthBarCoroutine(float targetPercent, int totalHealth)
+        {
+            float currentPercent = HealthBar.rectTransform.localScale.x;
+
+            while (Mathf.Abs(currentPercent - targetPercent) > 0.0001f)
+            {
+                currentPercent = Mathf.Lerp(currentPercent, targetPercent, 0.01f);
+                SetHealthBar(currentPercent, totalHealth);
+
+                if (currentPercent <= 0)
+                {
+                    SetHealthBar(0, totalHealth);
+                    break;
+                }
+                yield return null;
+            }
         }
 
         public void AddExperience(int levelsGained, float xpPercentage)

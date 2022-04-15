@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private int Count;
         public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            //Status.ApplyStatus(source, Count);
+            Status.ApplyStatus(source, Count);
             
             base.InvokeAction(source, target, card);
         }

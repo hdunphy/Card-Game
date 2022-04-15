@@ -81,6 +81,7 @@ namespace Assets.Scripts.Entities
             Logic.OnStatusAdded += StatusAdded;
             Logic.OnStatusUpdated += StatusUpdated;
             Logic.OnStatusRemoved += StatusRemoved;
+            Logic.OnTakeDamage += TakeDamage;
         }
 
         private void RemoveEvents()
@@ -89,6 +90,7 @@ namespace Assets.Scripts.Entities
             Logic.OnStatusAdded -= StatusAdded;
             Logic.OnStatusUpdated -= StatusUpdated;
             Logic.OnStatusRemoved -= StatusRemoved;
+            Logic.OnTakeDamage -= TakeDamage;
         }
 
         private void SetUpToolTips(MingmingInstance data)
@@ -148,46 +150,30 @@ namespace Assets.Scripts.Entities
         #endregion
 
         #region Game Logic
-        public void TakeDamage(int damage, Mingming source)
+        public void TakeDamage(int damage, MingmingBattleLogic source)
         {
             if (damage != 0)
             {
                 if (source != null)
                 {
                     string effect = damage < 0 ? $"was healed {damage}" : $"took {damage} damage ";
-                    UserMessage.Instance.SendMessageToUser($"{name} {effect} from {source.name}");
+                    UserMessage.Instance.SendMessageToUser($"{name} {effect} from {source.Name}");
                 }
 
-                StartCoroutine(TakeDamageCoroutine(damage));
-                Logic.TakeDamage(damage, source.Logic);
+                StartCoroutine(TakeDamageCoroutine());
             }
         }
 
-        private IEnumerator TakeDamageCoroutine(int damage)
+        private IEnumerator TakeDamageCoroutine()
         {
-            int currentHealth = Logic.CurrentHealth;
-            int totalHealth = Logic.TotalHealth;
+            float targetPercent = (float)(Logic.CurrentHealth) / Logic.TotalHealth;
 
-            float startPercent = (float)currentHealth / totalHealth;
-            float finalPercent = (float)(currentHealth - damage) / totalHealth;
+            yield return UIController.SetHealthBarCoroutine(targetPercent, Logic.TotalHealth);
 
-            float currentPercent = startPercent;
-
-            while (Mathf.Abs(currentPercent - finalPercent) > 0.0001f)
+            if(Logic.CurrentHealth <= 0)
             {
-                currentPercent = Mathf.Lerp(currentPercent, finalPercent, 0.01f);
-                currentHealth = Mathf.FloorToInt((float)currentPercent * totalHealth);
-                UIController.SetHealthBar(currentHealth, totalHealth);
-
-                if (currentHealth <= 0)
-                {
-                    SetDead();
-                    break;
-                }
-                yield return null;
+                SetDead();
             }
-
-            UIController.SetHealthBar(currentHealth, totalHealth);
         }
 
         private void SetDead()

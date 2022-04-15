@@ -50,6 +50,7 @@ namespace Assets.Scripts.Entities.Scriptable
         public override void RemoveStatus(MingmingBattleLogic mingming)
         {
             ModifierProperty.SetValue(mingming, 1);
+            base.RemoveStatus(mingming);
         }
 
         public override void DoEffect(MingmingBattleLogic mingming) {}

@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            //Status.ApplyStatus(target, Count);
+            Status.ApplyStatus(target, Count);
             base.InvokeAction(source, target, card);
         }
 

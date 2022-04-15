@@ -114,7 +114,7 @@ namespace Assets.Scripts.Entities
                 int _count = _statuses[status] += count;
                 if (_count == 0)
                 {
-                    RemoveStatus(status);
+                    status.RemoveStatus(this);
                 }
                 else
                 {
@@ -133,15 +133,13 @@ namespace Assets.Scripts.Entities
             var keys = _statuses.Keys;
             foreach (var status in keys)
             {
-                RemoveStatus(status);
+                status.RemoveStatus(this);
             }
         }
 
         public bool HasStatus(BaseStatus status) => _statuses.ContainsKey(status);
 
         public int GetStatusCount(BaseStatus status) => HasStatus(status) ? _statuses[status] : 0;
-
-        //public void GetStatusEffect(BaseStatus status) => status.DoEffect(this, _statuses[status]);
         #endregion
     }
 }

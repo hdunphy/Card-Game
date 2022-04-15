@@ -7,6 +7,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
     {
         [Header("Status Parameters")]
         [SerializeField] private BaseStatus Status;
+
         public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             Status.RemoveStatus(target);
