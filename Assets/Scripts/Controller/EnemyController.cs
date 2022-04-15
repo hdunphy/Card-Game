@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private PartyController SelfController;
     [SerializeField] private PartyController OtherController;
-    private List<Card> Hand;
 
     [SerializeField] private EnemyAttackBehaviorEnum EnemyAttackBehaviorEnum;
 
@@ -25,25 +23,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //called by UnityEvent
     public void StartTurn()
     {
-        SetUpTurn(SelfController.GetHand());
+        attackBehavior.SetTurnStategy(SelfController.GetHand(), SelfController.Mingmings, OtherController.Mingmings);
     }
 
-    private void SetUpTurn(List<Card> hand)
-    {
-        Hand = hand;
+    //Called by unityEvent
+    public void StartAttackPhase() => StartCoroutine(AttackPhaseCoroutine());
 
-        attackBehavior.SetTurnStategy(Hand, SelfController.Mingmings, OtherController.Mingmings);
-
-        StartCoroutine(AttackPhase());
-    }
-
-    private IEnumerator AttackPhase()
+    private IEnumerator AttackPhaseCoroutine()
     {
         //disable user message so not to get bombarded by failed attempts
         UserMessage.Instance.CanSendMessage = false;
 
+        //TODO change this to animation duration
         yield return new WaitForSeconds(SecondsBetweenAttack);
 
         while (GetNextAttack())

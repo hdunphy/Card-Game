@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
         public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            base.InvokeAction(source, target, card);
+            OnInvoked?.Invoke();
 
             if (Constraint.CanUseCard(source, card))
             {
@@ -20,9 +21,6 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             }
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            // no animation
-        }
+        public override Action<GameObject, GameObject> PerformAnimation => null;
     }
 }

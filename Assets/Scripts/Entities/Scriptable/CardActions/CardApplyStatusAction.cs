@@ -1,4 +1,5 @@
 using Assets.Scripts.Helpers;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -18,9 +19,10 @@ namespace Assets.Scripts.Entities.Scriptable
             base.InvokeAction(source, target, card);
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            LeanTweenAnimations.RotateBackAndForth(target.gameObject, rotationAmountDegrees, durationSeconds / 4);
-        }
+        public override Action<GameObject, GameObject> PerformAnimation
+            => (_, target) =>
+            {
+                LeanTweenAnimations.RotateBackAndForth(target.gameObject, rotationAmountDegrees, durationSeconds / 4);
+            };
     }
 }

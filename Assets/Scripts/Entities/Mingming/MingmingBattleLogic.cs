@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Entities
 {
@@ -46,6 +47,10 @@ namespace Assets.Scripts.Entities
         public event Action<BaseStatus, int> OnStatusUpdated;
         public event Action<BaseStatus, int> OnStatusAdded;
         public event Action<BaseStatus> OnStatusRemoved;
+        public event Action<Action<GameObject, GameObject>, MingmingBattleLogic> TriggerAnimation;
+
+        public void OnTriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target) 
+            => TriggerAnimation?.Invoke(animation, target);
 
         public MingmingBattleLogic(MingmingBattleLogic simulation)
         {

@@ -19,10 +19,10 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             base.InvokeAction(source, target, card);
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            LeanTweenAnimations.RotateBackAndForth(source.gameObject, rotationAmountDegrees, durationSeconds / 4);
-        }
-
+        public override Action<GameObject, GameObject> PerformAnimation
+            => (source, _) =>
+            {
+                LeanTweenAnimations.RotateBackAndForth(source, rotationAmountDegrees, durationSeconds / 4);
+            };
     }
 }

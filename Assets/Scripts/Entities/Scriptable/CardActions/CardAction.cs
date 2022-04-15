@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -17,15 +18,16 @@ namespace Assets.Scripts.Entities.Scriptable
             OnInvoked?.Invoke();
 
             //PerformAnimation(source, target);
+            source.OnTriggerAnimation(PerformAnimation, target);
         }
 
-        public virtual void PerformAnimation(Mingming source, Mingming target)
-        {
-            Vector3 currentPosition = source.transform.position;
-            Vector3 destination = target.transform.position;
-
-            LeanTween.move(source.gameObject, destination, durationSeconds).setEaseOutBack();
-            LeanTween.delayedCall(durationSeconds, () => LeanTween.move(source.gameObject, currentPosition, durationSeconds / 2));
-        }
+        public virtual Action<GameObject, GameObject> PerformAnimation
+            => (source, target) =>
+            {
+                Vector3 currentPosition = source.transform.position;
+                Vector3 destination = target.transform.position;
+                LeanTween.move(source, destination, durationSeconds).setEaseOutBack();
+                LeanTween.delayedCall(durationSeconds, () => LeanTween.move(source, currentPosition, durationSeconds / 2));
+            };
     }
 }

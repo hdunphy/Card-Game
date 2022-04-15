@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -16,9 +17,6 @@ namespace Assets.Scripts.Entities.Scriptable
             base.InvokeAction(source, target, card);
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            //no animation
-        }
+        public override Action<GameObject, GameObject> PerformAnimation => null;
     }
 }

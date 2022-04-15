@@ -3,6 +3,7 @@ using Assets.Scripts.UI.Tooltips;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -82,6 +83,7 @@ namespace Assets.Scripts.Entities
             Logic.OnStatusUpdated += StatusUpdated;
             Logic.OnStatusRemoved += StatusRemoved;
             Logic.OnTakeDamage += TakeDamage;
+            Logic.TriggerAnimation += Logic_TriggerAnimation;
         }
 
         private void RemoveEvents()
@@ -91,6 +93,7 @@ namespace Assets.Scripts.Entities
             Logic.OnStatusUpdated -= StatusUpdated;
             Logic.OnStatusRemoved -= StatusRemoved;
             Logic.OnTakeDamage -= TakeDamage;
+            Logic.TriggerAnimation -= Logic_TriggerAnimation;
         }
 
         private void SetUpToolTips(MingmingInstance data)
@@ -196,6 +199,13 @@ namespace Assets.Scripts.Entities
             UIController.AddExperience(levelsGained, Logic.GetExperiencePercentage());
 
             UpdateTooltip();
+        }
+
+        private void Logic_TriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target)
+        {
+            //TODO: Refactor
+            var targetMingming = FindObjectsOfType<Mingming>().First(m => m.Logic == target);
+            animation?.Invoke(gameObject, targetMingming.gameObject);
         }
 
         public void OnDrop(PointerEventData eventData)

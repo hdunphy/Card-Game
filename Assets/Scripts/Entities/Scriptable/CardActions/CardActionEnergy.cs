@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable.CardActions
 {
@@ -14,10 +15,11 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
             base.InvokeAction(source, target, card);
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            var destination = new Vector3(2, 1, 1);
-            LeanTween.moveLocal(target.gameObject, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
-        }
+        public override Action<GameObject, GameObject> PerformAnimation
+            => (_, target) =>
+            {
+                var destination = new Vector3(2, 1, 1);
+                LeanTween.moveLocal(target, destination, durationSeconds).setEaseInBounce().setLoopPingPong(1);
+            };
     }
 }

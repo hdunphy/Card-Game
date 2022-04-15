@@ -5,18 +5,16 @@ namespace Assets.Scripts.Entities.Scriptable.Statuses
     [CreateAssetMenu(fileName = "Poison Status", menuName = "Data/Status/Create Poison Status")]
     public class PoisonStatus : BurnStatus
     {
-        [SerializeField] private int damage; //damage per count
-
         public override void DoEffect(MingmingBattleLogic mingming)
         {
             base.DoEffect(mingming);
             mingming.ApplyStatus(this, -1);
         }
 
-        protected override int GetDamage(int health, int count) => count * damage;
+        protected override float GetModifier(int count) => count * 0.05f;
 
         public override string GetTooltip(int count) =>
-            $"Deals {count} * {damage} at the start of the turn. Decreases count every turn";
+            $"{base.GetTooltip(count)}. Decreases count every turn";
 
         public override string GetTooltipHeader(int count) => "Poison";
     }

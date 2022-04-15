@@ -1,4 +1,5 @@
 using Assets.Scripts.References;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -16,9 +17,10 @@ namespace Assets.Scripts.Entities.Scriptable
             base.InvokeAction(source, target, card);
         }
 
-        public override void PerformAnimation(Mingming source, Mingming target)
-        {
-            LeanTween.moveLocalY(target.gameObject, animationHeightMovement, durationSeconds / 2).setLoopPingPong(3);
-        }
+        public override Action<GameObject, GameObject> PerformAnimation
+            => (_, target) =>
+            {
+                LeanTween.moveLocalY(target, animationHeightMovement, durationSeconds / 2).setLoopPingPong(3);
+            };
     }
 }

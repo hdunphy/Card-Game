@@ -25,17 +25,17 @@ namespace Assets.Scripts.Entities.Scriptable
             UserMessage.Instance.SendMessageToUser($"{mingming.Name} took {dmg} {GetTooltipHeader(count)} damage");
         }
 
-        protected virtual int GetDamage(int health, int count)
+        private int GetDamage(int health, int count)
         {
             var damage = health * GetModifier(count);
             return Mathf.Clamp(Mathf.FloorToInt(damage), 1, health);
         }
 
-        float GetModifier(int count) => count switch
+        protected virtual float GetModifier(int count) => count switch
         {
-            1 => 0.025f,
-            2 => 0.05f,
-            _ => 0.08f
+            1 => 0.05f,
+            2 => 0.12f,
+            _ => 0.25f
         };
 
         public override string GetTooltip(int count)
