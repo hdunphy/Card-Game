@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -6,9 +7,9 @@ namespace Assets.Scripts.Entities.Scriptable
     [CreateAssetMenu(fileName = "Stat Modifier Status", menuName = "Data/Status/Create Stat Modifier Status")]
     public class StatModiferStatus : BaseStatus
     {
-        [SerializeField, Range(1, 2)] public float Modifier;
-        [SerializeField] public Sprite PositiveSprite;
-        [SerializeField] public Sprite NegativeSprite;
+        [SerializeField, Range(1, 2)] private float Modifier;
+        [SerializeField] private Sprite PositiveSprite;
+        [SerializeField] private Sprite NegativeSprite;
         [SerializeField] private string PropertyName;
         [SerializeField] private string PositiveName;
         [SerializeField] private string NegativeName;
@@ -65,5 +66,20 @@ namespace Assets.Scripts.Entities.Scriptable
             => $"Modified {GetTooltipHeader(count)} by {Modifier * count}";
 
         public override string GetTooltipHeader(int count) => count > 0 ? PositiveName : NegativeName;
+
+        public override bool Equals(object obj)
+        {
+            return obj is StatModiferStatus status &&
+                   Modifier == status.Modifier &&
+                   PropertyName == status.PropertyName;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 76424289;
+            hashCode = hashCode * -1521134295 + Modifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PropertyName);
+            return hashCode;
+        }
     }
 }
