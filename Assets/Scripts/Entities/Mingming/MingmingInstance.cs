@@ -41,9 +41,9 @@ namespace Assets.Scripts.Entities
             DefenseModifier = mingmingInstance.DefenseModifier;
             HealthModifier = mingmingInstance.HealthModifier;
 
-            CurrentHealth = mingmingInstance.CurrentHealth;
-
             SetFieldsFromData();
+
+            CurrentHealth = mingmingInstance.CurrentHealth;
         }
 
         public MingmingInstance(MingmingData mingmingData, int level)
@@ -55,10 +55,10 @@ namespace Assets.Scripts.Entities
             AttackModifier = Rules.GetRandomInt(0, 31);
             DefenseModifier = Rules.GetRandomInt(0, 31);
             HealthModifier = Rules.GetRandomInt(0, 31);
-            
-            CurrentHealth = Health;
 
             SetFieldsFromData();
+            
+            CurrentHealth = Health;
         }
 
         public MingmingInstance(MingmingSaveModel mingmingSaveModel)
