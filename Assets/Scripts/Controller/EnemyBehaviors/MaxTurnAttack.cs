@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Entities;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Assets.Scripts.Controller.EnemyBehaviors
 {
@@ -13,7 +10,23 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public bool GetNextAttack()
         {
-            throw new System.NotImplementedException();
+            bool canPlay = CardPlays.Any();
+
+            if (canPlay)
+            {
+                var cardPlay = CardPlays.Dequeue();
+
+                if (cardPlay.IsValidAction())
+                {
+                    cardPlay.Play();
+                }
+                else
+                {
+                    canPlay = false;
+                }
+            }
+
+            return canPlay;
         }
 
         public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
@@ -23,19 +36,30 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
             if (canAttack)
             {
-                int maxScore = 0;
+                int maxScore = int.MinValue;
                 var turnState = new TurnState(ownedParty, otherParty, hand);
 
+                //scores not being added correctly check get best turn
+                /*
+                 * Should go something like:
+                 * Foreach card in hand //pick best start
+                 *  While still has energy
+                 *      recursively score += GetBestTurn
+                 *      
+                 *  GetBestTurn:
+                 */
                 maxScore = GetBestCard(maxScore, ref CardPlays, turnState);
+                
             }
         }
 
-        private int GetBestCard(int maxScore, ref Queue<CardPlay> cardPlays, TurnState turnState)
+        private int GetBestCard(int score, ref Queue<CardPlay> cardPlays, TurnState turnState)
         {
+            int maxScore = int.MinValue;
             foreach (var card in turnState.RemaingHand)
             {
                 var _cardPlays = new Queue<CardPlay>();
-                int _maxScore = GetBestTurn(maxScore, card, _cardPlays, turnState.Clone());
+                int _maxScore = GetBestSource(maxScore, card, _cardPlays, turnState.Clone());
                 if (_maxScore > maxScore)
                 {
                     maxScore = _maxScore;
@@ -43,17 +67,17 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 }
             }
 
-            return maxScore;
+            score += maxScore;
+            return score;
         }
 
-        private int GetBestTurn(int score, Card currentCard, Queue<CardPlay> cardPlayQueue, TurnState turnState)
+        private int GetBestSource(int maxScore, Card currentCard, Queue<CardPlay> cardPlayQueue, TurnState turnState)
         {
             if (!turnState.RemaingHand.Any())
             {
-                return score;
+                return maxScore;
             }
 
-            int maxScore = 0;
             CardPlay cardPlay = new CardPlay();
 
             foreach (var _source in turnState.OwnedMingmings.Keys)
@@ -72,25 +96,29 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 }
             }
 
-            score += maxScore;
             turnState.RemaingHand.Remove(currentCard);
             cardPlayQueue.Enqueue(cardPlay);
 
-            return GetBestCard(score, ref cardPlayQueue, turnState);
+            return GetBestCard(maxScore, ref cardPlayQueue, turnState);
         }
 
         private int GetBestCardPlay(out CardPlay cardPlay, MingmingBattleLogic _source, Card currentCard, TurnState turnState)
         {
-            int maxScore = 0;
+            int maxScore = int.MinValue;
             cardPlay = new CardPlay();
 
             foreach (var _target in turnState.AllTargets)
             {
+                if(!turnState.OtherMingmings.TryGetValue(_target, out Mingming targetMingming))
+                {
+                    targetMingming = turnState.OwnedMingmings[_target];
+                }
+
                 var _cardplay = new CardPlay
                 {
                     Card = currentCard,
                     Source = turnState.OwnedMingmings[_source],
-                    Target = turnState.OtherMingmings[_target]
+                    Target = targetMingming
                 };
 
                 if (currentCard.IsValidAction(_cardplay.Source, _cardplay.Target))
@@ -115,6 +143,21 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
         public Card Card { get; set; }
         public Mingming Source { get; set; }
         public Mingming Target { get; set; }
+
+        public bool IsValidAction() => Card.IsValidAction(Source, Target);
+
+        public void Play()
+        {
+            UserMessage.Instance.CanSendMessage = true;
+
+            EventManager.Instance.OnSelectMingmingTrigger(Source);
+            EventManager.Instance.OnSelectTargetTrigger(Target, Card);
+
+            EventManager.Instance.OnSelectMingmingTrigger(Source); //to deselect
+
+            //disable user message so not to get bombarded by failed attempts
+            UserMessage.Instance.CanSendMessage = false;
+        }
     }
 
     public class TurnState
@@ -123,7 +166,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public Dictionary<MingmingBattleLogic, Mingming> OtherMingmings { get; private set; }
 
-        public IEnumerable<MingmingBattleLogic> AllTargets { get; private set; }
+        public List<MingmingBattleLogic> AllTargets { get; private set; }
 
         public List<Card> RemaingHand { get; private set; }
 
@@ -140,8 +183,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public TurnState(TurnState turnState)
         {
-            OwnedMingmings = OwnedMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
-            OtherMingmings = OtherMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
+            OwnedMingmings = turnState.OwnedMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
+            OtherMingmings = turnState.OtherMingmings.Values.ToDictionary(m => new MingmingBattleLogic(m.Logic));
             RemaingHand = new List<Card>(turnState.RemaingHand);
 
             GetAllTargets();
@@ -149,8 +192,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         private void GetAllTargets()
         {
-            AllTargets = OtherMingmings.Keys;
-            AllTargets.ToList().AddRange(OwnedMingmings.Keys);
+            AllTargets = OtherMingmings.Keys.Union(OwnedMingmings.Keys).ToList();
         }
 
         public int ApplyCardPlay(CardPlay cardplay)
@@ -165,9 +207,25 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 var test = actions.Current;
             }
 
-            var _this = this;
-            return 0;
-            //throw new NotImplementedException("Need to apply card effects to simulation");
+            RemaingHand.Remove(cardplay.Card);
+
+            return GetScore();
+        }
+
+        private int GetScore()
+        {
+            int score = 0;
+            foreach(var owned in OwnedMingmings.Keys)
+            {
+                score += owned.GetCurrentStateScore();
+            }
+
+            foreach(var other in OtherMingmings.Keys)
+            {
+                score -= other.GetCurrentStateScore();
+            }
+
+            return score;
         }
     }
 }

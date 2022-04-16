@@ -174,5 +174,12 @@ namespace Assets.Scripts.Entities
             return hashCode;
         }
         #endregion
+
+        #region Misc
+        public int GetCurrentStateScore()
+        {
+            return TotalHealth * 2;
+        }
+        #endregion
     }
 }
