@@ -204,8 +204,12 @@ namespace Assets.Scripts.Entities
         private void Logic_TriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target)
         {
             //TODO: Refactor
-            var targetMingming = FindObjectsOfType<Mingming>().First(m => m.Logic == target);
-            animation?.Invoke(gameObject, targetMingming.gameObject);
+            var targetMingming = FindObjectsOfType<Mingming>().FirstOrDefault(m => m.Logic == target);
+
+            if (targetMingming != null)
+            {
+                animation?.Invoke(gameObject, targetMingming.gameObject);
+            }
         }
 
         public void OnDrop(PointerEventData eventData)

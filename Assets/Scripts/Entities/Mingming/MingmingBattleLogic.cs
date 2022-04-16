@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities
 {
-    public class MingmingBattleLogic
+    public class MingmingBattleLogic : IEquatable<MingmingBattleLogic>
     {
 
         /* --Private Properties-- */
@@ -145,6 +145,34 @@ namespace Assets.Scripts.Entities
         public bool HasStatus(BaseStatus status) => _statuses.ContainsKey(status);
 
         public int GetStatusCount(BaseStatus status) => HasStatus(status) ? _statuses[status] : 0;
+        #endregion
+
+        #region Equals Overrides
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as MingmingBattleLogic);
+        }
+
+        public bool Equals(MingmingBattleLogic other)
+        {
+            return other != null &&
+                   EqualityComparer<MingmingInstance>.Default.Equals(_data, other._data) &&
+                   _energyAvailable == other._energyAvailable &&
+                   Name == other.Name &&
+                   AttackModifier == other.AttackModifier &&
+                   DefenseModifier == other.DefenseModifier;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -1469461565;
+            hashCode = hashCode * -1521134295 + EqualityComparer<MingmingInstance>.Default.GetHashCode(_data);
+            hashCode = hashCode * -1521134295 + _energyAvailable.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + AttackModifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + DefenseModifier.GetHashCode();
+            return hashCode;
+        }
         #endregion
     }
 }

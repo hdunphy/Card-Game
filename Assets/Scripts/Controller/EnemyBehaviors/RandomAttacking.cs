@@ -1,73 +1,75 @@
-using Assets.Scripts.Controller.EnemyBehaviors;
 using Assets.Scripts.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class RandomAttacking : IEnemyAttackBehavior
+namespace Assets.Scripts.Controller.EnemyBehaviors
 {
-    private List<Mingming> OwnedParty;
-    private List<Mingming> OtherParty;
-    private List<Card> Hand;
-
-    public bool GetNextAttack()
+    public class RandomAttacking : IEnemyAttackBehavior
     {
-        bool hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
+        private List<Mingming> OwnedParty;
+        private List<Mingming> OtherParty;
+        private List<Card> Hand;
 
-        if (hasAttack)
+        public bool GetNextAttack()
         {
-            int minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
-            Mingming source = GetRandomMingming(OwnedParty);
-            Mingming target = GetRandomMingming(OtherParty);
-            Card _card = GetCard(source);
+            bool hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
 
-            List<Mingming> availableMingmings = new List<Mingming>(OtherParty);
-            while(!_card.IsValidAction(source, target))
+            if (hasAttack)
             {
-                availableMingmings.Remove(target);
-                if(availableMingmings.Count == 0)
+                int minCardEnergy = Hand.Any() ? Hand.Min(x => x.EnergyCost) : int.MaxValue;
+                Mingming source = GetRandomMingming(OwnedParty);
+                Mingming target = GetRandomMingming(OtherParty);
+                Card _card = GetCard(source);
+
+                List<Mingming> availableMingmings = new List<Mingming>(OtherParty);
+                while (!_card.IsValidAction(source, target))
                 {
-                    target = source;
-                    break;
+                    availableMingmings.Remove(target);
+                    if (availableMingmings.Count == 0)
+                    {
+                        target = source;
+                        break;
+                    }
+
+                    target = GetRandomMingming(availableMingmings);
                 }
 
-                target = GetRandomMingming(availableMingmings);
+                if (_card.IsValidAction(source, target))
+                {
+                    UserMessage.Instance.CanSendMessage = true;
+
+                    EventManager.Instance.OnSelectMingmingTrigger(source);
+                    EventManager.Instance.OnSelectTargetTrigger(target, _card);
+
+                    EventManager.Instance.OnSelectMingmingTrigger(source); //to deselect
+
+                    //disable user message so not to get bombarded by failed attempts
+                    UserMessage.Instance.CanSendMessage = false;
+                }
+
+                hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
             }
 
-            if (_card.IsValidAction(source, target))
-            {
-                UserMessage.Instance.CanSendMessage = true;
-
-                EventManager.Instance.OnSelectMingmingTrigger(source);
-                EventManager.Instance.OnSelectTargetTrigger(target, _card);
-
-                EventManager.Instance.OnSelectMingmingTrigger(source); //to deselect
-
-                //disable user message so not to get bombarded by failed attempts
-                UserMessage.Instance.CanSendMessage = false;
-            }
-
-            hasAttack = EnemyBehaviourHelper.CanAttack(OwnedParty, OtherParty, Hand);
+            return hasAttack;
         }
 
-        return hasAttack;
-    }
+        private Mingming GetRandomMingming(List<Mingming> mingmings)
+        {
+            return mingmings[Random.Range(0, mingmings.Count())];
+        }
 
-    private Mingming GetRandomMingming(List<Mingming> mingmings)
-    {
-        return mingmings[Random.Range(0, mingmings.Count())];
-    }
+        private Card GetCard(Mingming attacker)
+        {
+            var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.Logic.EnergyAvailable).ToList();
+            return possiblecards[Random.Range(0, possiblecards.Count())];
+        }
 
-    private Card GetCard(Mingming attacker)
-    {
-        var possiblecards = Hand.Where(x => x.EnergyCost <= attacker.Logic.EnergyAvailable).ToList();
-        return possiblecards[Random.Range(0, possiblecards.Count())];
-    }
-
-    public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
-    {
-        Hand = hand;
-        OwnedParty = ownedParty.ToList();
-        OtherParty = otherParty.ToList();
+        public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
+        {
+            Hand = hand;
+            OwnedParty = ownedParty.ToList();
+            OtherParty = otherParty.ToList();
+        }
     }
 }

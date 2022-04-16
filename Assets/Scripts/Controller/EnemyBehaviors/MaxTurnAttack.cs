@@ -56,7 +56,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             int maxScore = 0;
             CardPlay cardPlay = new CardPlay();
 
-            foreach(var _source in turnState.OwnedMingmings.Keys)
+            foreach (var _source in turnState.OwnedMingmings.Keys)
             {
                 var isValid = currentCard.CanUseCard(_source);
                 if (isValid)
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             int maxScore = 0;
             cardPlay = new CardPlay();
 
-            foreach(var _target in turnState.AllTargets)
+            foreach (var _target in turnState.AllTargets)
             {
                 var _cardplay = new CardPlay
                 {
@@ -93,7 +93,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                     Target = turnState.OtherMingmings[_target]
                 };
 
-                if(currentCard.IsValidAction(_cardplay.Source, _cardplay.Target))
+                if (currentCard.IsValidAction(_cardplay.Source, _cardplay.Target))
                 {
                     var _turnSate = turnState.Clone();
                     int _score = _turnSate.ApplyCardPlay(_cardplay);
@@ -155,23 +155,19 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public int ApplyCardPlay(CardPlay cardplay)
         {
-            throw new NotImplementedException("Need to apply card effects to simulation");
-        }
-    }
+            var source = AllTargets.First(x => x.Equals(cardplay.Source.Logic));
+            var target = AllTargets.First(x => x.Equals(cardplay.Target.Logic));
 
-    public static class EnemyBehaviourHelper
-    {
-        public static bool CanAttack(IEnumerable<Mingming> OwnedParty, IEnumerable<Mingming> OtherParty, IEnumerable<Card> Hand)
-        {
-            OwnedParty = OwnedParty.Where(x => x.IsInPlay && x.Logic.EnergyAvailable > 0).ToList();
-            OtherParty = OtherParty.Where(x => x.IsInPlay).ToList();
+            var actions = cardplay.Card.InvokeActions(source, target);
 
-            var targets = new List<Mingming>(OwnedParty);
-            targets.AddRange(new List<Mingming>(OtherParty));
+            while (actions.MoveNext())
+            {
+                var test = actions.Current;
+            }
 
-            Hand = Hand.Where(card => OwnedParty.Any(own => targets.Any(target => card.IsValidAction(own, target)))).ToList();
-
-            return OwnedParty.Any() && OtherParty.Any() && Hand.Any();
+            var _this = this;
+            return 0;
+            //throw new NotImplementedException("Need to apply card effects to simulation");
         }
     }
 }

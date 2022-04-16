@@ -2,21 +2,22 @@
 using Assets.Scripts.Entities.Drops;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.References;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Assets.Scripts.Entities
 {
-    public class MingmingInstance
+    public class MingmingInstance : IEquatable<MingmingInstance>
     {
         public readonly int AttackModifier;
         public readonly int DefenseModifier;
         public readonly int HealthModifier;
 
         public MingmingData BaseData { get; }
-        public int Attack { get => Rules.CalculateStat(BaseData.Attack, AttackModifier, Level); }
-        public int Defense { get => Rules.CalculateStat(BaseData.Defense, DefenseModifier, Level); }
-        public int Health { get => Rules.CalculateStat(BaseData.Health, HealthModifier, Level) + Level + 5; }
+        public int Attack { get; private set; }
+        public int Defense { get; private set; }
+        public int Health { get; private set; }
         public int CurrentHealth { get; set; }
         public int Energy { get; private set; }
         public int Level { get; private set; }
@@ -76,6 +77,11 @@ namespace Assets.Scripts.Entities
         {
             Name = BaseData.name;
             Energy = BaseData.Energy;
+
+            Attack = Rules.CalculateStat(BaseData.Attack, AttackModifier, Level);
+            Defense = Rules.CalculateStat(BaseData.Defense, DefenseModifier, Level);
+            Health = Rules.CalculateStat(BaseData.Health, HealthModifier, Level) + Level + 5;
+
             CardDraw = BaseData.CardDraw;
             WildDeck = BaseData.WildCards;
             if (BaseData.Level30Card != null && Level >= 30)
@@ -125,5 +131,45 @@ namespace Assets.Scripts.Entities
 
             return (CardData)new DropTable(wildCardDrops).GetDrop();
         }
+
+        #region Equals Overrides
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as MingmingInstance);
+        }
+
+        public bool Equals(MingmingInstance other)
+        {
+            return other != null &&
+                   AttackModifier == other.AttackModifier &&
+                   DefenseModifier == other.DefenseModifier &&
+                   HealthModifier == other.HealthModifier &&
+                   EqualityComparer<MingmingData>.Default.Equals(BaseData, other.BaseData) &&
+                   CurrentHealth == other.CurrentHealth &&
+                   Energy == other.Energy &&
+                   Level == other.Level &&
+                   Experience == other.Experience &&
+                   Name == other.Name &&
+                   CardDraw == other.CardDraw &&
+                   DataName == other.DataName;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -1499152676;
+            hashCode = hashCode * -1521134295 + AttackModifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + DefenseModifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + HealthModifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<MingmingData>.Default.GetHashCode(BaseData);
+            hashCode = hashCode * -1521134295 + CurrentHealth.GetHashCode();
+            hashCode = hashCode * -1521134295 + Energy.GetHashCode();
+            hashCode = hashCode * -1521134295 + Level.GetHashCode();
+            hashCode = hashCode * -1521134295 + Experience.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + CardDraw.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DataName);
+            return hashCode;
+        }
+        #endregion
     }
 }

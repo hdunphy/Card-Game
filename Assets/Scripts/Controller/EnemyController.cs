@@ -1,3 +1,4 @@
+using Assets.Scripts.Controller.EnemyBehaviors;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class EnemyController : MonoBehaviour
         {
             case EnemyAttackBehaviorEnum.Random:
                 attackBehavior = new RandomAttacking();
+                break;
+            case EnemyAttackBehaviorEnum.MaxTurnAttack:
+                attackBehavior = new MaxTurnAttack();
                 break;
         }
     }
