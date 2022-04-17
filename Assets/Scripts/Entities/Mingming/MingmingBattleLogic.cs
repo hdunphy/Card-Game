@@ -15,6 +15,7 @@ namespace Assets.Scripts.Entities
         private int _energyAvailable;
 
         /* --Public Properties-- */
+        public int Id { get; set; }
         public string Name { get; private set; }
         public float AttackModifier { get; set; }
         public float DefenseModifier { get; set; }
@@ -52,14 +53,15 @@ namespace Assets.Scripts.Entities
         public void OnTriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target) 
             => TriggerAnimation?.Invoke(animation, target);
 
-        public MingmingBattleLogic(MingmingBattleLogic simulation)
+        public MingmingBattleLogic(MingmingBattleLogic battleLogic)
         {
-            _data = new MingmingInstance(simulation._data);
-            AttackModifier = simulation.AttackModifier;
-            DefenseModifier = simulation.DefenseModifier;
-            EnergyAvailable = simulation.EnergyAvailable;
-            _statuses = simulation._statuses;
-            Name = simulation.Name;
+            _data = new MingmingInstance(battleLogic._data);
+            AttackModifier = battleLogic.AttackModifier;
+            DefenseModifier = battleLogic.DefenseModifier;
+            EnergyAvailable = battleLogic.EnergyAvailable;
+            Id = battleLogic.Id;
+            _statuses = new Dictionary<BaseStatus, int>( battleLogic._statuses );
+            Name = battleLogic.Name;
         }
 
         public MingmingBattleLogic(MingmingInstance data, string name)
@@ -155,17 +157,26 @@ namespace Assets.Scripts.Entities
         public bool Equals(MingmingBattleLogic other)
         {
             return other != null &&
-                   EqualityComparer<MingmingInstance>.Default.Equals(_data, other._data) &&
+                   _data.Equals(other._data) &&
                    _energyAvailable == other._energyAvailable &&
                    Name == other.Name &&
                    AttackModifier == other.AttackModifier &&
                    DefenseModifier == other.DefenseModifier;
         }
 
+        /*
+            _data = new MingmingInstance(simulation._data);
+            AttackModifier = simulation.AttackModifier;
+            DefenseModifier = simulation.DefenseModifier;
+            EnergyAvailable = simulation.EnergyAvailable;
+            _statuses = new Dictionary<BaseStatus, int>( simulation._statuses );
+            Name = simulation.Name;
+        */
+
         public override int GetHashCode()
         {
             int hashCode = -1469461565;
-            hashCode = hashCode * -1521134295 + EqualityComparer<MingmingInstance>.Default.GetHashCode(_data);
+            hashCode = hashCode * -1521134295 + _data.GetHashCode();
             hashCode = hashCode * -1521134295 + _energyAvailable.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
             hashCode = hashCode * -1521134295 + AttackModifier.GetHashCode();
