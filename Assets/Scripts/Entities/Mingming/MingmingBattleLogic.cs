@@ -86,7 +86,6 @@ namespace Assets.Scripts.Entities
 
         public void PlayCard(Card selectedCard)
         {
-            EventManager.Instance.OnDiscardCardTrigger(selectedCard);
             EnergyAvailable -= selectedCard.EnergyCost;
         }
 

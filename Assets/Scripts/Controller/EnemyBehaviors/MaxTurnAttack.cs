@@ -36,25 +36,66 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
             if (canAttack)
             {
-                int maxScore = int.MinValue;
                 var turnState = new TurnState(ownedParty, otherParty, hand);
 
-                //scores not being added correctly check get best turn
-                /*
-                 * Should go something like:
-                 * Foreach card in hand //pick best start
-                 *  While still has energy
-                 *      recursively score += GetBestTurn
-                 *      
-                 *  GetBestTurn:
-                 */
-                maxScore = GetBestCard(maxScore, ref CardPlays, turnState);
+                var maxScore = GetBestCardPlay(turnState, CardPlays);
                 
             }
         }
 
+        public int GetBestCardPlay(TurnState turnState, Queue<CardPlay> cardPlays)
+        {
+            int maxScore = int.MinValue;
+
+            foreach(var card in turnState.RemaingHand)
+            {
+                var sources = turnState.OwnedMingmings.Keys.Where(m => card.CanUseCard(m));
+
+                foreach (var source in sources)
+                {
+                    var sourceMingming = turnState.GetMingming(source);
+                    var allTargets = turnState.AllTargets.Where(t => card.IsValidTarget(sourceMingming, turnState.GetMingming(t)));
+                
+                    foreach (var target in allTargets)
+                    {
+                        var _turnState = turnState.Clone();
+                        var cardplay = new CardPlay
+                        {
+                            Card = card,
+                            Source = _turnState.GetMingming(source),
+                            Target = _turnState.GetMingming(target)
+                        };
+
+                        var score = _turnState.ApplyCardPlay(cardplay);
+                        _turnState.RemaingHand.Remove(card);
+
+                        var _cardPlays = new Queue<CardPlay>(cardPlays);
+                        _cardPlays.Enqueue(cardplay);
+
+                        score += GetBestCardPlay(_turnState, _cardPlays);
+
+                        if(score > maxScore)
+                        {
+                            turnState = _turnState;
+                            cardPlays = _cardPlays;
+                            maxScore = score;
+                        }
+                    }
+                }
+            }
+
+            return maxScore;
+        }
+
         private int GetBestCard(int score, ref Queue<CardPlay> cardPlays, TurnState turnState)
         {
+            var canAttack = turnState.HasUsableCards();
+
+            if (!canAttack)
+            {
+                return score;
+            }
+
             int maxScore = int.MinValue;
             foreach (var card in turnState.RemaingHand)
             {
@@ -67,17 +108,11 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 }
             }
 
-            score += maxScore;
-            return score;
+            return score + maxScore;
         }
 
         private int GetBestSource(int maxScore, Card currentCard, Queue<CardPlay> cardPlayQueue, TurnState turnState)
         {
-            if (!turnState.RemaingHand.Any())
-            {
-                return maxScore;
-            }
-
             CardPlay cardPlay = new CardPlay();
 
             foreach (var _source in turnState.OwnedMingmings.Keys)
@@ -195,6 +230,15 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             AllTargets = OtherMingmings.Keys.Union(OwnedMingmings.Keys).ToList();
         }
 
+        public bool HasUsableCards()
+        {
+            var OwnedParty = OwnedMingmings.Keys.Where(x => x.CurrentHealth > 0 && x.EnergyAvailable > 0).ToList();
+
+            RemaingHand = RemaingHand.Where(card => OwnedParty.Any(own => card.CanUseCard(own))).ToList();
+
+            return OwnedParty.Any() && RemaingHand.Any();
+        }
+
         public int ApplyCardPlay(CardPlay cardplay)
         {
             var source = AllTargets.First(x => x.Equals(cardplay.Source.Logic));
@@ -226,6 +270,16 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             }
 
             return score;
+        }
+
+        public Mingming GetMingming(MingmingBattleLogic logic)
+        {
+            if(!OwnedMingmings.TryGetValue(logic, out Mingming mingming))
+            {
+                mingming = OtherMingmings.[logic];
+            }
+
+            return mingming;
         }
     }
 }

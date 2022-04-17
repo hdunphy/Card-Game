@@ -88,13 +88,17 @@ public class Card : MonoBehaviour
         DragAndDrop.enabled = false;
 
         yield return InvokeActions(source.Logic, target.Logic);
+
+        EventManager.Instance.OnDiscardCardTrigger(this);
     }
 
     public IEnumerator InvokeActions(MingmingBattleLogic source, MingmingBattleLogic target) => Data.InvokeActionCoroutine(source, target, this);
 
     public bool CanUseCard(MingmingBattleLogic source) => !PlayedThisTurn && Data.CardConstraint.CanUseCard(source, this);
 
-    public bool IsValidAction(Mingming source, Mingming target) => Data.TargetType.IsValidAction(source, target, this);
+    public bool IsValidTarget(Mingming source, Mingming target) => Data.TargetType.IsValidTarget(source, target, this);
+
+    public bool IsValidAction(Mingming source, Mingming target) => IsValidTarget(source, target) && CanUseCard(source.Logic);
 
     private void Instance_UpdateSelectedMingming(Mingming _mingming)
     {
