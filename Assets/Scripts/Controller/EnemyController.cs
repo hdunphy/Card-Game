@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
         //TODO change this to animation duration
         yield return new WaitForSeconds(SecondsBetweenAttack);
 
-        while (GetNextAttack())
+        while (attackBehavior.GetNextAttack())
         {
             yield return new WaitForSeconds(SecondsBetweenAttack);
         }
@@ -55,10 +55,5 @@ public class EnemyController : MonoBehaviour
         {
             EventManager.Instance.OnGetNextTurnStateTrigger();
         }
-    }
-
-    public bool GetNextAttack()
-    {
-        return attackBehavior.GetNextAttack();
     }
 }

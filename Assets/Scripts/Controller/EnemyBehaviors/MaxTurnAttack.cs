@@ -40,17 +40,14 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
                 var turnState = new TurnState(ownedParty, otherParty, hand);
 
-                var maxScore = GetBestCardPlay(turnState, CardPlays);
-
+                var maxScore = GetBestCardPlay(turnState, ref CardPlays, int.MinValue);
 
                 UserMessage.Instance.CanSendMessage = true;
             }
         }
 
-        public int GetBestCardPlay(TurnState turnState, Queue<CardPlay> cardPlays)
+        public int GetBestCardPlay(TurnState turnState, ref Queue<CardPlay> cardPlays, int maxScore)
         {
-            int maxScore = int.MinValue;
-
             foreach(var card in turnState.RemaingHand)
             {
                 var sources = turnState.OwnedMingmings.Where(m => card.CanUseCard(m));
@@ -75,7 +72,11 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                         var _cardPlays = new Queue<CardPlay>(cardPlays);
                         _cardPlays.Enqueue(cardplay);
 
-                        score += GetBestCardPlay(_turnState, _cardPlays);
+                        //want to get the final score
+                        if (_turnState.HasUsableCards())
+                        {
+                            score = GetBestCardPlay(_turnState, ref _cardPlays, score);
+                        }
 
                         if(score > maxScore)
                         {
