@@ -161,4 +161,6 @@ public class Card : MonoBehaviour
         HoverEffect.enabled = true;
         PlayedThisTurn = false;
     }
+
+    int GetCardScore() => Data.GetCardScore();
 }

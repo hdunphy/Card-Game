@@ -48,6 +48,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public int GetBestCardPlay(TurnState turnState, ref Queue<CardPlay> cardPlays, int maxScore)
         {
+            var bestCardPlays = new Queue<CardPlay>(cardPlays);
+
             foreach(var card in turnState.RemaingHand)
             {
                 var sources = turnState.OwnedMingmings.Where(m => card.CanUseCard(m));
@@ -80,13 +82,14 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
                         if(score > maxScore)
                         {
-                            cardPlays = _cardPlays;
+                            bestCardPlays = _cardPlays;
                             maxScore = score;
                         }
                     }
                 }
             }
 
+            cardPlays = bestCardPlays;
             return maxScore;
         }
     }

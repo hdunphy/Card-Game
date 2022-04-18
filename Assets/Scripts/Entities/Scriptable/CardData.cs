@@ -4,6 +4,7 @@ using Assets.Scripts.Entities.Scriptable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Data/Create Card Data")]
@@ -39,6 +40,13 @@ public class CardData : IDropScriptableObject
 
         //TODO: improve this below. Move into TargetType
         (source ?? target).PlayCard(card); //use null check for self targeting. 
+    }
+
+    public int GetCardScore()
+    {
+        int score = 0;
+        cardActions.Aggregate(score, (score, action) => score += TargetType.ScoreModifier * action.ActionScore);
+        return score;
     }
 
 #if UNITY_EDITOR

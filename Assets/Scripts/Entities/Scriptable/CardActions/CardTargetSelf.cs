@@ -7,6 +7,8 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override string TooltipText => "Can target itself (the selected Mingming)";
 
+        public override int ScoreModifier => 1;
+
         public override bool IsValidTarget(Mingming source, Mingming target, Card card)
         {
             bool notNullTarget = target != null;

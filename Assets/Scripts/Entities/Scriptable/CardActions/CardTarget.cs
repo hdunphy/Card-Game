@@ -8,6 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] public Sprite Sprite;
 
         public abstract string TooltipText { get; }
+        public abstract int ScoreModifier { get; }
 
         public virtual bool IsValidTarget(Mingming source, Mingming target, Card card)
         {

@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
 {
-
     public abstract class BaseStatus : ScriptableObject
     {
         [SerializeField] protected Sprite sprite;

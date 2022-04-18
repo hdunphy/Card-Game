@@ -7,6 +7,8 @@ namespace Assets.Scripts.Entities.Scriptable
     {
         public override string TooltipText => "Can target any single Mingming. Friend or Foe";
 
+        public override int ScoreModifier => 1;
+
         public override void InvokeAction(CardAction cardAction, MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
             cardAction.InvokeAction(source, target, card);

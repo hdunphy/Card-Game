@@ -4,10 +4,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class DeckHandler : MonoBehaviour
 {
     [SerializeField] protected HandManager HandManager;
+    [SerializeField] protected UnityEvent<int> OnCardDraw;
     [Header("Sounds")]
     [SerializeField] protected SoundEventManager CardSoundManager;
     [SerializeField] protected string ShuffleCardsSound;
@@ -86,8 +88,11 @@ public abstract class DeckHandler : MonoBehaviour
             else
             {
                 UserMessage.Instance.SendMessageToUser($"Not enough Cards to draw {cardsRemaining} more");
+                _numberOfCards -= cardsRemaining;
             }
         }
+
+        OnCardDraw?.Invoke(_numberOfCards); //TODO: need to add event here
     }
 
     public void SetCardDraw(int cardDraw)

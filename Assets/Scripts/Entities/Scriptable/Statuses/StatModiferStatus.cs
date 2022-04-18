@@ -82,6 +82,6 @@ namespace Assets.Scripts.Entities.Scriptable
             return hashCode;
         }
 
-        public override int GetScore(int count) => 0;
+        public override int GetScore(int count) => Mathf.RoundToInt(count * Modifier);
     }
 }

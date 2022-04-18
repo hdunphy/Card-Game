@@ -12,6 +12,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] protected float durationSeconds = 0.75f;
 
         public float DurationSeconds => durationSeconds;
+        public virtual int ActionScore => 0;
 
         public virtual void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
@@ -29,5 +30,6 @@ namespace Assets.Scripts.Entities.Scriptable
                 LeanTween.move(source, destination, durationSeconds).setEaseOutBack();
                 LeanTween.delayedCall(durationSeconds, () => LeanTween.move(source, currentPosition, durationSeconds / 2));
             };
+
     }
 }
