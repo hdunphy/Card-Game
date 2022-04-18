@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -24,5 +25,7 @@ namespace Assets.Scripts.Entities.Scriptable
         public abstract string GetTooltip(int count);
 
         public abstract string GetTooltipHeader(int count);
+
+        public abstract int GetScore(int count);
     }
 }

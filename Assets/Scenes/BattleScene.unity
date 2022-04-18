@@ -1021,6 +1021,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 602442008}
+          m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+          m_MethodName: StartAttackPhase
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - StateEnum: 2
     Event:
       m_PersistentCalls:
@@ -3234,8 +3246,6 @@ MonoBehaviour:
   playerMinmings:
   - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
     Level: 20
-  - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-    Level: 20
   enemyMinmings:
   - MingMingData: {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
     Level: 20
@@ -4324,8 +4334,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.17777772
+  m_Value: 1
+  m_Size: 0.17777771
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

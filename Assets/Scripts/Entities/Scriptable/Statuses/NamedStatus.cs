@@ -8,6 +8,7 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] private new string name;
         [SerializeField] private string description;
         [SerializeField] private int maxCount;
+        [SerializeField] private int scoreFactor;
 
         public override TurnStateEnum TurnState => TurnStateEnum.PostTurn;
 
@@ -29,6 +30,8 @@ namespace Assets.Scripts.Entities.Scriptable
             }
             mingming.ApplyStatus(this, -1);
         }
+
+        public override int GetScore(int count) => scoreFactor * count;
 
         public override string GetTooltip(int count) => $"{description}. Lasts for {count} turns;";
 

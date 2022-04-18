@@ -33,6 +33,7 @@ namespace Assets.Scripts.Entities
                 OnEnergyChanged?.Invoke(value);
             }
         }
+
         public int CurrentHealth
         {
             get => _data.CurrentHealth;
@@ -136,12 +137,14 @@ namespace Assets.Scripts.Entities
 
         public void RemoveAllStatuses()
         {
-            var keys = _statuses.Keys;
+            var keys = _statuses.Keys.ToList();
             foreach (var status in keys)
             {
                 status.RemoveStatus(this);
             }
         }
+
+        public List<KeyValuePair<BaseStatus, int>> GetStatuses() => _statuses.ToList();
 
         public bool HasStatus(BaseStatus status) => _statuses.ContainsKey(status);
 
@@ -182,13 +185,6 @@ namespace Assets.Scripts.Entities
             hashCode = hashCode * -1521134295 + AttackModifier.GetHashCode();
             hashCode = hashCode * -1521134295 + DefenseModifier.GetHashCode();
             return hashCode;
-        }
-        #endregion
-
-        #region Misc
-        public int GetCurrentStateScore()
-        {
-            return TotalHealth * 2;
         }
         #endregion
     }

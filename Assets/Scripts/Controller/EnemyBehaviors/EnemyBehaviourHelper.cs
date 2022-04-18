@@ -18,5 +18,11 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
             return OwnedParty.Any() && OtherParty.Any() && Hand.Any();
         }
+
+        public static int GetCurrentStateScore(this MingmingBattleLogic mingming)
+        {
+            int statusScore = mingming.GetStatuses().Aggregate(0, (score, pair) => score += pair.Key.GetScore(pair.Value));
+            return mingming.CurrentHealth * 2 + statusScore;
+        }
     }
 }

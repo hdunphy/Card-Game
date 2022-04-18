@@ -81,5 +81,7 @@ namespace Assets.Scripts.Entities.Scriptable
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PropertyName);
             return hashCode;
         }
+
+        public override int GetScore(int count) => 0;
     }
 }

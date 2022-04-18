@@ -16,3 +16,4 @@ MonoBehaviour:
   name: Stunned
   description: Cannot attack next turn
   maxCount: 1
+  scoreFactor: 15

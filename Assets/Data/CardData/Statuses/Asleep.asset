@@ -16,3 +16,4 @@ MonoBehaviour:
   name: Asleep
   description: MingMing is sleeping
   maxCount: 3
+  scoreFactor: 10

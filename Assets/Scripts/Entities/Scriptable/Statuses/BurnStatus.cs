@@ -42,5 +42,7 @@ namespace Assets.Scripts.Entities.Scriptable
             => $"Does {GetModifier(count) * 100}% of Mingming's health at start of each turn";
 
         public override string GetTooltipHeader(int count) => "Burn";
+
+        public override int GetScore(int count) => -Mathf.RoundToInt(GetModifier(count) * 10);
     }
 }
