@@ -36,7 +36,7 @@ public class PartyController : MonoBehaviour
         {
             TurnStateEvent _event = stateEvents.Find(x => x.StateEnum.Equals(_enum));
             if (_event != null)
-                TurnStateMachine[_enum].NewStateAlert = _event.Event;
+                TurnStateMachine[_enum].SetEvent(_event.Event);
         }
     }
 
@@ -101,8 +101,8 @@ public class PartyController : MonoBehaviour
             _mingming.Logic.OnStatusRemoved += (status) => Logic_OnStatusRemoved(_mingming, status);
             
             //Refactor adding listeners
-            TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(_mingming.StartTurn);
-            TurnStateMachine[TurnStateEnum.PostTurn].NewStateAlert.AddListener(delegate { _mingming.SetIsTurn(false); });
+            TurnStateMachine[TurnStateEnum.PreTurn].AddListener(_mingming.StartTurn);
+            TurnStateMachine[TurnStateEnum.PostTurn].AddListener(delegate { _mingming.SetIsTurn(false); });
 
             CardDraw += _data.CardDraw - index;
             if (isWildDeck)
@@ -114,9 +114,6 @@ public class PartyController : MonoBehaviour
         CardDraw = Mathf.Clamp(CardDraw, 0, Rules.HAND_MAX);
         deckController.SetCardDraw(CardDraw);
         deckController.AddCardsToDeck(deck);
-
-        //Add end of preturn event trigger
-        TurnStateMachine[TurnStateEnum.PreTurn].NewStateAlert.AddListener(EventManager.Instance.OnGetNextTurnStateTrigger);
     }
 
     private void Logic_OnStatusAdded(Mingming mingming, BaseStatus status)
@@ -124,7 +121,7 @@ public class PartyController : MonoBehaviour
         var effectStatus = status as EffectStatus;
         if (effectStatus != null)
         {
-            TurnStateMachine[effectStatus.TurnState].NewStateAlert.AddListener(effectStatus.GetEffect(mingming.Logic));
+            TurnStateMachine[effectStatus.TurnState].AddListener(effectStatus.GetEffect(mingming.Logic));
         }
     }
 
@@ -133,20 +130,20 @@ public class PartyController : MonoBehaviour
         var effectStatus = status as EffectStatus;
         if (effectStatus != null)
         {
-            TurnStateMachine[effectStatus.TurnState].NewStateAlert.RemoveListener(effectStatus.GetEffect(mingming.Logic));
+            TurnStateMachine[effectStatus.TurnState].RemoveListener(effectStatus.GetEffect(mingming.Logic));
         }
     }
 
     public void GetNextTurnState()
     {
         CurrentTurnState = TurnStateMachine[CurrentTurnState].GetNextState();
-        TurnStateMachine[CurrentTurnState].NewStateAlert.Invoke();
+        TurnStateMachine[CurrentTurnState].Invoke();
     }
 
     public void StartTurn()
     {
         CurrentTurnState = TurnStateEnum.PreTurn;
-        TurnStateMachine[CurrentTurnState].NewStateAlert.Invoke();
+        TurnStateMachine[CurrentTurnState].Invoke();
     }
 
     public void SetAsLastSibling()
