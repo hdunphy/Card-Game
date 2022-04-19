@@ -1,3 +1,4 @@
+using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.References;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,24 @@ namespace Assets.Scripts.UI.Controller
         private List<SelectableCard> AvailableCards;
         private List<SelectableCard> CurrentCards;
         private IDeckHolder DeckHolder;
+        private PlayerController _playerController;
+        private PlayerInputController _playerInputController;
 
         private void Start()
         {
             DeckBuilderCanvas.gameObject.SetActive(false);
             AvailableCards = new List<SelectableCard>();
             CurrentCards = new List<SelectableCard>();
+            _playerController = FindObjectOfType<PlayerController>();
+            _playerInputController = FindObjectOfType<PlayerInputController>();
         }
 
         //called by unity event
         public void Show()
         {
             DeckBuilderCanvas.gameObject.SetActive(true);
-            DeckHolder = FindObjectOfType<PlayerController>().DevController.DeckHolder;
+            _playerInputController.enabled = false;
+            DeckHolder = _playerController.DevController.DeckHolder;
 
             GetAvailableCards();
             GetCurrentCards();
@@ -41,6 +47,7 @@ namespace Assets.Scripts.UI.Controller
         {
             ClearCards();
             DeckBuilderCanvas.gameObject.SetActive(false);
+            _playerInputController.enabled = true;
         }
 
         private void ClearCards()
