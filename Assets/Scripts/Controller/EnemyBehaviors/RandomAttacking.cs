@@ -65,7 +65,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             return possiblecards[Random.Range(0, possiblecards.Count())];
         }
 
-        public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
+        public void SetTurnStrategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
         {
             Hand = hand;
             OwnedParty = ownedParty.ToList();

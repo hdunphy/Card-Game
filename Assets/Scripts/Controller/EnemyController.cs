@@ -28,9 +28,9 @@ public class EnemyController : MonoBehaviour
     }
 
     //called by UnityEvent
-    public void StartTurn()
+    public void SetTurnStrategy()
     {
-        attackBehavior.SetTurnStategy(SelfController.GetHand(), SelfController.Mingmings, OtherController.Mingmings);
+        attackBehavior.SetTurnStrategy(SelfController.GetHand(), SelfController.Mingmings, OtherController.Mingmings);
     }
 
     //Called by unityEvent

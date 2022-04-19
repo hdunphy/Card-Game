@@ -7,6 +7,6 @@ public enum EnemyAttackBehaviorEnum { Random, MaxTurnAttack };
 
 public interface IEnemyAttackBehavior
 {
-    void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty);
+    void SetTurnStrategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty);
     bool GetNextAttack();
 }

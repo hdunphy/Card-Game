@@ -29,7 +29,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             return canPlay;
         }
 
-        public void SetTurnStategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
+        public void SetTurnStrategy(List<Card> hand, IEnumerable<Mingming> ownedParty, IEnumerable<Mingming> otherParty)
         {
             var canAttack = EnemyBehaviourHelper.CanAttack(ownedParty, otherParty, hand);
             CardPlays = new Queue<CardPlay>();

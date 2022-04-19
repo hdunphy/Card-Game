@@ -1011,7 +1011,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 602442008}
           m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-          m_MethodName: StartTurn
+          m_MethodName: SetTurnStrategy
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1336,6 +1336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandManager: {fileID: 2031949607}
+  OnCardDraw:
+    m_PersistentCalls:
+      m_Calls: []
   CardSoundManager: {fileID: 11400000, guid: 63bf488baf4ded344a018ba3d869bc5a, type: 2}
   ShuffleCardsSound: Shuffle
   DiscardCardSound: Discard Card
@@ -1618,6 +1621,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandManager: {fileID: 106777029}
+  OnCardDraw:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 602442008}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: SetTurnStrategy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   CardSoundManager: {fileID: 11400000, guid: 63bf488baf4ded344a018ba3d869bc5a, type: 2}
   ShuffleCardsSound: Shuffle
   DiscardCardSound: Discard Card
@@ -4334,8 +4352,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.17777771
+  m_Value: 0.9999999
+  m_Size: 0.3111111
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
