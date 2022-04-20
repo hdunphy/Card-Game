@@ -1640,7 +1640,7 @@ MonoBehaviour:
   ShuffleCardsSound: Shuffle
   DiscardCardSound: Discard Card
   DrawCardSound: Draw Card
-  CardPrefab: {fileID: 1180509782708117283, guid: 0adf23de703c97e4592a48c22d6e973e, type: 3}
+  CardPrefab: {fileID: 1742662274366525885, guid: 4810dff7f01bfa74a8641d68809a4786, type: 3}
   GO_DrawPile: {fileID: 2100119898}
   handTransform: {fileID: 776402046}
   discardPileTransform: {fileID: 862655843}
@@ -4352,8 +4352,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480727979}
   m_HandleRect: {fileID: 480727978}
   m_Direction: 2
-  m_Value: 0.9999999
-  m_Size: 0.3111111
+  m_Value: 1.0000001
+  m_Size: 0.17777772
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

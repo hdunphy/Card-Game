@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6968571787322211759}
   - component: {fileID: 1180509782708117283}
+  - component: {fileID: 5558226686246948654}
   - component: {fileID: 6821801021120068574}
   - component: {fileID: 5629434573421279429}
   - component: {fileID: 5056140934290618629}
@@ -53,9 +54,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94520be6e5418be47b7c5c5ef85cbab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisableCover: {fileID: 7560345995254320797}
-  HoverEffect: {fileID: 5629434573421279429}
-  DragAndDrop: {fileID: 6821801021120068574}
+--- !u!114 &5558226686246948654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012564442648465318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7af870291948941ba9a38bdbb3c1fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableCover: {fileID: 7560345995254320797}
+  hoverEffect: {fileID: 5629434573421279429}
+  dragAndDrop: {fileID: 6821801021120068574}
+  card: {fileID: 1180509782708117283}
 --- !u!114 &6821801021120068574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,12 +82,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd16279d06c96954b9c13abe62e2938e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_transform: {fileID: 0}
   OnBeginDragEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+      - m_Target: {fileID: 5558226686246948654}
+        m_TargetAssemblyTypeName: Assets.Scripts.UI.Controller.CardInputController,
+          Assembly-CSharp
         m_MethodName: OnBeginDrag
         m_Mode: 1
         m_Arguments:
@@ -87,8 +101,9 @@ MonoBehaviour:
   OnEndDragEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+      - m_Target: {fileID: 5558226686246948654}
+        m_TargetAssemblyTypeName: Assets.Scripts.UI.Controller.CardInputController,
+          Assembly-CSharp
         m_MethodName: OnEndDrag
         m_Mode: 1
         m_Arguments:
@@ -117,8 +132,9 @@ MonoBehaviour:
   OnHoverStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+      - m_Target: {fileID: 5558226686246948654}
+        m_TargetAssemblyTypeName: Assets.Scripts.UI.Controller.CardInputController,
+          Assembly-CSharp
         m_MethodName: OnHoverStart
         m_Mode: 1
         m_Arguments:
@@ -132,8 +148,9 @@ MonoBehaviour:
   OnHoverEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180509782708117283}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+      - m_Target: {fileID: 5558226686246948654}
+        m_TargetAssemblyTypeName: Assets.Scripts.UI.Controller.CardInputController,
+          Assembly-CSharp
         m_MethodName: OnHoverEnd
         m_Mode: 1
         m_Arguments:
