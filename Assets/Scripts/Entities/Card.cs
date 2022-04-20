@@ -162,5 +162,5 @@ public class Card : MonoBehaviour
         PlayedThisTurn = false;
     }
 
-    int GetCardScore() => Data.GetCardScore();
+    public int GetCardScore() => Data.GetCardScore();
 }

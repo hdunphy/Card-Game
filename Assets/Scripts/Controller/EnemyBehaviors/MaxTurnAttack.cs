@@ -174,9 +174,11 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 var test = actions.Current;
             }
 
+            var score = GetScore() + cardplay.Card.GetCardScore();
+
             RemaingHand.Remove(cardplay.Card);
 
-            return GetScore();
+            return score;
         }
 
         private int GetScore()
