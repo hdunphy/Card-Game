@@ -10,6 +10,7 @@ public class Movement2D : MonoBehaviour, IMovement
 {
     [SerializeField] private Rigidbody2D Rb;
     [SerializeField] private float MoveSpeed;
+    [SerializeField] private Animator CharacterMovementAnimator;
 
     private Vector2 moveDirection;
     private bool canMove;
@@ -31,6 +32,18 @@ public class Movement2D : MonoBehaviour, IMovement
         {
             Rb.velocity = Vector2.zero;
         }
+
+        if(CharacterMovementAnimator != null)
+        {
+            SetAnimatorParameters();
+        }
+    }
+
+    private void SetAnimatorParameters()
+    {
+        CharacterMovementAnimator.SetBool("IsMoving", Rb.velocity.sqrMagnitude > 0.001f);
+        CharacterMovementAnimator.SetFloat("MoveX", Mathf.RoundToInt(moveDirection.x));
+        CharacterMovementAnimator.SetFloat("MoveY", Mathf.RoundToInt(moveDirection.y));
     }
 
     public void SetCanMove(bool _canMove)
