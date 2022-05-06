@@ -9,7 +9,7 @@ namespace Assets.Scripts.UI.Tooltips
             if (data is CardData cardData)
             {
                 //TODO: use the actions here
-                gameObject.AddComponent<TooltipTrigger>().SetText($"card has {cardData.AttackModifier} power");
+                gameObject.AddComponent<TooltipTrigger>().SetText($"TODO");
             }
         }
     }

@@ -9,7 +9,6 @@ public class Card : MonoBehaviour
     private ICardUI UIController;
     private CardData Data { get; set; }
     public bool PlayedThisTurn { get; private set; }
-    public float Power => Data.AttackModifier;
     public int EnergyCost => Data.EnergyCost;
 
     public event Action<bool> ToggleInteractions;

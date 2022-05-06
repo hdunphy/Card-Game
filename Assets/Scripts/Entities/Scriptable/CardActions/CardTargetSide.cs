@@ -15,7 +15,7 @@ namespace Assets.Scripts.Entities.Scriptable
             var controller = FindObjectsOfType<PartyController>().First(m => m.HasMingming(target)); //should never be null
             foreach (var mingming in controller.Mingmings.Where(m => m.IsInPlay))
             {
-                cardAction.InvokeAction(source, mingming.Logic, card);
+                cardAction.InvokeAction(source, mingming.Logic, card.CardAlignment);
             }
         }
     }

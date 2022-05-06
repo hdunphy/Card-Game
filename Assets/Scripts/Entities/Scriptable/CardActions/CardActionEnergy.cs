@@ -13,10 +13,11 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
 
         public override int ActionScore => EnergyAdded * SCORE_PER_ENERGY;
 
-        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
+            //TODO add card alignment modifier?
             target.AddEnergy(EnergyAdded);
-            base.InvokeAction(source, target, card);
+            base.InvokeAction(source, target, cardAlignment);
         }
 
         public override Action<GameObject, GameObject> PerformAnimation

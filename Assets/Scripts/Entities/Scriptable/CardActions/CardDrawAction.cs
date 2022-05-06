@@ -14,11 +14,11 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override int ActionScore => numberOfCards * SCORE_PER_CARD_DRAW;
 
-        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
             FindObjectsOfType<PartyController>().First(m => m.HasMingming(source)).DrawCards(numberOfCards);
 
-            base.InvokeAction(source, target, card);
+            base.InvokeAction(source, target, cardAlignment);
         }
 
         public override Action<GameObject, GameObject> PerformAnimation => null;

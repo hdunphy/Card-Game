@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable
         public float DurationSeconds => durationSeconds;
         public virtual int ActionScore => 0;
 
-        public virtual void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public virtual void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
             OnInvoked?.Invoke();
 

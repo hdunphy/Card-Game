@@ -13,6 +13,7 @@ namespace Assets.Scripts.Entities.Scriptable.Statuses
         [SerializeField] private TurnStateEnum turnState;
         [SerializeField] private BaseConstraint constraint;
         [SerializeField] private CardAction action;
+        [SerializeField] private CardAlignment alignment;
 
         public override TurnStateEnum TurnState => turnState;
 
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Entities.Scriptable.Statuses
         {
             if (constraint.MingmingMeetsConstraint(mingming))
             {
-                action.InvokeAction(mingming, mingming, null);
+                action.InvokeAction(mingming, mingming, alignment);
             }
         }
 

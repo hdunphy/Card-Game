@@ -8,13 +8,17 @@ namespace Assets.Scripts.Entities.Scriptable
     public class CardHealAction : CardAction
     {
         [SerializeField] private float animationHeightMovement;
+        [Range(0, 1.5f)]
+        [SerializeField] private float healPower;
 
-        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public float HealPower => 100 * healPower;
+
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
-            int healAmount = Rules.GetHealAmount(source, target, card);
+            int healAmount = Rules.GetHealAmount(source, target, HealPower);
             target.TakeDamage(-healAmount, source);
 
-            base.InvokeAction(source, target, card);
+            base.InvokeAction(source, target, cardAlignment);
         }
 
         public override Action<GameObject, GameObject> PerformAnimation

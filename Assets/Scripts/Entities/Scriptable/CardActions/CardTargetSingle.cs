@@ -11,7 +11,7 @@ namespace Assets.Scripts.Entities.Scriptable
 
         public override void InvokeAction(CardAction cardAction, MingmingBattleLogic source, MingmingBattleLogic target, Card card)
         {
-            cardAction.InvokeAction(source, target, card);
+            cardAction.InvokeAction(source, target, card.CardAlignment);
         }
     }
 }

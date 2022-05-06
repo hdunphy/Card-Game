@@ -11,13 +11,13 @@ namespace Assets.Scripts.Entities.Scriptable.CardActions
         [SerializeField] private CardAction Action;
         [SerializeField] private BaseConstraint Constraint;
 
-        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
             OnInvoked?.Invoke();
 
-            if (Constraint.CanUseCard(source, card))
+            if (Constraint.MingmingMeetsConstraint(source))
             {
-                Action.InvokeAction(source, target, card);
+                Action.InvokeAction(source, target, cardAlignment);
             }
         }
 

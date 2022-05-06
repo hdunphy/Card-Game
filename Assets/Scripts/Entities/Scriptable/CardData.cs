@@ -16,7 +16,6 @@ public class CardData : IDropScriptableObject
     [SerializeField] private int energyCost;
     [SerializeField] private CardTarget targetType;
     [SerializeField] private CardAlignment cardAlignment;
-    [SerializeField, Range(0, 1.5f)] private float attackModifier;
     [SerializeField] private List<CardAction> cardActions;
     [SerializeField] private BaseConstraint cardConstraint;
 
@@ -26,7 +25,6 @@ public class CardData : IDropScriptableObject
     public int EnergyCost { get => energyCost; }
     public CardTarget TargetType { get => targetType; }
     public CardAlignment CardAlignment { get => cardAlignment; }
-    public float AttackModifier { get => attackModifier * 100; } //Float to real percent
     public BaseConstraint CardConstraint { get => cardConstraint; }
 
     public IEnumerator InvokeActionCoroutine(MingmingBattleLogic source, MingmingBattleLogic target, Card card)

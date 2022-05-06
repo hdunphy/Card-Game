@@ -100,12 +100,12 @@ namespace Assets.Scripts.References
 
         public System.Random GetRandom() => Random;
 
-        public int GetAttackDamage(MingmingBattleLogic source, MingmingBattleLogic target, Card _card)
+        public int GetAttackDamage(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment, float power)
         {
-            float _modifier = GetModifier(source.GetMingmingAlignment, target.GetMingmingAlignment, _card.CardAlignment);
+            float _modifier = GetModifier(source.GetMingmingAlignment, target.GetMingmingAlignment, cardAlignment);
 
             float damage = GetLevelModifier(source.Level);
-            damage *= (float)_card.Power * source.Attack / target.Defense;
+            damage *= (float)power * source.Attack / target.Defense;
             damage = (float)(damage / 40) + 2;
 
             //Debug.Log($"{source.name} {source.GetInstanceID()} attacks {target.name} {target.GetInstanceID()} for {damage} damage.\nModifier: {_modifier}");
@@ -114,9 +114,9 @@ namespace Assets.Scripts.References
             return Mathf.FloorToInt(damage);
         }
 
-        public static int GetHealAmount(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public static int GetHealAmount(MingmingBattleLogic source, MingmingBattleLogic target, float power)
         {
-            float healAmount = GetLevelModifier(source.Level) * card.Power * source.Attack / 2;
+            float healAmount = GetLevelModifier(source.Level) * power * source.Attack / 2;
             return Mathf.FloorToInt(Mathf.Clamp(healAmount, 0, target.TotalHealth - target.CurrentHealth));
         }
 

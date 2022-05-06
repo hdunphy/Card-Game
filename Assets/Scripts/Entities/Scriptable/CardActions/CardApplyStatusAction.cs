@@ -13,10 +13,10 @@ namespace Assets.Scripts.Entities.Scriptable
         [SerializeField] private BaseStatus Status;
         [SerializeField] private int Count;
 
-        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, Card card)
+        public override void InvokeAction(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment)
         {
             Status.ApplyStatus(target, Count);
-            base.InvokeAction(source, target, card);
+            base.InvokeAction(source, target, cardAlignment);
         }
 
         public override Action<GameObject, GameObject> PerformAnimation
