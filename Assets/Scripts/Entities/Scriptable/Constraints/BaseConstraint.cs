@@ -4,6 +4,8 @@ namespace Assets.Scripts.Entities.Scriptable
 {
     public abstract class BaseConstraint : ScriptableObject
     {
+        public virtual bool MingmingMeetsConstraint(MingmingBattleLogic source) => true;
+
         public virtual bool CanUseCard(MingmingBattleLogic source, Card card)
         {
             bool hasEnergy = source.EnergyAvailable >= card.EnergyCost;
@@ -12,7 +14,7 @@ namespace Assets.Scripts.Entities.Scriptable
             {
                 UserMessage.Instance.SendMessageToUser($"{source.Name} does not have the required energy. Needs {card.EnergyCost}");
             }
-            return hasEnergy;
+            return hasEnergy && MingmingMeetsConstraint(source);
         }
     }
 }

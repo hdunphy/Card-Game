@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable
@@ -7,23 +8,19 @@ namespace Assets.Scripts.Entities.Scriptable
     public class MultipleStatusConstraints : BaseConstraint
     {
         [SerializeField] private List<StatusConstraint> StatusConstraints;
-        public override bool CanUseCard(MingmingBattleLogic source, Card card)
+
+        public override bool MingmingMeetsConstraint(MingmingBattleLogic source)
         {
-            bool isValid = base.CanUseCard(source, card);
+            bool meetsStatusConstraint = StatusConstraints.All(sc => source.HasStatus(sc.Status) == sc.HasStatus);
 
-            foreach(var StatusConstraint in StatusConstraints)
+            if (!meetsStatusConstraint)
             {
-                bool meetsStatusConstraint = source.HasStatus(StatusConstraint.Status) == StatusConstraint.HasStatus;
-
-                if (!meetsStatusConstraint)
-                {
-                    string canHave = StatusConstraint.HasStatus ? "MUST" : "CANNOT";
-                    UserMessage.Instance.SendMessageToUser($"{source.Name} {canHave} have the status: {StatusConstraint.Status.name}");
-                }
-                isValid = isValid && meetsStatusConstraint;
+                var statusConstraint = StatusConstraints.FirstOrDefault(sc => source.HasStatus(sc.Status) != sc.HasStatus);
+                string canHave = statusConstraint.HasStatus ? "MUST" : "CANNOT";
+                UserMessage.Instance.SendMessageToUser($"{source.Name} {canHave} have the status: {statusConstraint.Status.name}");
             }
 
-            return isValid;
+            return meetsStatusConstraint;
         }
     }
 }
