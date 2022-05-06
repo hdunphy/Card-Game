@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cde06e532e4f0a41ada0b3de01216fb, type: 3}
-  m_Name: CardHeal
+  m_Name: Heal_10
   m_EditorClassIdentifier: 
   OnInvoked:
     m_PersistentCalls:
@@ -30,3 +30,4 @@ MonoBehaviour:
         m_CallState: 2
   durationSeconds: 0.75
   animationHeightMovement: 5
+  healPower: 0.1

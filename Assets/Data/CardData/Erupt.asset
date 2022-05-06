@@ -19,8 +19,7 @@ MonoBehaviour:
   energyCost: 3
   targetType: {fileID: 11400000, guid: 1e3bae39b9fe0eb42a7cd767be287e91, type: 2}
   cardAlignment: 0
-  attackModifier: 0.9
   cardActions:
-  - {fileID: 11400000, guid: cde58406898319c43a4874212a027b27, type: 2}
+  - {fileID: 11400000, guid: 415dcf43855f8d14d9904720ec9b48d4, type: 2}
   - {fileID: 11400000, guid: ad43c1fe474d11148959a0d572aa2944, type: 2}
   cardConstraint: {fileID: 11400000, guid: a62de787cd5fe0f43938ce85343bdfb0, type: 2}
