@@ -54,6 +54,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _primaryColor: {r: 0.0035756826, g: 1, b: 0, a: 1}
+    - _primaryColor: {r: 0.16660735, g: 0.48866206, b: 0.9056604, a: 1}
     - _primaryMask: {r: 0.5254902, g: 0.75294125, b: 0.42352945, a: 1}
   m_BuildTextureStacks: []
