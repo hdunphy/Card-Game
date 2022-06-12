@@ -138,16 +138,18 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
                 mingming.Logic.Id = mingming.GetInstanceID();
             }
             Mingmings = _mingmings.ToDictionary(m => m.Logic.Id);
-            OwnedMingmings = owned.Select(m => m.Logic).ToList();
-            OtherMingmings = other.Select(m => m.Logic).ToList();
+            OwnedMingmings = owned.Where(m => m.IsInPlay).Select(m => m.Logic).ToList();
+            OtherMingmings = other.Where(m => m.IsInPlay).Select(m => m.Logic).ToList();
 
             RemaingHand = new List<Card>(hand);
         }
 
         public TurnState(TurnState turnState)
         {
-            OwnedMingmings = turnState.OwnedMingmings.Select(m => new MingmingBattleLogic(m)).ToList();
-            OtherMingmings = turnState.OtherMingmings.Select(m => new MingmingBattleLogic(m)).ToList();
+            OwnedMingmings = turnState.OwnedMingmings.Where(m => m.CurrentHealth > 0)
+                .Select(m => new MingmingBattleLogic(m)).ToList();
+            OtherMingmings = turnState.OtherMingmings.Where(m => m.CurrentHealth > 0)
+                .Select(m => new MingmingBattleLogic(m)).ToList();
             Mingmings = turnState.Mingmings;
 
             RemaingHand = new List<Card>(turnState.RemaingHand);
