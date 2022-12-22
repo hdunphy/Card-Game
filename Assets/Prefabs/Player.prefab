@@ -33,6 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2505605168626438318}
   m_Father: {fileID: 0}
@@ -84,7 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2505605168106303825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4e48379d4f5270448cbfd87573d60da, type: 3}
+  m_Script: {fileID: 11500000, guid: e1607f883bc1afa4e9a7386ced9b8ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   devController: {fileID: 6100250102517698589}
@@ -97,23 +98,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2505605168106303825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 447c3fe5122ec304b82f5fbd6ec29cdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9812f8192d4abc346b00840d682cbadb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MingmingData:
-  - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-    Level: 12
-  - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
-    Level: 12
-  StartingDeck:
-  - {fileID: 11400000, guid: 8e5d7a5b1d7d95d4bb74521061f22084, type: 2}
-  - {fileID: 11400000, guid: e66051f3d60724f4982f7874b90d4d43, type: 2}
-  - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
-  - {fileID: 11400000, guid: 7c05b565a6bd5b74f9cfe8fd349023b9, type: 2}
-  - {fileID: 11400000, guid: 40eca63994a2cbf4bb4a4b56b8926efc, type: 2}
-  - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
-  - {fileID: 11400000, guid: 833a63ad9074f314db06823b91f7b693, type: 2}
-  - {fileID: 11400000, guid: 15180cac62c0faa428c7c9af8373d9fc, type: 2}
+  MingmingData: []
+  StartingDeck: []
 --- !u!114 &2505605168106303826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,11 +112,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2505605168106303825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d110d8a44c8ac84d8462d750771ac79, type: 3}
+  m_Script: {fileID: 11500000, guid: b6d98a2ed8be38345b348ee9f05842b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Rb: {fileID: 2505605168106303829}
-  MoveSpeed: 200
+  MoveSpeed: 5
   CharacterMovementAnimator: {fileID: 8449895892530717572}
 --- !u!114 &-4800230835523734646
 MonoBehaviour:
@@ -138,10 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2505605168106303825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 888aa1b2a67410a4c98edee73ccb689c, type: 3}
+  m_Script: {fileID: 11500000, guid: c5421947b96fb8547a5f4d2a22a81c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 2505605168106303827}
+  Player: {fileID: 0}
 --- !u!114 &6165599312679873335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +280,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 18.345291}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2505605168106303830}
   m_RootOrder: 0
@@ -349,7 +339,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8449895892530717572
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -362,6 +352,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
