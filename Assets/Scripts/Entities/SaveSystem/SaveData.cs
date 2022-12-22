@@ -24,7 +24,6 @@ namespace Assets.Scripts.Entities.SaveSystem
         private string playerSceneName; //The current scene the player is on last save
         private List<MingmingSaveModel> playerMingmings; //list of player's mingmings
         private DeckHolderSaveModel deckHolder;  //holds player cards and deck list
-        private System.Random random; //hold the random state so we can continue
         private readonly Dictionary<string, bool> trainersCanBattle; //Reference to which trainers can battle at the moment
 
         public Vector3 PlayerPosition { get => playerPosition; set => playerPosition = value; } 
@@ -32,7 +31,6 @@ namespace Assets.Scripts.Entities.SaveSystem
         public string PlayerSceneName { get => playerSceneName; set => playerSceneName = value; }
         public List<MingmingSaveModel> PlayerMingmings { get => playerMingmings; set => playerMingmings = value; }
         public DeckHolderSaveModel DeckHolder { get => deckHolder; set => deckHolder = value; }
-        public System.Random Random { get => random; set => random = value; }
 
         public SaveData()
         {
