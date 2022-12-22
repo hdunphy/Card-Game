@@ -1,5 +1,4 @@
-﻿
-namespace Assets.Scripts.GameScene.Entities
+﻿namespace Assets.Scripts.Entities.Player
 {
     public interface IPlayerInteractable
     {

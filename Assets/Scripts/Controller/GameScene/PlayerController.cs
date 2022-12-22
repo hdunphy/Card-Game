@@ -1,7 +1,7 @@
 using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.GameScene.Controller;
-using Assets.Scripts.GameScene.Entities;
 using System;
 using System.Linq;
 using UnityEngine;

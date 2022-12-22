@@ -8,6 +8,7 @@ using System.Linq;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Controller;
 using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Interfaces;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 

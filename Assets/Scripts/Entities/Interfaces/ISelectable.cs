@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.Scripts.Entities
+﻿namespace Assets.Scripts.Entities.Interfaces
 {
     public interface ISelectable
     {

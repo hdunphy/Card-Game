@@ -1,3 +1,4 @@
+using Assets.Scripts.Entities.Player;
 using UnityEngine;
 using UnityEngine.Events;
 

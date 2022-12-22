@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Interfaces;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.Entities.Scriptable;
 using System.Collections.Generic;
 using System.Linq;

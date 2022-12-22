@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Entities.Player;
+using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Entities
 {

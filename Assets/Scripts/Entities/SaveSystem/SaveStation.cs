@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Controller.SaveSystem;
-using Assets.Scripts.GameScene.Entities;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.References;
 using System.Collections;
 using UnityEngine;

@@ -1,3 +1,4 @@
+using Assets.Scripts.Entities.Interfaces;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.References;
 using System.Collections.Generic;

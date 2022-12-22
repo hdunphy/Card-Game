@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entities.Scriptable;
+﻿using Assets.Scripts.Entities.Interfaces;
+using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.UI.Tooltips;
 using System;
 using System.Collections;
