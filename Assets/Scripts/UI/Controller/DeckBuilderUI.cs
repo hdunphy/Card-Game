@@ -23,21 +23,41 @@ namespace Assets.Scripts.UI.Controller
         private PlayerController _playerController;
         private PlayerInputController _playerInputController;
 
+        public PlayerController PlayerController
+        {
+            get
+            {
+                if (_playerController is null)
+                    _playerController = FindObjectOfType<PlayerController>();
+
+                return _playerController;
+            }
+        }
+
+        public PlayerInputController PlayerInputController
+        {
+            get
+            {
+                if (_playerInputController is null)
+                    _playerInputController = FindObjectOfType<PlayerInputController>();
+
+                return _playerInputController;
+            }
+        }
+
         private void Start()
         {
             DeckBuilderCanvas.gameObject.SetActive(false);
             AvailableCards = new List<SelectableCard>();
             CurrentCards = new List<SelectableCard>();
-            _playerController = FindObjectOfType<PlayerController>();
-            _playerInputController = FindObjectOfType<PlayerInputController>();
         }
 
         //called by unity event
         public void Show()
         {
             DeckBuilderCanvas.gameObject.SetActive(true);
-            _playerInputController.enabled = false;
-            DeckHolder = _playerController.DevController.DeckHolder;
+            PlayerInputController.enabled = false;
+            DeckHolder = PlayerController.DevController.DeckHolder;
 
             GetAvailableCards();
             GetCurrentCards();
@@ -47,7 +67,7 @@ namespace Assets.Scripts.UI.Controller
         {
             ClearCards();
             DeckBuilderCanvas.gameObject.SetActive(false);
-            _playerInputController.enabled = true;
+            PlayerInputController.enabled = true;
         }
 
         private void ClearCards()
