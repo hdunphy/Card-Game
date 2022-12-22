@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -60,8 +61,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 1
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -328,6 +329,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      StatusIcons_fire1: 4847072211282044801
+      StatusIcons_defense_up: 8305296478794949452
+      StatusIcons_defense_down: -6297762757991420105
+      StatusIcons_stunned: 274942090106988843
+      StatusIcons_strength_down: 4390828945791132085
+      StatusIcons_strength_up: 412806360417562724
+      StatusIcons_asleep: 2526043692424303287
+      StatusIcons_poison: -8211022945955410972
+      StatusIcons_burn: 8118723070098738515
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

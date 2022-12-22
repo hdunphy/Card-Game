@@ -91,7 +91,7 @@ public class CardEditorWindow : EditorWindow
             }
         };
 
-        cardList.Refresh();
+        cardList.Rebuild();
     }
 
     private void FindAllCards(out CardData[] cards)
