@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Entities;
-using Assets.Scripts.Entities.SaveSystem;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.References
 {
@@ -37,9 +37,6 @@ namespace Assets.Scripts.References
         private static readonly float EFFECTIVE = 2f;
         private static readonly float SAME_TYPE_ADVANTAGE = 1.5f;
         private static readonly float SECONDARY_TYPE_ADVANTAGE = 0.75f;
-        private static readonly int SEED = 2;
-
-        private static System.Random Random;
 
         private static Dictionary<AlignmentCombination, float> AlignmentAdvantageLookup;
 
@@ -86,8 +83,6 @@ namespace Assets.Scripts.References
 
                 { new AlignmentCombination { Source = CardAlignment.Darkness, Target = CardAlignment.Light }, EFFECTIVE },
             };
-
-            Random = SaveData.Current.Random ?? new System.Random(SEED);
         }
 
         public static Rules Instance
@@ -97,8 +92,6 @@ namespace Assets.Scripts.References
                 return instance;
             }
         }
-
-        public System.Random GetRandom() => Random;
 
         public int GetAttackDamage(MingmingBattleLogic source, MingmingBattleLogic target, CardAlignment cardAlignment, float power)
         {
@@ -184,16 +177,16 @@ namespace Assets.Scripts.References
             {
                 if (min.HasValue)
                 {
-                    randomValue = Random.Next(min.Value, max.Value);
+                    randomValue = Random.Range(min.Value, max.Value);
                 }
                 else
                 {
-                    randomValue = Random.Next(max.Value);
+                    randomValue = Random.Range(0, max.Value);
                 }
             }
             else
             {
-                randomValue = Random.Next();
+                randomValue = Random.Range(0, int.MaxValue);
             }
 
             return randomValue;
@@ -204,8 +197,6 @@ namespace Assets.Scripts.References
         /// </summary>
         /// <returns>float range[0,1]</returns>
         public static float GetRandomFloat()
-        {
-            return (float)Random.NextDouble();
-        }
+            => Random.value;
     }
 }

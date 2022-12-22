@@ -50,7 +50,6 @@ namespace Assets.Scripts.Entities.SaveSystem
             SaveStationText.text = OnSaveText;
 
             SaveData.Current.PlayerSceneName = gameObject.scene.name;
-            SaveData.Current.Random = Rules.Instance.GetRandom();
             controller.SavePlayerData();
             StartCoroutine(SaveFlash());
 
