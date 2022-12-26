@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6687dc19e763048a2466cfc58aac3b, type: 3}
   m_Name: Fenrir
   m_EditorClassIdentifier: 
+  id: 1
   sprite: {fileID: 21300000, guid: c1c8192a2173c3840b9d5796ee16f0f2, type: 3}
   health: 66
   attack: 91
   defense: 69
   energy: 2
   cardDraw: 3
-  monsterAlignments:
+  mingmingAlignments:
     Primary: 0
     Secondary: 8
   wildCards:
@@ -30,3 +31,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ddd39980c411412479348802b12a9a09, type: 2}
   level30Card: {fileID: 11400000, guid: 211fc1b03ea95e844b65770d7450b9ce, type: 2}
   level50Card: {fileID: 11400000, guid: dee9dce9230007b45a11d110c6ce7d7e, type: 2}
+  maxBlueprintsRequired: 0
