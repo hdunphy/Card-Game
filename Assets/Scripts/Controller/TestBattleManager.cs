@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
@@ -25,7 +26,7 @@ namespace Assets.Scripts.Controller
                 var _playerMingmings = playerMinmings.Select(m => new MingmingInstance(m.MingMingData, m.Level));
                 var _enemyMingmings = enemyMinmings.Select(m => new MingmingInstance(m.MingMingData, m.Level));
 
-                var battleScene = new BattleSceneData(sceneName, playerCards, enemyCards, null, _playerMingmings, _enemyMingmings);
+                var battleScene = new BattleSceneData(sceneName, null, new(playerCards, _playerMingmings, new PlayerInventory()), new(enemyCards, _enemyMingmings, new PlayerInventory()));
 
                 BattleManager.Singleton.StartBattle(battleScene);
             }

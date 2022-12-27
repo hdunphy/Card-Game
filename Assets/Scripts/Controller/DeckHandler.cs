@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entities.Sound;
+﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Sound;
 using Assets.Scripts.References;
 using System;
 using System.Collections;
@@ -33,13 +34,17 @@ public abstract class DeckHandler : MonoBehaviour
         DiscardPile = new List<Card>();
     }
 
-    private void Start()
+    private void Start() => UnityStart();
+
+    private void OnDestroy() => UnityOnDestroy();
+
+    protected virtual void UnityStart()
     {
         EventManager.Instance.DiscardCard += DiscardCard;
         EventManager.Instance.BattleOver += Instance_BattleOver;
     }
 
-    private void OnDestroy()
+    protected virtual void UnityOnDestroy()
     {
         EventManager.Instance.DiscardCard -= DiscardCard;
         EventManager.Instance.BattleOver -= Instance_BattleOver;

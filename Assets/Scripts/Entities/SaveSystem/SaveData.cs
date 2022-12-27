@@ -39,6 +39,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         {
             SaveName = "save1"; //Set here for now, but for multiple saves will need to set somewhere else
             trainersCanBattle = new Dictionary<string, bool>();
+            PlayerInventory = new();
         }
 
         public bool GetTrainerCanBattle(string name) => 

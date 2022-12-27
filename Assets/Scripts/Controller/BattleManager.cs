@@ -59,8 +59,8 @@ public class BattleManager : SingletonMonoBehavior<BattleManager>
     {
         _previousLevel = battleSceneData.PreviousLevel;
         /* -- Set up Battle -- */
-        PlayerLoader.BattleSetUp(battleSceneData.PlayerMingmings, battleSceneData.PlayerCards.ToList());
-        EnemyLoader.BattleSetUp(battleSceneData.EnemyMingmings, battleSceneData.EnemyCards.ToList());
+        PlayerLoader.BattleSetUp(battleSceneData.PlayerInfo);
+        EnemyLoader.BattleSetUp(battleSceneData.EnemyInfo);
 
         _playerTurn = PlayerTurn.PlayerOne;
 

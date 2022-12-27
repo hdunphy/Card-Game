@@ -11,15 +11,15 @@ public class PlayerController : MonoBehaviour
 
     IMovement Movement;
     private IPlayerInteractable _interactable;
-    private PlayerInventory _playerInventory;
 
+    public PlayerInventory PlayerInventory { get; private set; }
     public DevController DevController => devController;
 
     // Start is called before the first frame update
     void Start()
     {
         Movement ??= GetComponent<IMovement>();
-        _playerInventory = new();
+        PlayerInventory = new();
     }
 
     public void SetMoveDirection(Vector2 movementVector) => Movement.SetMoveDirection(movementVector);
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         SaveData.Current.PlayerPosition = transform.position;
         SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DevController.DeckHolder);
         SaveData.Current.PlayerMingmings = DevController.Mingming.Select(m => new MingmingSaveModel(m)).ToList();
-        SaveData.Current.PlayerInventory = _playerInventory;
+        SaveData.Current.PlayerInventory = PlayerInventory;
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         DevController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
         DevController.SetMingmings(SaveData.Current.PlayerMingmings?.Select(m => new MingmingInstance(m)).ToList());
-        _playerInventory = SaveData.Current.PlayerInventory;
+        PlayerInventory = SaveData.Current.PlayerInventory;
     }
 
     public void SetInteraction(IPlayerInteractable interactable)

@@ -1,21 +1,20 @@
-﻿using Assets.Scripts.Entities.Interfaces;
-using System.Collections;
+﻿using Assets.Scripts.Controller.References;
+using Assets.Scripts.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.Entities.Player
 {
+    [Serializable]
     public class MingmingBluePrintItem : IItem { 
         public int MaxRequired { get; }
         public int Current { get; private set; }
-        public string Name { get; }
         public float PercentComplete => (float)Current / MaxRequired;
 
-        public MingmingBluePrintItem(int maxRequired, int current, string name)
+        public MingmingBluePrintItem(int maxRequired, int current)
         {
             MaxRequired = maxRequired;
             Current = current;
-            Name = name;
         }
 
         public int Add(int value)
@@ -33,24 +32,31 @@ namespace Assets.Scripts.Entities.Player
         }
     }
 
-    public class PlayerInventory
+    public interface IInventory
     {
-        private readonly Dictionary<int, MingmingBluePrintItem> _blueprints;
+        int AddBlueprint(string name, int count);
+    }
+
+    [Serializable]
+    public class PlayerInventory : IInventory
+    {
+        private readonly Dictionary<string, MingmingBluePrintItem> _blueprints;
 
         public PlayerInventory()
         {
             _blueprints = new();
         }
 
-        public int AddBlueprint(MingmingData mingming, int count)
+        public int AddBlueprint(string name, int count)
         {
             int currentCount = count;
-            if (_blueprints.ContainsKey(mingming.ID)){
-                currentCount = _blueprints[mingming.ID].Add(count);
+            if (_blueprints.ContainsKey(name)){
+                currentCount = _blueprints[name].Add(count);
             }
             else
             {
-                _blueprints.Add(mingming.ID, new MingmingBluePrintItem(mingming.MaxBlueprintsRequired, count, mingming.name));
+                var mingming = ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<MingmingData>(name);
+                _blueprints.Add(name, new MingmingBluePrintItem(mingming.MaxBlueprintsRequired, count));
             }
 
             return currentCount;

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameScene.Controller;
+﻿using Assets.Scripts.Entities.Player;
+using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using Assets.Scripts.UI.Controller;
 using System.Collections.Generic;
@@ -43,11 +44,9 @@ namespace Assets.Scripts.GameScene.Entities
             var thisScene = new LevelSceneData(gameObject.scene.name, this, _player);
             var battleScene = new BattleSceneData(
                 GameSceneController.BattleScene, 
-                _player.DevController.DeckHolder.CurrentDeck,
-                trainerController.DevController.DeckHolder.CurrentDeck, 
                 thisScene, 
-                _player.DevController.PlayableMingmings, 
-                trainerController.DevController.PlayableMingmings
+                new(_player.DevController.DeckHolder.CurrentDeck, _player.DevController.PlayableMingmings, _player.PlayerInventory),
+                new(trainerController.DevController.DeckHolder.CurrentDeck, trainerController.DevController.PlayableMingmings, new PlayerInventory())
             );
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);

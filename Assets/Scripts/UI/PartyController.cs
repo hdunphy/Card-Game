@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.Entities.Scriptable;
+using Assets.Scripts.GameScene.Controller.SceneManagement;
 using Assets.Scripts.References;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,13 @@ public class PartyController : MonoBehaviour
 
     public List<Mingming> Mingmings { get; private set; }
     private int CardDraw;
+    private IInventory _inventory;
 
     //Turn
     private TurnStateEnum CurrentTurnState;
     private Dictionary<TurnStateEnum, ITurnStateMachine> TurnStateMachine;
-
     [SerializeField] private List<TurnStateEvent> stateEvents;
+
 
     private void Awake()
     {
@@ -55,7 +58,7 @@ public class PartyController : MonoBehaviour
     private void Instance_MingmingDied(Mingming _mingming)
     {
         if (HasMingming(_mingming))
-        {
+        { //Mingming is on this team
             if(!Mingmings.Any(m => m.IsInPlay))
             { //if all mingmings are not in play
                 EventManager.Instance.OnBattleOverTrigger(this);
@@ -63,6 +66,7 @@ public class PartyController : MonoBehaviour
         }
         else
         {
+            //Add exp
             int totalXP = _mingming.Logic.GetDeathExp();
             int xpPerMingming = Mathf.CeilToInt((float)totalXP / Mingmings.Count( m => m.IsInPlay ));
             
@@ -70,6 +74,9 @@ public class PartyController : MonoBehaviour
             {
                 mingming.AddExperience(xpPerMingming);
             }
+
+            //Add blueprints to inventory
+            _inventory.AddBlueprint(_mingming.DataName, 1);
         }
     }
 
@@ -78,8 +85,12 @@ public class PartyController : MonoBehaviour
         CurrentTurnState = TurnStateEnum.End;
     }
 
-    public void BattleSetUp(IEnumerable<MingmingInstance> datas, List<CardData> deck)
+    public void BattleSetUp(DevBattleSceneInfo battleSceneInfo)
     {
+        var deck = battleSceneInfo.Cards.ToList();
+        var datas = battleSceneInfo.Mingmings.ToList();
+        _inventory = battleSceneInfo.Inventory;
+
         bool isWildDeck = deck.Count == 0;
         CardDraw = 0;
 
@@ -151,15 +162,9 @@ public class PartyController : MonoBehaviour
         transform.SetAsLastSibling();
     }
 
-    public bool HasMingming(Mingming mingming)
-    {
-        return Mingmings.Contains(mingming);
-    }
+    public bool HasMingming(Mingming mingming) => Mingmings.Contains(mingming);
 
-    public bool HasMingming(MingmingBattleLogic mingmingSimulation)
-    {
-        return Mingmings.Any(m => m.Logic == mingmingSimulation);
-    }
+    public bool HasMingming(MingmingBattleLogic mingmingSimulation) => Mingmings.Any(m => m.Logic == mingmingSimulation);
 
     public void DrawCards(int numberOfCards) => deckController.DrawCards(numberOfCards);
 

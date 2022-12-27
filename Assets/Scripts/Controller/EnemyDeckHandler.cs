@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Entities;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDeckHandler : DeckHandler

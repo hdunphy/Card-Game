@@ -26,6 +26,7 @@ namespace Assets.Scripts.Entities
 
         #region Getters and Setters
         public bool IsTurn { get; private set; }
+        public string DataName { get; private set; }
 
         public bool IsInPlay => Logic.CurrentHealth > 0;
 
@@ -70,6 +71,7 @@ namespace Assets.Scripts.Entities
         {
             Logic = new MingmingBattleLogic(data, name);
             UIController.SetUp(data, isFacingRight);
+            DataName = data.DataName;
 
             AddEvents();
             SetEnergy();

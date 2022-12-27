@@ -1,5 +1,6 @@
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.Entities.Player;
 using Assets.Scripts.GameScene.Controller;
 using Assets.Scripts.GameScene.Controller.SceneManagement;
 using Assets.Scripts.References;
@@ -55,8 +56,11 @@ public class RandomEncounter : MonoBehaviour, IEncounter
             var player = FindObjectOfType<PlayerController>();
             
             var thisScene = new LevelSceneData(gameObject.scene.name, this, player);
-            var battleScene = new BattleSceneData(GameSceneController.BattleScene, player.DevController.DeckHolder.CurrentDeck, new List<CardData>(),
-                thisScene, player.DevController.PlayableMingmings, mingmings);
+            var battleScene = new BattleSceneData(
+                GameSceneController.BattleScene,
+                thisScene,
+                new(player.DevController.DeckHolder.CurrentDeck, player.DevController.PlayableMingmings, player.PlayerInventory),
+                new(new List<CardData>(), mingmings, new PlayerInventory()));
 
             GameSceneController.Singleton.SwapScenes(thisScene, battleScene);
         }
