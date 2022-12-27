@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Entities
+namespace Assets.Scripts.Entities.Mingmings
 {
     public class Mingming : MonoBehaviour, ISelectable, IDropHandler
     {
@@ -172,11 +172,11 @@ namespace Assets.Scripts.Entities
 
         private IEnumerator TakeDamageCoroutine()
         {
-            float targetPercent = (float)(Logic.CurrentHealth) / Logic.TotalHealth;
+            float targetPercent = (float)Logic.CurrentHealth / Logic.TotalHealth;
 
             yield return UIController.SetHealthBarCoroutine(targetPercent, Logic.TotalHealth);
 
-            if(Logic.CurrentHealth <= 0)
+            if (Logic.CurrentHealth <= 0)
             {
                 SetDead();
             }

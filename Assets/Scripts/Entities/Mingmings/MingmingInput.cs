@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Entities
+namespace Assets.Scripts.Entities.Mingmings
 {
     public class MingmingInput : MonoBehaviour, IPointerDownHandler
     {

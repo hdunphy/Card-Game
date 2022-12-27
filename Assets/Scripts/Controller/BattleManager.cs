@@ -9,6 +9,7 @@ using Assets.Scripts.Helpers;
 using Assets.Scripts.Controller;
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Interfaces;
+using Assets.Scripts.Entities.Mingmings;
 
 public enum PlayerTurn { PlayerOne, PlayerTwo }
 

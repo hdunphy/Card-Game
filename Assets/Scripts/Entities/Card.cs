@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.UI.Controller;
+﻿using Assets.Scripts.Entities.Mingmings;
+using Assets.Scripts.UI.Controller;
 using System;
 using System.Collections;
 using UnityEngine;

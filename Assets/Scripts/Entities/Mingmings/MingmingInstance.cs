@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Assets.Scripts.Entities
+namespace Assets.Scripts.Entities.Mingmings
 {
     public class MingmingInstance : IEquatable<MingmingInstance>
     {
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Entities
             HealthModifier = Rules.GetRandomInt(0, 31);
 
             SetFieldsFromData();
-            
+
             CurrentHealth = Health;
         }
 

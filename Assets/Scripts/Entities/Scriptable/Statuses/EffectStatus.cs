@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using Assets.Scripts.Entities.Mingmings;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities.Scriptable
 {

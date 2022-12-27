@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Drops;
+using Assets.Scripts.Entities.Mingmings;
 using Assets.Scripts.Entities.Scriptable;
 using System;
 using System.Collections;

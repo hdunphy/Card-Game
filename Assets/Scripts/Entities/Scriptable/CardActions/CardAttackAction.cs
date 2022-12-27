@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.References;
+﻿using Assets.Scripts.Entities.Mingmings;
+using Assets.Scripts.References;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable

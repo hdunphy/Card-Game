@@ -1,10 +1,9 @@
-﻿using Assets.Scripts.UI.Tooltips;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Entities
+namespace Assets.Scripts.Entities.Mingmings
 {
     public class MingmingUIController : Highlightable
     {
@@ -17,9 +16,7 @@ namespace Assets.Scripts.Entities
         [SerializeField] private TMP_Text HealthText;
         [SerializeField] private TMP_Text NameText;
         [SerializeField] private Gradient HealthGradient;
-        //private MingmingInstance Data;
         public int Direction { get; private set; } //1 or -1
-        //private int CurrentHealth => Data.CurrentHealth;
 
         public void SetUp(MingmingInstance data, bool isFacingRight)
         {

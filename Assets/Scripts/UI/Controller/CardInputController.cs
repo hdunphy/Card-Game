@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Mingmings;
 using System.Collections;
 using System.Linq;
 using UnityEngine;

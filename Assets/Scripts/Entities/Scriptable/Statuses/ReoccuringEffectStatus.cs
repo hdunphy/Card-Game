@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Entities.Mingmings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

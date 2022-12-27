@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.Entities;
 using Random = UnityEngine.Random;
+using Assets.Scripts.Entities.Mingmings;
 
 namespace Assets.Scripts.References
 {

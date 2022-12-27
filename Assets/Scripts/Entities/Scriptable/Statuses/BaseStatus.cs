@@ -1,3 +1,4 @@
+using Assets.Scripts.Entities.Mingmings;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable

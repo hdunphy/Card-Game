@@ -1,3 +1,4 @@
+using Assets.Scripts.Entities.Mingmings;
 using Assets.Scripts.References;
 using System;
 using UnityEngine;

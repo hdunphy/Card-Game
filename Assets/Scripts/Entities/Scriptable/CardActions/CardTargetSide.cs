@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Assets.Scripts.Entities.Mingmings;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Scriptable

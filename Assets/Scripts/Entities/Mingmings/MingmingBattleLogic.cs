@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Assets.Scripts.Entities.Mingmings
 {
     public class MingmingBattleLogic : IEquatable<MingmingBattleLogic>
     {
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Entities
         public event Action<BaseStatus> OnStatusRemoved;
         public event Action<Action<GameObject, GameObject>, MingmingBattleLogic> TriggerAnimation;
 
-        public void OnTriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target) 
+        public void OnTriggerAnimation(Action<GameObject, GameObject> animation, MingmingBattleLogic target)
             => TriggerAnimation?.Invoke(animation, target);
 
         public MingmingBattleLogic(MingmingBattleLogic battleLogic)
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Entities
             DefenseModifier = battleLogic.DefenseModifier;
             EnergyAvailable = battleLogic.EnergyAvailable;
             Id = battleLogic.Id;
-            _statuses = new Dictionary<BaseStatus, int>( battleLogic._statuses );
+            _statuses = new Dictionary<BaseStatus, int>(battleLogic._statuses);
             Name = battleLogic.Name;
         }
 
