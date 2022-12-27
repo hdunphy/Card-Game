@@ -10,7 +10,7 @@ namespace Assets.Scripts.GameScene.Controller
 {
     public class DevController : MonoBehaviour
     {
-        public IEnumerable<MingmingInstance> PlayableMingmings { get => Mingming.Where(m => m.CurrentHealth > 0); }
+        public IEnumerable<MingmingInstance> PlayableMingmings => Mingming.Where(m => m.CurrentHealth > 0);
         //Replace
         public List<MingmingLevelData> MingmingData;
         [SerializeField] private List<CardData> StartingDeck;

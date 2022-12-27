@@ -41,5 +41,19 @@ namespace Assets.Scripts.Entities.Player
         {
             _blueprints = new();
         }
+
+        public int AddBlueprint(MingmingData mingming, int count)
+        {
+            int currentCount = count;
+            if (_blueprints.ContainsKey(mingming.ID)){
+                currentCount = _blueprints[mingming.ID].Add(count);
+            }
+            else
+            {
+                _blueprints.Add(mingming.ID, new MingmingBluePrintItem(mingming.MaxBlueprintsRequired, count, mingming.name));
+            }
+
+            return currentCount;
+        }
     }
 }

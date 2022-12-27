@@ -20,7 +20,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         }
 
         public PlayerDeckHolder GetDeckHolder() =>
-            new PlayerDeckHolder(
+            new(
                 AllCardNames.Select(n => ScriptableObjectReferenceSingleton.Singleton.GetScriptableObject<CardData>(n)).ToList(),
                 Decks.Select(n => n.GetPlayerDeckHolder()).ToList()
             );

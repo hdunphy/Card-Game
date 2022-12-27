@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Entities.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,12 +26,14 @@ namespace Assets.Scripts.Entities.SaveSystem
         private List<MingmingSaveModel> playerMingmings; //list of player's mingmings
         private DeckHolderSaveModel deckHolder;  //holds player cards and deck list
         private readonly Dictionary<string, bool> trainersCanBattle; //Reference to which trainers can battle at the moment
+        private PlayerInventory playerInventory;
 
         public Vector3 PlayerPosition { get => playerPosition; set => playerPosition = value; } 
         public string SaveName { get => saveName; set => saveName = value; }
         public string PlayerSceneName { get => playerSceneName; set => playerSceneName = value; }
         public List<MingmingSaveModel> PlayerMingmings { get => playerMingmings; set => playerMingmings = value; }
         public DeckHolderSaveModel DeckHolder { get => deckHolder; set => deckHolder = value; }
+        public PlayerInventory PlayerInventory { get => playerInventory; set => playerInventory = value; }
 
         public SaveData()
         {
