@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Entities.SaveSystem;
-using System;
+﻿using Assets.Scripts.Entities.GameScene;
+using Assets.Scripts.Entities.SaveSystem;
+using Assets.Scripts.Entities.Trainers;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.GameScene.Controller
@@ -9,6 +11,7 @@ namespace Assets.Scripts.GameScene.Controller
     {
         public new string name;
         [SerializeField] private DevController devController;
+        [SerializeField] private DevStartingInfo startingInfo;
 
         public bool CanBattle { get; private set; }
 
@@ -16,8 +19,8 @@ namespace Assets.Scripts.GameScene.Controller
 
         private void Start()
         {
-            devController.SetDeckHolder(null);
-            devController.SetMingmings(null);
+            devController.SetDeckHolder(new TrainerDeckHolder(startingInfo.Deck.ToList()));
+            devController.SetMingmings(startingInfo.Mingmings.ToList());
             CanBattle = false;
 
             StartCoroutine(GetCanBattle());
@@ -27,7 +30,6 @@ namespace Assets.Scripts.GameScene.Controller
         {
             yield return new WaitForSeconds(3);
 
-
             CanBattle = SaveData.Current.GetTrainerCanBattle(name);
         }
 
@@ -35,5 +37,7 @@ namespace Assets.Scripts.GameScene.Controller
         {
             SaveData.Current.SetTrainerCanBattle(name, false);
         }
+
+        //TODO: implement trainer loading & saving for rebattling
     }
 }

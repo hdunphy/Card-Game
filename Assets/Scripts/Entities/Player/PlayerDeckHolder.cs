@@ -7,8 +7,8 @@ namespace Assets.Scripts.Entities.Player
     {
         public List<CardData> AllCards { get; private set; }
         public List<Deck> Decks { get; private set; }
-        private int CurrentDeckIndex { get; set; }
-        public List<CardData> CurrentDeck => Decks[CurrentDeckIndex].Cards;
+        private int _currentDeckIndex { get; set; }
+        public List<CardData> CurrentDeck => Decks[_currentDeckIndex].Cards;
 
         public PlayerDeckHolder(List<CardData> allCards)
         {
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Entities.Player
                 Name = "Deck 1"
             }
         };
-            CurrentDeckIndex = 0;
+            _currentDeckIndex = 0;
         }
 
         public PlayerDeckHolder(List<CardData> allCards, List<Deck> decks, int currentDeck = 0)
         {
             AllCards = allCards;
             Decks = decks;
-            CurrentDeckIndex = currentDeck;
+            _currentDeckIndex = currentDeck;
         }
     }
 }

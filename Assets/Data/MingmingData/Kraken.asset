@@ -31,3 +31,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc7ae3d79e4e5aa4da2e34334dde0ca5, type: 2}
   level30Card: {fileID: 11400000, guid: 80e15b09ca403f840b1cf3d886aa9171, type: 2}
   level50Card: {fileID: 11400000, guid: 967b0fdd9f523dd428c497caa2dbd73a, type: 2}
+  maxBlueprintsRequired: 8

@@ -1349,6 +1349,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ContinueButton: {fileID: 779140087}
   BootSceneName: PlayerScene
+  playerStartingInfo:
+    startingMingmings:
+    - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+      Level: 5
+    - MingMingData: {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}
+      Level: 5
+    startingDeck:
+    - {fileID: 11400000, guid: 8e5d7a5b1d7d95d4bb74521061f22084, type: 2}
+    - {fileID: 11400000, guid: e66051f3d60724f4982f7874b90d4d43, type: 2}
+    - {fileID: 11400000, guid: 2790b0d6580e3654d8f3a693bdbe0c79, type: 2}
+    - {fileID: 11400000, guid: 7c05b565a6bd5b74f9cfe8fd349023b9, type: 2}
+    - {fileID: 11400000, guid: 40eca63994a2cbf4bb4a4b56b8926efc, type: 2}
+    - {fileID: 11400000, guid: fc1f2f69eafe6f6449dddff15336432d, type: 2}
+    - {fileID: 11400000, guid: 833a63ad9074f314db06823b91f7b693, type: 2}
+    - {fileID: 11400000, guid: 15180cac62c0faa428c7c9af8373d9fc, type: 2}
 --- !u!1 &1950995112
 GameObject:
   m_ObjectHideFlags: 0

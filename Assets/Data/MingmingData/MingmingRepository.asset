@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f7588725aed2f4ea28705eda47fc2b, type: 3}
   m_Name: MingmingRepository
   m_EditorClassIdentifier: 
-  mingmingDatas: []
+  mingmingDatas:
+  - {fileID: 11400000, guid: 1b25bcae7a6ad7a499e775502603a9b1, type: 2}
+  - {fileID: 11400000, guid: 86b74ac326c875b49ba4b9a726d6cb1b, type: 2}

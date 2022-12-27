@@ -1,7 +1,10 @@
 using Assets.Scripts.Controller.SaveSystem;
+using Assets.Scripts.Entities.GameScene;
 using Assets.Scripts.Entities.SaveSystem;
+using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.GameScene.Controller;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +15,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button ContinueButton;
     [SerializeField] private string BootSceneName;
+    [SerializeField] private DevStartingInfo playerStartingInfo;
 
     FileInfo[] saveFiles;
 
@@ -52,6 +56,7 @@ public class MainMenu : MonoBehaviour
             File.Delete(_file.FullName);
         }
 
+        SaveData.Current.SetStartingInfo(playerStartingInfo);
         var success = SerializationManager.Save(SaveData.Current.SaveName, SaveData.Current);
 
         Debug.Log($"Save succeeded? {success}");

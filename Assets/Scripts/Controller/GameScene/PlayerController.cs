@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         EnterRoom(loadPosition);
 
-        DevController.SetDeckHolder(SaveData.Current.DeckHolder?.GetDeckHolder());
+        DevController.SetDeckHolder(SaveData.Current.DeckHolder.GetDeckHolder());
         DevController.SetMingmings(SaveData.Current.PlayerMingmings?.Select(m => new MingmingInstance(m)).ToList());
         PlayerInventory = SaveData.Current.PlayerInventory;
     }

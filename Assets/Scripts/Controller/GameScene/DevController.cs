@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Entities.Interfaces;
 using Assets.Scripts.Entities.Mingmings;
-using Assets.Scripts.Entities.Player;
-using Assets.Scripts.Entities.Scriptable;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +9,6 @@ namespace Assets.Scripts.GameScene.Controller
     public class DevController : MonoBehaviour
     {
         public IEnumerable<MingmingInstance> PlayableMingmings => Mingming.Where(m => m.CurrentHealth > 0);
-        //Replace
-        public List<MingmingLevelData> MingmingData;
-        [SerializeField] private List<CardData> StartingDeck;
 
         public List<MingmingInstance> Mingming { get; private set; }
 
@@ -21,15 +16,8 @@ namespace Assets.Scripts.GameScene.Controller
 
         public void HealParty() => Mingming.ForEach((mingming) => mingming.CurrentHealth = mingming.Health);
 
-        public void SetDeckHolder(IDeckHolder _deckHolder)
-        {
-            DeckHolder = _deckHolder ?? 
-                new PlayerDeckHolder(StartingDeck, new List<Deck> { new Deck { Cards = new List<CardData>(StartingDeck) } });
-        }
+        public void SetDeckHolder(IDeckHolder _deckHolder) => DeckHolder = _deckHolder;
 
-        public void SetMingmings(List<MingmingInstance> mingmingInstances)
-        {
-            Mingming = mingmingInstances ?? MingmingData.Select(d => new MingmingInstance(d.MingMingData, d.Level)).ToList();
-        }
+        public void SetMingmings(List<MingmingInstance> mingmingInstances) => Mingming = mingmingInstances;
     }
 }

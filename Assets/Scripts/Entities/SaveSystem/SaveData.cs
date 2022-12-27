@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Entities.Player;
+﻿using Assets.Scripts.Entities.GameScene;
+using Assets.Scripts.Entities.Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,5 +57,8 @@ namespace Assets.Scripts.Entities.SaveSystem
                 trainersCanBattle.Add(name, canBattle);
             }
         }
+
+        public void SetStartingInfo(DevStartingInfo playerStartingInfo) 
+            => (deckHolder, playerMingmings) = playerStartingInfo.GetSaveModels();
     }
 }
