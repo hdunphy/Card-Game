@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Mingmings;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Assets.Scripts.Controller.EnemyBehaviors
@@ -129,7 +130,7 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public List<Card> RemaingHand { get; private set; }
 
-        public TurnState Clone() => new TurnState(this);
+        public TurnState Clone() => new(this);
 
         public TurnState(IEnumerable<Mingming> owned, IEnumerable<Mingming> other, IEnumerable<Card> hand)
         {
@@ -167,8 +168,14 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public int ApplyCardPlay(CardPlay cardplay)
         {
-            var source = OwnedMingmings.First(m => m.Id == cardplay.Source.GetInstanceID());
+            //TODO: error -> sequence contains no matching elements
+            var source = OwnedMingmings.FirstOrDefault(m => m.Id == cardplay.Source.GetInstanceID());
             var target = AllTargets.First(m => m.Id == cardplay.Target.GetInstanceID());
+
+            if(source == null)
+            {
+                var check = cardplay.Source.GetInstanceID();
+            }
 
             var actions = cardplay.Card.InvokeActions(source, target);
 

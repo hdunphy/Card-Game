@@ -27,6 +27,7 @@ namespace Assets.Scripts.Entities.Player
         }
     }
 
+    [Serializable]
     public class MingmingHolderSaveModel
     {
         public List<MingmingSaveModel> AllMingmings { get; }
