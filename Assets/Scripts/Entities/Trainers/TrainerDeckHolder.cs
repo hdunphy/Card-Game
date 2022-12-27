@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.Entities.Trainers
 {
@@ -9,9 +10,9 @@ namespace Assets.Scripts.Entities.Trainers
 
         public List<CardData> CurrentDeck => AllCards;
 
-        public TrainerDeckHolder(List<CardData> allCards)
+        public TrainerDeckHolder(IEnumerable<CardData> allCards)
         {
-            AllCards = allCards;
+            AllCards = allCards.ToList();
         }
     }
 }

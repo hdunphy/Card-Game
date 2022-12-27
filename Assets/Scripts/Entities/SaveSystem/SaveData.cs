@@ -24,7 +24,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         private string saveName; //The name of the current save
         private Vector3 playerPosition; //The current player position on last save
         private string playerSceneName; //The current scene the player is on last save
-        private List<MingmingSaveModel> playerMingmings; //list of player's mingmings
+        private MingmingHolderSaveModel mingmingHolder; //contains mingming's party and all mingmings
         private DeckHolderSaveModel deckHolder;  //holds player cards and deck list
         private readonly Dictionary<string, bool> trainersCanBattle; //Reference to which trainers can battle at the moment
         private PlayerInventory playerInventory;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Entities.SaveSystem
         public Vector3 PlayerPosition { get => playerPosition; set => playerPosition = value; } 
         public string SaveName { get => saveName; set => saveName = value; }
         public string PlayerSceneName { get => playerSceneName; set => playerSceneName = value; }
-        public List<MingmingSaveModel> PlayerMingmings { get => playerMingmings; set => playerMingmings = value; }
+        public MingmingHolderSaveModel MingmingHolder { get => mingmingHolder; set => mingmingHolder = value; }
         public DeckHolderSaveModel DeckHolder { get => deckHolder; set => deckHolder = value; }
         public PlayerInventory PlayerInventory { get => playerInventory; set => playerInventory = value; }
 
@@ -40,7 +40,8 @@ namespace Assets.Scripts.Entities.SaveSystem
         {
             SaveName = "save1"; //Set here for now, but for multiple saves will need to set somewhere else
             trainersCanBattle = new Dictionary<string, bool>();
-            PlayerInventory = new();
+            playerInventory = new();
+            mingmingHolder = new();
         }
 
         public bool GetTrainerCanBattle(string name) => 
@@ -59,6 +60,6 @@ namespace Assets.Scripts.Entities.SaveSystem
         }
 
         public void SetStartingInfo(DevStartingInfo playerStartingInfo) 
-            => (deckHolder, playerMingmings) = playerStartingInfo.GetSaveModels();
+            => (deckHolder, mingmingHolder) = playerStartingInfo.GetSaveModels();
     }
 }

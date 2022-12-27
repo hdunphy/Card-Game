@@ -18,8 +18,8 @@ namespace Assets.Scripts.Entities.GameScene
         public IEnumerable<CardData> Deck => startingDeck;
         public IEnumerable<MingmingInstance> Mingmings => startingMingmings.Select(m => new MingmingInstance(m.MingMingData, m.Level));
 
-        public (DeckHolderSaveModel, List<MingmingSaveModel>) GetSaveModels() 
-            => (new DeckHolderSaveModel(new PlayerDeckHolder(startingDeck)),
-                Mingmings.Select(m => new MingmingSaveModel(m)).ToList());
+        public (DeckHolderSaveModel, MingmingHolderSaveModel) GetSaveModels() 
+            => (new (new PlayerDeckHolder(startingDeck)),
+                new(new PlayerMingmingHolder(startingMingmings)));
     }
 }

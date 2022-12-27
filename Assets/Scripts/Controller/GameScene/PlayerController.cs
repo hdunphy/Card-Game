@@ -1,5 +1,4 @@
 using Assets.Scripts.Entities;
-using Assets.Scripts.Entities.Mingmings;
 using Assets.Scripts.Entities.Player;
 using Assets.Scripts.Entities.SaveSystem;
 using Assets.Scripts.GameScene.Controller;
@@ -46,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         SaveData.Current.PlayerPosition = transform.position;
         SaveData.Current.DeckHolder = new DeckHolderSaveModel((PlayerDeckHolder)DevController.DeckHolder);
-        SaveData.Current.PlayerMingmings = DevController.Mingming.Select(m => new MingmingSaveModel(m)).ToList();
+        SaveData.Current.MingmingHolder = new MingmingHolderSaveModel((PlayerMingmingHolder)DevController.MingmingHolder);
         SaveData.Current.PlayerInventory = PlayerInventory;
     }
 
@@ -59,7 +58,7 @@ public class PlayerController : MonoBehaviour
         EnterRoom(loadPosition);
 
         DevController.SetDeckHolder(SaveData.Current.DeckHolder.GetDeckHolder());
-        DevController.SetMingmings(SaveData.Current.PlayerMingmings?.Select(m => new MingmingInstance(m)).ToList());
+        DevController.SetMingmingHolder(new PlayerMingmingHolder(SaveData.Current.MingmingHolder));
         PlayerInventory = SaveData.Current.PlayerInventory;
     }
 
