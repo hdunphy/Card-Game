@@ -7,7 +7,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Create Mingming Data")]
 public class MingmingData : IDropScriptableObject
 {
-    [SerializeField] private int id = -1;
     [SerializeField] private Sprite sprite;
     [SerializeField] private int health;
     [SerializeField] private int attack;
@@ -20,7 +19,6 @@ public class MingmingData : IDropScriptableObject
     [SerializeField] private CardData level50Card;
     [SerializeField] private int maxBlueprintsRequired;
 
-    public int ID => id;
     public Sprite Sprite => sprite;
     public int Health => health;
     public int Attack => attack;
@@ -32,12 +30,6 @@ public class MingmingData : IDropScriptableObject
     public CardData Level30Card => level30Card;
     public CardData Level50Card => level50Card;
     public int MaxBlueprintsRequired => maxBlueprintsRequired;
-
-    public int SetId(int currentMax)
-    {
-        id = currentMax + 1;
-        return id;
-    }
 }
 
 [Serializable]
