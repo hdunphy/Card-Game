@@ -19,13 +19,13 @@ public class HoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if(move != -1)
         {
-            move = -1;
             LeanTween.cancel(move);
+            move = -1;
         }
         if(scale != -1)
         {
-            scale = -1;
             LeanTween.cancel(scale);
+            scale = -1;
         }
     }
 

@@ -29,8 +29,11 @@ namespace Assets.Scripts.Entities.Scriptable
                 Vector3 currentPosition = source.transform.position;
                 Vector3 destination = target.transform.position;
                 LeanTween.move(source, destination, durationSeconds).setEaseOutBack();
-                LeanTween.delayedCall(durationSeconds, () => LeanTween.move(source, currentPosition, durationSeconds / 2));
+                LeanTween.delayedCall(durationSeconds, () =>
+                {
+                    Debug.Log("Animation Moving Back");
+                    LeanTween.move(source, currentPosition, durationSeconds / 2);
+                });
             };
-
     }
 }
