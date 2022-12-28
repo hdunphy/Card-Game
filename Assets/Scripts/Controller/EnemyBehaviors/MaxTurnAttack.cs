@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Mingmings;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Assets.Scripts.Controller.EnemyBehaviors
@@ -148,9 +147,9 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public TurnState(TurnState turnState)
         {
-            OwnedMingmings = turnState.OwnedMingmings.Where(m => m.CurrentHealth > 0)
+            OwnedMingmings = turnState.OwnedMingmings
                 .Select(m => new MingmingBattleLogic(m)).ToList();
-            OtherMingmings = turnState.OtherMingmings.Where(m => m.CurrentHealth > 0)
+            OtherMingmings = turnState.OtherMingmings
                 .Select(m => new MingmingBattleLogic(m)).ToList();
             Mingmings = turnState.Mingmings;
 
@@ -168,14 +167,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
 
         public int ApplyCardPlay(CardPlay cardplay)
         {
-            //TODO: error -> sequence contains no matching elements
-            var source = OwnedMingmings.FirstOrDefault(m => m.Id == cardplay.Source.GetInstanceID());
-            var target = AllTargets.First(m => m.Id == cardplay.Target.GetInstanceID());
-
-            if(source == null)
-            {
-                var check = cardplay.Source.GetInstanceID();
-            }
+            var source = OwnedMingmings.Single(m => m.Id == cardplay.Source.GetInstanceID());
+            var target = AllTargets.Single(m => m.Id == cardplay.Target.GetInstanceID());
 
             var actions = cardplay.Card.InvokeActions(source, target);
 
@@ -187,6 +180,8 @@ namespace Assets.Scripts.Controller.EnemyBehaviors
             var score = GetScore() + cardplay.Card.GetCardScore();
 
             RemaingHand.Remove(cardplay.Card);
+            OwnedMingmings = OwnedMingmings.Where(m => m.CurrentHealth > 0).ToList();
+            OtherMingmings = OtherMingmings.Where(m => m.CurrentHealth > 0).ToList();
 
             return score;
         }
