@@ -23,7 +23,9 @@ namespace Assets.Scripts.Entities.Scriptable
         public override Action<GameObject, GameObject> PerformAnimation
             => (_, target) =>
             {
-                LeanTweenAnimations.RotateBackAndForth(target.gameObject, rotationAmountDegrees, durationSeconds / 4);
+                Debug.Log("Animation start");
+                LeanTweenAnimations.RotateBackAndForth(target, rotationAmountDegrees, durationSeconds / 4);
+                Debug.Log("Animation finish");
             };
     }
 }
