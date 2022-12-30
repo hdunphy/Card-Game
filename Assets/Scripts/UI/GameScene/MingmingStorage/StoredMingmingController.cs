@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.GameScene.MingmingStorage
 {
-    public class MingmingStorageController : MonoBehaviour
+    public class StoredMingmingController : MonoBehaviour
     {
         [SerializeField] private Image mingmingSprite;
         [SerializeField] private TMP_Text nameText;
