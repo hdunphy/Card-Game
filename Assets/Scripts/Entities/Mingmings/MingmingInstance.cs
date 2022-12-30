@@ -10,6 +10,7 @@ namespace Assets.Scripts.Entities.Mingmings
 {
     public class MingmingInstance : IEquatable<MingmingInstance>
     {
+        public const int MAX_MODIFIER = 31;
         public readonly int AttackModifier;
         public readonly int DefenseModifier;
         public readonly int HealthModifier;
@@ -52,9 +53,9 @@ namespace Assets.Scripts.Entities.Mingmings
             Level = level;
 
             Experience = Rules.GetExp(this);
-            AttackModifier = Rules.GetRandomInt(0, 31);
-            DefenseModifier = Rules.GetRandomInt(0, 31);
-            HealthModifier = Rules.GetRandomInt(0, 31);
+            AttackModifier = Rules.GetRandomInt(0, MAX_MODIFIER);
+            DefenseModifier = Rules.GetRandomInt(0, MAX_MODIFIER);
+            HealthModifier = Rules.GetRandomInt(0, MAX_MODIFIER);
 
             SetFieldsFromData();
 
@@ -80,7 +81,7 @@ namespace Assets.Scripts.Entities.Mingmings
 
             Attack = Rules.CalculateStat(BaseData.Attack, AttackModifier, Level);
             Defense = Rules.CalculateStat(BaseData.Defense, DefenseModifier, Level);
-            Health = Rules.CalculateStat(BaseData.Health, HealthModifier, Level) + Level + 5;
+            Health = Rules.CalculateStat(BaseData.Health, HealthModifier, Level, true);
 
             CardDraw = BaseData.CardDraw;
             WildDeck = BaseData.WildCards;

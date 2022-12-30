@@ -17,10 +17,10 @@ namespace Assets.Scripts.Entities.Player
         public PlayerMingmingHolder(List<MingmingLevelData> mingmings)
         {
             AllMingmings = mingmings.Select(d => new MingmingInstance(d.MingMingData, d.Level)).ToList();
-            Party = new(AllMingmings);
+            Party = new(AllMingmings.Take(3));
         }
 
-        public PlayerMingmingHolder(MingmingHolderSaveModel saveModel)
+        public PlayerMingmingHolder(MingmingHolderSaveModel saveModel)   
         {
             AllMingmings = saveModel.AllMingmings.Select(m => new MingmingInstance(m)).ToList();
             Party = saveModel.PartyIndecies.Select(i => AllMingmings[i]).ToList();

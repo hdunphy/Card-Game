@@ -170,6 +170,8 @@ namespace Assets.Scripts.References
             return (int)Math.Floor((double)(((2 * baseStat) + modifier) * level / 100) + 5);
         }
 
+        public static int CalculateStat(int baseStat, int modifier, int level, bool isHealth) => CalculateStat(baseStat, modifier, level) + level + 5;
+
         public static int GetRandomInt(int? min = null, int? max = null)
         {
             int randomValue;

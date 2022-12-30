@@ -7,12 +7,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Create Mingming Data")]
 public class MingmingData : IDropScriptableObject
 {
+    public const int MAX_ENERGY = 10;
+    public const int MAX_CARD_DRAW = 10;
+
     [SerializeField] private Sprite sprite;
     [SerializeField] private int health;
     [SerializeField] private int attack;
     [SerializeField] private int defense;
-    [SerializeField] private int energy;
-    [SerializeField] private int cardDraw;
+    [SerializeField, Range(1, MAX_ENERGY)] private int energy;
+    [SerializeField, Range(1, MAX_CARD_DRAW)] private int cardDraw;
     [SerializeField] private MingmingAlignment mingmingAlignments;
     [SerializeField] private List<CardData> wildCards;
     [SerializeField] private CardData level30Card;
