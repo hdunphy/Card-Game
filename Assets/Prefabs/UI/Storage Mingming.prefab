@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 936335550990456058}
   - component: {fileID: 801558759850675379}
   m_Layer: 0
-  m_Name: Mingming Storage
+  m_Name: Storage Mingming
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
