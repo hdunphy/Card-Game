@@ -13,12 +13,16 @@ public class TooltipSystem : MonoBehaviour
 
     public static void Show(string content, string header = "")
     {
+        if (current == null) return;
+
         current.tooltip.SetText(content, header);
         current.tooltip.gameObject.SetActive(true);
     }
 
     public static void Hide()
     {
+        if (current == null) return; //maybe add a debug?
+
         current.tooltip.gameObject.SetActive(false);
     }
 }

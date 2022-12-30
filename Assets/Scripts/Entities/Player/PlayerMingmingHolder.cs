@@ -14,6 +14,8 @@ namespace Assets.Scripts.Entities.Player
 
         public List<MingmingInstance> Party { get; }
 
+        public List<MingmingInstance> StorageMingmings => AllMingmings.Except(Party).ToList();
+
         public PlayerMingmingHolder(List<MingmingLevelData> mingmings)
         {
             AllMingmings = mingmings.Select(d => new MingmingInstance(d.MingMingData, d.Level)).ToList();

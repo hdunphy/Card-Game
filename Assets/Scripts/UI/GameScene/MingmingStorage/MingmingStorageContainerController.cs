@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Entities.Player;
-using Assets.Scripts.Entities.Scriptable;
 using Assets.Scripts.Helpers;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.UI.GameScene.MingmingStorage
@@ -13,16 +11,9 @@ namespace Assets.Scripts.UI.GameScene.MingmingStorage
         [SerializeField] private GameObject horizontalRowPrefab;
         [SerializeField] private StoredMingmingController storedMingmingPrefab;
 
-        [SerializeField] public List<MingmingLevelData> Mingmings;
-
-        private void Start()
-        {
-            Setup(new(Mingmings));
-        }
-
         public void Setup(PlayerMingmingHolder mingmingHolder)
         {
-            var rows = mingmingHolder.AllMingmings.ChunkBy(3);
+            var rows = mingmingHolder.StorageMingmings.ChunkBy(3);
             rows.ForEach(row => {
                 var horizontalRow = Instantiate(horizontalRowPrefab, mingmingStorageTransform);
                 row.ForEach(mingming =>
