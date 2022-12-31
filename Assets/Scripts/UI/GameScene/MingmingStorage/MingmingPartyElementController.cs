@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Entities.Mingmings;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.UI.GameScene.MingmingStorage
 {
@@ -14,9 +16,9 @@ namespace Assets.Scripts.UI.GameScene.MingmingStorage
         const string SHOW_TEXT = "SHOW";
         const string HIDE_TEXT = "HIDE";
 
-        public override void Setup(MingmingInstance mingming)
+        public override void Setup(MingmingInstance mingming, Action<MingmingInstance> onSelected)
         {
-            base.Setup(mingming);
+            base.Setup(mingming, onSelected);
 
             statsPanel.Setup(mingming);
 

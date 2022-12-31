@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Helpers
 {
@@ -12,6 +13,16 @@ namespace Assets.Scripts.Helpers
                 .GroupBy(x => x.Index / chunkSize)
                 .Select(x => x.Select(v => v.Value).ToList())
                 .ToList();
+        }
+
+        public static Transform DestroyAllChildren(this Transform transform)
+        {
+            foreach(Transform child in transform)
+            {
+                Object.Destroy(child.gameObject);
+            }
+
+            return transform;
         }
     }
 }
