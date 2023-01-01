@@ -21,26 +21,13 @@ namespace Assets.Scripts.UI.Controller
         private List<SelectableCard> AvailableCards;
         private List<SelectableCard> CurrentCards;
         private IDeckHolder DeckHolder;
-        private PlayerController _playerController;
         private PlayerInputController _playerInputController;
-
-        public PlayerController PlayerController
-        {
-            get
-            {
-                if (_playerController is null)
-                    _playerController = FindObjectOfType<PlayerController>();
-
-                return _playerController;
-            }
-        }
 
         public PlayerInputController PlayerInputController
         {
             get
             {
-                if (_playerInputController is null)
-                    _playerInputController = FindObjectOfType<PlayerInputController>();
+                _playerInputController ??= FindObjectOfType<PlayerInputController>();
 
                 return _playerInputController;
             }
@@ -54,11 +41,11 @@ namespace Assets.Scripts.UI.Controller
         }
 
         //called by unity event
-        public void Show()
+        public void Show(PlayerController playerController)
         {
             DeckBuilderCanvas.gameObject.SetActive(true);
             PlayerInputController.enabled = false;
-            DeckHolder = PlayerController.DevController.DeckHolder;
+            DeckHolder = playerController.DevController.DeckHolder;
 
             GetAvailableCards();
             GetCurrentCards();
