@@ -31,5 +31,15 @@ namespace Assets.Scripts.Entities.Player
 
             return currentCount;
         }
+
+        /* Need to add recycled cards. 
+         * Should inventory be a Dictionary<Type, object> to store anything that goes in the inventory?
+         *  Make object for blueprint and one for common scrap
+         * 
+         * Dictionary<enum, object> -> Add(ItemType.Scrap, (object)1) can add scrap with int
+         * **Dictionary<enum, IItem> IItem has Add() method so we can implement different types of add new Item**
+         * 
+         * Inventory will also need: potions ?
+         */
     }
 }
